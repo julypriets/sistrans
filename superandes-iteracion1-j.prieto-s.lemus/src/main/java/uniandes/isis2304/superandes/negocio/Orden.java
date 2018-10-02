@@ -39,6 +39,11 @@ public class Orden implements VOOrden{
 	 */
 	private Double calificacion;
 	
+	/**
+	 * El id de la sucursal al que pertenece
+	 */
+	private Long idSucursal;
+	
 	// Constantes
 	
 	/**
@@ -62,13 +67,14 @@ public class Orden implements VOOrden{
 	 * @param calificacion
 	 */
 	public Orden(Long id, Double precio, Timestamp fechaEsperada, Timestamp fechaLlegada, String estado,
-			Double calificacion) {
+			Double calificacion, Long idSucursal) {
 		this.id = id;
 		this.precio = precio;
 		this.fechaEsperada = fechaEsperada;
 		this.fechaLlegada = fechaLlegada;
 		this.estado = estado;
 		this.calificacion = calificacion;
+		this.idSucursal = idSucursal;
 	}
 	
 	/**
@@ -81,6 +87,7 @@ public class Orden implements VOOrden{
 		this.fechaLlegada = new Timestamp(0);
 		this.estado = "";
 		this.calificacion = 0.0;
+		this.idSucursal = (long) 0;
 	}
 
 	public Long getId() {
@@ -129,6 +136,16 @@ public class Orden implements VOOrden{
 
 	public void setCalificacion(Double calificacion) {
 		this.calificacion = calificacion;
+	}
+	
+	
+
+	public Long getIdSucursal() {
+		return idSucursal;
+	}
+
+	public void setIdSucursal(Long idSucursal) {
+		this.idSucursal = idSucursal;
 	}
 
 	@Override

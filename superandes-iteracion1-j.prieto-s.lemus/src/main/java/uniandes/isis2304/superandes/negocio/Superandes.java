@@ -80,7 +80,23 @@ public class Superandes
 	 * 			Métodos para manejar los PRODUCTOS
 	 *****************************************************************/
 
-	
+	/**
+	 * Se encarga de adicionar un producto según los valores dados
+	 * y de retornar la representación en Objeto respectiva
+	 * @param nombre
+	 * @param marca
+	 * @param precioUnitario
+	 * @param presentacion
+	 * @param precioUnidadMedida
+	 * @param unidadMedida
+	 * @param empacado
+	 * @param codigoBarras
+	 * @param nivelReorden
+	 * @param existencias
+	 * @param idCategoria
+	 * @param idSucursal
+	 * @return La representación del producto
+	 */
 	public Producto adicionarProducto(String nombre, String marca, Double precioUnitario, String presentacion,
 			Double precioUnidadMedida, String unidadMedida, String empacado, String codigoBarras, Integer nivelReorden,
 			Integer existencias, Long idCategoria, Long idSucursal) {
@@ -89,6 +105,47 @@ public class Superandes
 		log.info("Adicionando el producto: " + p.toString());
 		return p;
 	}
+	
+	
+	/* ****************************************************************
+	 * 			Métodos para manejar los CLIENTES
+	 *****************************************************************/
+	
+	/**
+	 * Se encarga de adicionar una empresa según los valores dados
+	 * y de retornar la representación en Objeto respectiva
+	 * @param id
+	 * @param nombre
+	 * @param correo
+	 * @param nit
+	 * @param direccion
+	 * @return
+	 */
+	public Cliente adicionarEmpresa(Long id, String nombre, String correo, String nit, String direccion) {
+		log.info("Adicionando la empresa: " + nombre + "con nit: " + nit);
+		Cliente e = pa.adicionarEmpresa(id, nombre, correo, nit, direccion);
+		log.info("Adicionando el producto: " + e.toString());
+		return e;
+	} 
+	
+	/**
+	 * Se encarga de adicionar una persona natural según los valores dados
+	 * y de retornar la representación en Objeto respectiva
+	 * @param id
+	 * @param nombre
+	 * @param correo
+	 * @param identificacion
+	 * @return
+	 */
+	public Cliente adicionarPersonaNatural(Long id, String nombre, String correo, String identificacion) {
+		log.info("Adicionando la persona: " + nombre + "con documento de identificación: " + identificacion);
+		Cliente p = pa.adicionarPersonaNatural(id, nombre, correo, identificacion);
+		log.info("Adicionando el producto: " + p.toString());
+		return p;
+		
+	} 
+	
+	
 	
 //	/**
 //	 * Elimina todas las tuplas de todas las tablas de la base de datos de Parranderos

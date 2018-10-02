@@ -15,6 +15,10 @@ public interface VOUsuario {
 	public String getUsername();
 
 	public String getPassword();
+	
+	public String getTipo();
+
+	public Long getIdSucursal();
 
 	@Override
 	public String toString();

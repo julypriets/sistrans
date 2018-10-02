@@ -2,12 +2,14 @@ package uniandes.isis2304.superandes.negocio;
 
 public class Empresa extends Cliente implements VOEmpresa {
 	
+	private Long id;
+	
 	private String nit;
 	
 	private String direccion;
 	
-	public Empresa(String nombre, String correo, String nit, String direccion) {
-		super(nombre, correo);
+	public Empresa(Long id, String nombre, String correo, String nit, String direccion) {
+		super(id, nombre, correo);
 		this.nit = nit;
 		this.direccion = direccion;
 	}

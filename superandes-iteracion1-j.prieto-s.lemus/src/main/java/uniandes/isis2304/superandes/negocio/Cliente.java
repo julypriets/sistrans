@@ -5,18 +5,28 @@ package uniandes.isis2304.superandes.negocio;
  * @author s.lemus
  *
  */
-public class Cliente implements VOCliente{
+public abstract class Cliente implements VOCliente{
 
+	private Long id;
+	
 	private String nombre;
 	
 	private String correo;
+	
+	private String tipo;
+	
+	public static final String EMPRESA = "EMPRESA";
+	
+	public static final String PERSONA_NATURAL = "PERSONA_NATURAL";
 
-	public Cliente(String nombre, String correo) {
+	public Cliente(Long id, String nombre, String correo) {
+		this.id = id;
 		this.nombre = nombre;
 		this.correo = correo;
 	} 
 	
 	public Cliente(){
+		this.id = (long) 0;
 		this.nombre = "";
 		this.correo = "";
 	}
@@ -35,6 +45,22 @@ public class Cliente implements VOCliente{
 
 	public void setCorreo(String correo) {
 		this.correo = correo;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 	@Override

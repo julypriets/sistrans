@@ -26,6 +26,12 @@ public interface VOBodega {
 	public Double getCapacidadVolumen();
 	
 	/**
+	 * 
+	 * @return el id de la sucursal
+	 */
+	public Long getIdSucursal();
+	
+	/**
 	 * Retorna una cadena de caractéres con la información básica
 	 * de la bodega
 	 */

@@ -11,6 +11,10 @@ public interface VOCliente {
 	public String getNombre();
 
 	public String getCorreo();
+	
+	public Long getId();
+
+	public String getTipo();
 
 	@Override
 	public String toString();

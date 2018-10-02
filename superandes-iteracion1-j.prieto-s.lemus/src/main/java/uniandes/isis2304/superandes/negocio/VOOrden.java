@@ -21,6 +21,8 @@ public interface VOOrden {
 	public String getEstado();
 
 	public Double getCalificacion();
+	
+	public Long getIdSucursal();
 
 	@Override
 	public String toString();

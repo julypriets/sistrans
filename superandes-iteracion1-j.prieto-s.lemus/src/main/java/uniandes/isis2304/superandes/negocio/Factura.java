@@ -14,17 +14,25 @@ public class Factura implements VOFactura{
 	private Double precioTotal;
 	
 	private Timestamp fecha;
+	
+	private Long idCajero;
+	
+	private Long idCliente;
 
-	public Factura(Long id, Double precioTotal, Timestamp fecha) {
+	public Factura(Long id, Double precioTotal, Timestamp fecha, Long idCajero, Long idCliente) {
 		this.id = id;
 		this.precioTotal = precioTotal;
 		this.fecha = fecha;
+		this.idCajero = idCajero;
+		this.idCliente = idCliente;
 	}
 	
 	public Factura(){
 		this.id = (long) 0;
 		this.precioTotal = 0.0;
 		this.fecha = new Timestamp(0);
+		this.idCajero = (long) 0;
+		this.idCliente = (long) 0;
 	}
 
 	public Long getId() {
@@ -49,6 +57,22 @@ public class Factura implements VOFactura{
 
 	public void setFecha(Timestamp fecha) {
 		this.fecha = fecha;
+	}
+	
+	public Long getIdCajero() {
+		return idCajero;
+	}
+
+	public void setIdCajero(Long idCajero) {
+		this.idCajero = idCajero;
+	}
+
+	public Long getIdCliente() {
+		return idCliente;
+	}
+
+	public void setIdCliente(Long idCliente) {
+		this.idCliente = idCliente;
 	}
 
 	@Override

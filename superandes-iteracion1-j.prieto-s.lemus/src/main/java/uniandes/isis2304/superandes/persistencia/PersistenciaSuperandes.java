@@ -33,6 +33,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import uniandes.isis2304.superandes.negocio.Bebedor;
+import uniandes.isis2304.superandes.negocio.Cliente;
+import uniandes.isis2304.superandes.negocio.Empresa;
+import uniandes.isis2304.superandes.negocio.PersonaNatural;
 import uniandes.isis2304.superandes.negocio.Producto;
 
 
@@ -120,6 +123,11 @@ public class PersistenciaSuperandes
 	 * Atributo para el acceso a la tabla PRODUCTO
 	 */
 	private SQLProducto sqlProducto;
+	
+	/**
+	 * Atributo para el acceso a la tabla CLIENTE
+	 */
+	private SQLCliente sqlCliente; 
 	
 
 	
@@ -238,6 +246,7 @@ public class PersistenciaSuperandes
 	private void crearClasesSQL ()
 	{	
 		sqlProducto = new SQLProducto(this);
+		sqlCliente = new SQLCliente(this);
 		sqlUtil = new SQLUtil(this);
 	}
 
@@ -275,6 +284,23 @@ public class PersistenciaSuperandes
 	 * 			Métodos para manejar los PRODUCTOS
 	 *****************************************************************/
 
+	/**
+	 * Se encarga de adicionar un producto según los valores dados
+	 * y de retornar la representación en Objeto respectiva
+	 * @param nombre
+	 * @param marca
+	 * @param precioUnitario
+	 * @param presentacion
+	 * @param precioUnidadMedida
+	 * @param unidadMedida
+	 * @param empacado
+	 * @param codigoBarras
+	 * @param nivelReorden
+	 * @param existencias
+	 * @param idCategoria
+	 * @param idSucursal
+	 * @return
+	 */
 	public Producto adicionarProducto(String nombre, String marca, Double precioUnitario, String presentacion,
 			Double precioUnidadMedida, String unidadMedida, String empacado, String codigoBarras, Integer nivelReorden,
 			Integer existencias, Long idCategoria, Long idSucursal)
@@ -307,7 +333,91 @@ public class PersistenciaSuperandes
             pm.close();
         }
 	}
+
+	/* ****************************************************************
+	 * 			Métodos para manejar los CLIENTES
+	 *****************************************************************/
 	
+	/**
+	 * Se encarga de adicionar una empresa según los valores dados
+	 * y de retornar la representación en Objeto respectiva
+	 * @param id
+	 * @param nombre
+	 * @param correo
+	 * @param nit
+	 * @param direccion
+	 * @return
+	 */
+	public Cliente adicionarEmpresa(Long id, String nombre, String correo, String nit, String direccion)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            long idCliente = nextval ();
+            long tuplasInsertadas = sqlCliente.adicionarEmpresa(pm, id, nombre, correo, nit, direccion);
+            tx.commit();
+            
+            log.trace ("Inserción de producto: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+            
+            return new Empresa(id, nombre, correo, nit, direccion);
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return null;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+	}
+	
+	/**
+	 * Se encarga de adicionar una persona natural según los valores dados
+	 * y de retornar la representación en Objeto respectiva
+	 * @param id
+	 * @param nombre
+	 * @param correo
+	 * @param identificacion
+	 * @return
+	 */
+	public Cliente adicionarPersonaNatural(Long id, String nombre, String correo, String identificacion)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            long idCliente = nextval ();
+            long tuplasInsertadas = sqlCliente.adicionarPersonaNatural(pm, id, nombre, correo, identificacion);
+            tx.commit();
+            
+            log.trace ("Inserción de producto: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+            
+            return new PersonaNatural(id, nombre, correo, identificacion);
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return null;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+	}
 	
 	
 //	/**

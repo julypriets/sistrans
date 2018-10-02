@@ -51,6 +51,8 @@ import com.google.gson.stream.JsonReader;
 import uniandes.isis2304.superandes.interfaz.PanelDatos;
 import uniandes.isis2304.superandes.negocio.Superandes;
 import uniandes.isis2304.superandes.negocio.VOBebedor;
+import uniandes.isis2304.superandes.negocio.VOCliente;
+import uniandes.isis2304.superandes.negocio.VOEmpresa;
 import uniandes.isis2304.superandes.negocio.VOProducto;
 
 
@@ -278,34 +280,119 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     		    "precioUnidadMedida:", idSucursal,
     		};
     		int option = JOptionPane.showConfirmDialog(this, message, "Crear el producto ingresando todos sus valores", JOptionPane.OK_CANCEL_OPTION);
-    		try {
-        		if (option == JOptionPane.OK_OPTION)
-        		{
-            		String nombreResp = nombre.getText();
-            		String marcaResp = marca.getText();
-            		Double precioUnitarioResp = Double.parseDouble(precioUnitario.getText());
-            		String presentacionResp = presentacion.getText();
-            		Double precioUnidadMedidaResp = Double.parseDouble(precioUnidadMedida.getText());
-            		String unidadMedidaResp = unidadMedida.getText();
-            		String empacadoResp = empacado.getText();
-            		String codigoBarrasResp = codigoBarras.getText();
-            		Integer nivelReordenResp = Integer.parseInt(nivelReorden.getText());
-            		Integer existenciasResp = Integer.parseInt(existencias.getText());
-            		Long idCategoriaResp = Long.parseLong(idCategoria.getText());
-            		Long idSucursalResp = Long.parseLong(idSucursal.getText());
-            		
-            		VOProducto p = superandes.adicionarProducto(nombreResp, marcaResp, precioUnitarioResp, presentacionResp, precioUnidadMedidaResp, 
-            				unidadMedidaResp, empacadoResp, codigoBarrasResp, nivelReordenResp, existenciasResp, idCategoriaResp, idSucursalResp);
-            		String resultado = "En adicionarProducto\n\n";
-            		resultado += "Producto adicionado exitosamente: " + p;
-        			resultado += "\n Operación terminada";
-            		panelDatos.actualizarInterfaz(resultado);
-        		}else {
-        			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-        		}
-			} catch (Exception e) {
-				e.getMessage();
-			}
+    		if (option == JOptionPane.OK_OPTION)
+    		{
+        		String nombreResp = nombre.getText();
+        		String marcaResp = marca.getText();
+        		Double precioUnitarioResp = Double.parseDouble(precioUnitario.getText());
+        		String presentacionResp = presentacion.getText();
+        		Double precioUnidadMedidaResp = Double.parseDouble(precioUnidadMedida.getText());
+        		String unidadMedidaResp = unidadMedida.getText();
+        		String empacadoResp = empacado.getText();
+        		String codigoBarrasResp = codigoBarras.getText();
+        		Integer nivelReordenResp = Integer.parseInt(nivelReorden.getText());
+        		Integer existenciasResp = Integer.parseInt(existencias.getText());
+        		Long idCategoriaResp = Long.parseLong(idCategoria.getText());
+        		Long idSucursalResp = Long.parseLong(idSucursal.getText());
+        		
+        		VOProducto p = superandes.adicionarProducto(nombreResp, marcaResp, precioUnitarioResp, presentacionResp, precioUnidadMedidaResp, 
+        				unidadMedidaResp, empacadoResp, codigoBarrasResp, nivelReordenResp, existenciasResp, idCategoriaResp, idSucursalResp);
+        		String resultado = "En adicionarProducto\n\n";
+        		resultado += "Producto adicionado exitosamente: " + p;
+    			resultado += "\n Operación terminada";
+        		panelDatos.actualizarInterfaz(resultado);
+    		}else {
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+    }
+    
+    
+	/* ****************************************************************
+	 * 			Operaciones Cliente
+	 *****************************************************************/
+    
+    public void adicionarEmpresa( )
+    {
+    	try 
+    	{
+    		JTextField id = new JTextField();
+    		JTextField nombre = new JTextField();
+    		JTextField correo = new JTextField();
+    		JTextField nit = new JTextField();
+    		JTextField direccion = new JTextField();
+    		Object[] message = {
+    		    "id:", id,
+    		    "nombre:", nombre,
+    		    "correo:", correo,
+    		    "nit:", nit,
+    		    "direccion:", direccion,
+    		};
+    		int option = JOptionPane.showConfirmDialog(this, message, "Adicionar una empresa ingresando todos sus valores", JOptionPane.OK_CANCEL_OPTION);
+    		if (option == JOptionPane.OK_OPTION)
+    		{
+    			Long idResp = Long.parseLong(id.getText());
+        		String nombreResp = nombre.getText();
+        		String correoResp = correo.getText();
+        		String nitResp = nit.getText();
+        		String direccionResp = direccion.getText();
+
+        		
+        		VOCliente e = superandes.adicionarEmpresa(idResp, nombreResp, correoResp, nitResp, direccionResp);
+        		String resultado = "En adicionarEmpresa\n\n";
+        		resultado += "Empresa adicionada exitosamente: " + e;
+    			resultado += "\n Operación terminada";
+        		panelDatos.actualizarInterfaz(resultado);
+    		}else {
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+    }
+    
+    public void adicionarPersonaNatural( )
+    {
+    	try 
+    	{
+    		JTextField id = new JTextField();
+    		JTextField nombre = new JTextField();
+    		JTextField correo = new JTextField();
+    		JTextField identificacion = new JTextField();
+    		Object[] message = {
+    		    "id:", id,
+    		    "nombre:", nombre,
+    		    "correo:", correo,
+    		    "identificacion:", identificacion,
+    		};
+    		int option = JOptionPane.showConfirmDialog(this, message, "Adicionar una empresa ingresando todos sus valores", JOptionPane.OK_CANCEL_OPTION);
+    		if (option == JOptionPane.OK_OPTION)
+    		{
+    			Long idResp = Long.parseLong(id.getText());
+        		String nombreResp = nombre.getText();
+        		String correoResp = correo.getText();
+        		String identificacionResp = identificacion.getText();
+        		
+        		VOCliente e = superandes.adicionarPersonaNatural(idResp, nombreResp, correoResp, identificacionResp);
+        		String resultado = "En adicionarPersonaNatural\n\n";
+        		resultado += "Persona adicionada exitosamente: " + e;
+    			resultado += "\n Operación terminada";
+        		panelDatos.actualizarInterfaz(resultado);
+    		}else {
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
 
 		} 
     	catch (Exception e) 

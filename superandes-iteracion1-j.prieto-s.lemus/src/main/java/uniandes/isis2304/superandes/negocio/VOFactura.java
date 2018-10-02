@@ -16,6 +16,10 @@ public interface VOFactura {
 
 	public Timestamp getFecha();
 
+	public Long getIdCajero();
+
+	public Long getIdCliente();
+	
 	@Override
 	public String toString();
 }

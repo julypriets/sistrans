@@ -26,6 +26,16 @@ public class Estante implements VOEstante{
 	 * Nivel de abastecimiento del estante
 	 */
 	private Integer nivelAbastecimiento;
+	
+	/**
+	 * El id de la categoría de los productos del estante
+	 */
+	private Long idCategoria;
+	
+	/**
+	 * El id de la sucursal al que pertenece
+	 */
+	private Long idSucursal;
 
 	/**
 	 * Constructor del Estante con valores
@@ -34,11 +44,14 @@ public class Estante implements VOEstante{
 	 * @param capacidadVolumen
 	 * @param nivelAbastecimiento
 	 */
-	public Estante(Long id, Double capacidadPeso, Double capacidadVolumen, Integer nivelAbastecimiento) {
+	public Estante(Long id, Double capacidadPeso, Double capacidadVolumen, Integer nivelAbastecimiento
+			, Long idCategoria, Long idSucursal) {
 		this.id = id;
 		this.capacidadPeso = capacidadPeso;
 		this.capacidadVolumen = capacidadVolumen;
 		this.nivelAbastecimiento = nivelAbastecimiento;
+		this.idCategoria = idCategoria;
+		this.idSucursal = idSucursal;
 	}
 	
 	/**
@@ -49,6 +62,8 @@ public class Estante implements VOEstante{
 		this.capacidadPeso = 0.0;
 		this.capacidadVolumen = 0.0;
 		this.nivelAbastecimiento = 0;
+		this.idCategoria = (long) 0;
+		this.idSucursal = (long) 0;
 	}
 
 	/**
@@ -113,6 +128,39 @@ public class Estante implements VOEstante{
 	 */
 	public void setNivelAbastecimiento(Integer nivelAbastecimiento) {
 		this.nivelAbastecimiento = nivelAbastecimiento;
+	}
+	
+	
+	/**
+	 * 
+	 * @return el id de la categoría 
+	 */
+	public Long getIdCategoria() {
+		return idCategoria;
+	}
+
+	/**
+	 * 
+	 * @param idCategoria - el id de una nueva categoría
+	 */
+	public void setIdCategoria(Long idCategoria) {
+		this.idCategoria = idCategoria;
+	}
+
+	/**
+	 * 
+	 * @return el id de la sucursal
+	 */
+	public Long getIdSucursal() {
+		return idSucursal;
+	}
+
+	/**
+	 * 
+	 * @param idSucursal - el id de una nueva sucursal
+	 */
+	public void setIdSucursal(Long idSucursal) {
+		this.idSucursal = idSucursal;
 	}
 
 	/**

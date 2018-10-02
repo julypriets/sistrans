@@ -10,11 +10,18 @@ public class Cajero implements VOCajero{
 	private Long id;
 	
 	private String nombre;
+	
+	private Long idSucursal;
 
-	public Cajero(Long id, String nombre) {
-		super();
+	public Cajero(Long id, String nombre, Long idSucursal) {
 		this.id = id;
 		this.nombre = nombre;
+		this.idSucursal = idSucursal;
+	}
+	
+	public Cajero() {
+		this.id = (long) 0;
+		this.idSucursal = (long) 0;
 	}
 
 	public Long getId() {

@@ -10,6 +10,10 @@ public interface VOPedidoBodega {
 
 	public Long getId();
 
+	public Long getIdCategoria();
+
+	public Long getIdEstante();
+	
 	@Override
 	public String toString();
 }
