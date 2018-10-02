@@ -31,7 +31,9 @@ import org.apache.log4j.Logger;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
 import uniandes.isis2304.superandes.negocio.Bebedor;
+import uniandes.isis2304.superandes.negocio.Producto;
 
 
 /**
@@ -110,9 +112,14 @@ public class PersistenciaSuperandes
 	private List <String> tablas;
 	
 	/**
-	 * Atributo para el acceso a las sentencias SQL propias a PersistenciaParranderos
+	 * Atributo para el acceso a las sentencias SQL propias a PersistenciaSuperandes
 	 */
 	private SQLUtil sqlUtil;
+	
+	/**
+	 * Atributo para el acceso a la tabla PRODUCTO
+	 */
+	private SQLProducto sqlProducto;
 	
 
 	
@@ -187,7 +194,7 @@ public class PersistenciaSuperandes
 	/**
 	 * Constructor que toma los nombres de las tablas de la base de datos del objeto tableConfig
 	 * @param tableConfig - El objeto JSON con los nombres de las tablas
-	 * @return Retorna el único objeto PersistenciaParranderos existente - Patrón SINGLETON
+	 * @return Retorna el único objeto PersistenciaSuperandes existente - Patrón SINGLETON
 	 */
 	public static PersistenciaSuperandes getInstance (JsonObject tableConfig)
 	{
@@ -229,15 +236,16 @@ public class PersistenciaSuperandes
 	 * Crea los atributos de clases de apoyo SQL
 	 */
 	private void crearClasesSQL ()
-	{		
+	{	
+		sqlProducto = new SQLProducto(this);
 		sqlUtil = new SQLUtil(this);
 	}
 
 	
 	/**
-	 * Transacción para el generador de secuencia de Parranderos
+	 * Transacción para el generador de secuencia de Superandes
 	 * Adiciona entradas al log de la aplicación
-	 * @return El siguiente número del secuenciador de Parranderos
+	 * @return El siguiente número del secuenciador de Superandes
 	 */
 	private long nextval ()
 	{
@@ -264,8 +272,43 @@ public class PersistenciaSuperandes
 
 
 	/* ****************************************************************
-	 * 			Métodos para manejar los BEBEDORES
+	 * 			Métodos para manejar los PRODUCTOS
 	 *****************************************************************/
+
+	public Producto adicionarProducto(String nombre, String marca, Double precioUnitario, String presentacion,
+			Double precioUnidadMedida, String unidadMedida, String empacado, String codigoBarras, Integer nivelReorden,
+			Integer existencias, Long idCategoria, Long idSucursal)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            long idProducto = nextval ();
+            long tuplasInsertadas = sqlProducto.adicionarProducto(pm, nombre, marca, precioUnitario, presentacion, precioUnidadMedida, unidadMedida, empacado, codigoBarras, nivelReorden, existencias, idCategoria, idSucursal);
+            tx.commit();
+            
+            log.trace ("Inserción de producto: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+            
+            return new Producto(nombre, marca, precioUnitario, presentacion, precioUnidadMedida, unidadMedida, empacado, codigoBarras, nivelReorden, existencias, idCategoria, idSucursal);
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return null;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+	}
+	
+	
 	
 //	/**
 //	 * Método que inserta, de manera transaccional, una tupla en la tabla BEBEDOR

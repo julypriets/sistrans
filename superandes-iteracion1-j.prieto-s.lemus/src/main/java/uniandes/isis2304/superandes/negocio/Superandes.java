@@ -30,7 +30,7 @@ import uniandes.isis2304.superandes.persistencia.PersistenciaSuperandes;
  *
  * @author Germán Bravo
  */
-public class Parranderos 
+public class Superandes 
 {
 	/* ****************************************************************
 	 * 			Constantes
@@ -38,7 +38,7 @@ public class Parranderos
 	/**
 	 * Logger para escribir la traza de la ejecución
 	 */
-	private static Logger log = Logger.getLogger(Parranderos.class.getName());
+	private static Logger log = Logger.getLogger(Superandes.class.getName());
 	
 	/* ****************************************************************
 	 * 			Atributos
@@ -46,7 +46,7 @@ public class Parranderos
 	/**
 	 * El manejador de persistencia
 	 */
-	private PersistenciaSuperandes pp;
+	private PersistenciaSuperandes pa;
 	
 	/* ****************************************************************
 	 * 			Métodos
@@ -54,18 +54,18 @@ public class Parranderos
 	/**
 	 * El constructor por defecto
 	 */
-	public Parranderos ()
+	public Superandes ()
 	{
-		pp = PersistenciaSuperandes.getInstance ();
+		pa = PersistenciaSuperandes.getInstance ();
 	}
 	
 	/**
 	 * El constructor qye recibe los nombres de las tablas en tableConfig
 	 * @param tableConfig - Objeto Json con los nombres de las tablas y de la unidad de persistencia
 	 */
-	public Parranderos (JsonObject tableConfig)
+	public Superandes (JsonObject tableConfig)
 	{
-		pp = PersistenciaSuperandes.getInstance (tableConfig);
+		pa = PersistenciaSuperandes.getInstance (tableConfig);
 	}
 	
 	/**
@@ -73,13 +73,23 @@ public class Parranderos
 	 */
 	public void cerrarUnidadPersistencia ()
 	{
-		pp.cerrarUnidadPersistencia ();
+		pa.cerrarUnidadPersistencia ();
 	}
 	
 	/* ****************************************************************
-	 * 			Métodos para manejar los TIPOS DE BEBIDA
+	 * 			Métodos para manejar los PRODUCTOS
 	 *****************************************************************/
 
+	
+	public Producto adicionarProducto(String nombre, String marca, Double precioUnitario, String presentacion,
+			Double precioUnidadMedida, String unidadMedida, String empacado, String codigoBarras, Integer nivelReorden,
+			Integer existencias, Long idCategoria, Long idSucursal) {
+		log.info("Adicionando el producto: " + nombre + "con código de barras: " + codigoBarras);
+		Producto p = pa.adicionarProducto(nombre, marca, precioUnitario, presentacion, precioUnidadMedida, unidadMedida, empacado, codigoBarras, nivelReorden, existencias, idCategoria, idSucursal);
+		log.info("Adicionando el producto: " + p.toString());
+		return p;
+	}
+	
 //	/**
 //	 * Elimina todas las tuplas de todas las tablas de la base de datos de Parranderos
 //	 * @return Un arreglo con 7 números que indican el número de tuplas borradas en las tablas GUSTAN, SIRVEN, VISITAN, BEBIDA,

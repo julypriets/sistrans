@@ -67,6 +67,12 @@ public interface VOProducto {
 	 * @return el número de productos disponibles
 	 */
 	public Integer getExistencias();
+	
+	/**
+	 * 
+	 * @return el id de la categoría del producto
+	 */
+	public Long getIdCategoria();
 
 	/**
 	 * Retorna una cadena de caractéres con la información básica

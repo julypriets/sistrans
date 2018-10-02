@@ -56,6 +56,13 @@ public class Producto implements VOProducto{
 	 * Número de productos disponibles
 	 */
 	private Integer existencias;
+	
+	/**
+	 * El id correspondiente a la Categoría del producto
+	 */
+	private Long idCategoria;
+	
+	private Long idSucursal;
 
 	/**
 	 * Constructor del Producto con valores
@@ -71,9 +78,9 @@ public class Producto implements VOProducto{
 	 * @param nivelReorden
 	 * @param existencias
 	 */
-	public Producto(Long id, String nombre, String marca, Double precioUnitario, String presentacion,
+	public Producto(String nombre, String marca, Double precioUnitario, String presentacion,
 			Double precioUnidadMedida, String unidadMedida, String empacado, String codigoBarras, Integer nivelReorden,
-			Integer existencias) {
+			Integer existencias, Long idCategoria, Long idSucursal) {
 		this.nombre = nombre;
 		this.marca = marca;
 		this.precioUnitario = precioUnitario;
@@ -84,6 +91,8 @@ public class Producto implements VOProducto{
 		this.codigoBarras = codigoBarras;
 		this.nivelReorden = nivelReorden;
 		this.existencias = existencias;
+		this.idCategoria = idCategoria;
+		this.idSucursal = idSucursal;
 	}
 	
 	/**
@@ -100,6 +109,8 @@ public class Producto implements VOProducto{
 		this.codigoBarras = "";
 		this.nivelReorden = 0;
 		this.existencias = 0;
+		this.idCategoria = (long) 0;
+		this.idSucursal = (long) 0;
 	}
 
 	/**
@@ -260,6 +271,23 @@ public class Producto implements VOProducto{
 	 */
 	public void setExistencias(Integer existencias) {
 		this.existencias = existencias;
+	}
+	
+	
+	/**
+	 * 
+	 * @return el id de la categoría del producto
+	 */
+	public Long getIdCategoria() {
+		return idCategoria;
+	}
+
+	/**
+	 * 
+	 * @param idCategoria - el nuevo id de una nueva categoría para el producto
+	 */
+	public void setIdCategoria(Long idCategoria) {
+		this.idCategoria = idCategoria;
 	}
 
 	/**

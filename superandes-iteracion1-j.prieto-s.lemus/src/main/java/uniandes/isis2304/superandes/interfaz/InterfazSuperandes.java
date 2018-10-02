@@ -37,6 +37,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 
 import org.apache.log4j.Logger;
@@ -48,8 +49,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
 import uniandes.isis2304.superandes.interfaz.PanelDatos;
-import uniandes.isis2304.superandes.negocio.Parranderos;
+import uniandes.isis2304.superandes.negocio.Superandes;
 import uniandes.isis2304.superandes.negocio.VOBebedor;
+import uniandes.isis2304.superandes.negocio.VOProducto;
 
 
 /**
@@ -90,7 +92,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     /**
      * Asociación a la clase principal del negocio.
      */
-    private Parranderos parranderos;
+    private Superandes superandes;
     
 	/* ****************************************************************
 	 * 			Atributos de interfaz
@@ -130,7 +132,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
         }
         
         tableConfig = openConfig ("Tablas BD", CONFIG_TABLAS);
-        parranderos = new Parranderos (tableConfig);
+        superandes = new Superandes (tableConfig);
         
     	String path = guiConfig.get("bannerPath").getAsString();
         panelDatos = new PanelDatos ( );
@@ -241,9 +243,78 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     }
     
 	/* ****************************************************************
-	 * 			Demos de TipoBebida
+	 * 			Operaciones PRODUCTO
 	 *****************************************************************/
 
+    public void adicionarProducto( )
+    {
+    	try 
+    	{
+    		//String nombreTipo = JOptionPane.showInputDialog (this, "Nombre del tipo de bedida?", "Adicionar tipo de bebida", JOptionPane.QUESTION_MESSAGE);
+    		JTextField nombre = new JTextField();
+    		JTextField marca = new JTextField();
+    		JTextField precioUnitario = new JTextField();
+    		JTextField presentacion = new JTextField();
+    		JTextField precioUnidadMedida = new JTextField();
+    		JTextField unidadMedida = new JTextField();
+    		JTextField empacado = new JTextField();
+    		JTextField codigoBarras = new JTextField();
+    		JTextField nivelReorden = new JTextField();
+    		JTextField existencias = new JTextField();
+    		JTextField idCategoria = new JTextField();
+    		JTextField idSucursal = new JTextField();
+    		Object[] message = {
+    		    "nombre:", nombre,
+    		    "marca:", marca,
+    		    "precio unitario:", precioUnitario,
+    		    "presentacion:", presentacion,
+    		    "precioUnidadMedida:", precioUnidadMedida,
+    		    "precioUnidadMedida:", unidadMedida,
+    		    "precioUnidadMedida:", empacado,
+    		    "precioUnidadMedida:", codigoBarras,
+    		    "precioUnidadMedida:", nivelReorden,
+    		    "precioUnidadMedida:", existencias,
+    		    "precioUnidadMedida:", idCategoria,
+    		    "precioUnidadMedida:", idSucursal,
+    		};
+    		int option = JOptionPane.showConfirmDialog(this, message, "Crear el producto ingresando todos sus valores", JOptionPane.OK_CANCEL_OPTION);
+    		try {
+        		if (option == JOptionPane.OK_OPTION)
+        		{
+            		String nombreResp = nombre.getText();
+            		String marcaResp = marca.getText();
+            		Double precioUnitarioResp = Double.parseDouble(precioUnitario.getText());
+            		String presentacionResp = presentacion.getText();
+            		Double precioUnidadMedidaResp = Double.parseDouble(precioUnidadMedida.getText());
+            		String unidadMedidaResp = unidadMedida.getText();
+            		String empacadoResp = empacado.getText();
+            		String codigoBarrasResp = codigoBarras.getText();
+            		Integer nivelReordenResp = Integer.parseInt(nivelReorden.getText());
+            		Integer existenciasResp = Integer.parseInt(existencias.getText());
+            		Long idCategoriaResp = Long.parseLong(idCategoria.getText());
+            		Long idSucursalResp = Long.parseLong(idSucursal.getText());
+            		
+            		VOProducto p = superandes.adicionarProducto(nombreResp, marcaResp, precioUnitarioResp, presentacionResp, precioUnidadMedidaResp, 
+            				unidadMedidaResp, empacadoResp, codigoBarrasResp, nivelReordenResp, existenciasResp, idCategoriaResp, idSucursalResp);
+            		String resultado = "En adicionarProducto\n\n";
+            		resultado += "Producto adicionado exitosamente: " + p;
+        			resultado += "\n Operación terminada";
+            		panelDatos.actualizarInterfaz(resultado);
+        		}else {
+        			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+        		}
+			} catch (Exception e) {
+				e.getMessage();
+			}
+
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+    }
 
 	/* ****************************************************************
 	 * 			Métodos administrativos
@@ -661,7 +732,6 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     {
         try
         {
-        	
             // Unifica la interfaz para Mac y para Windows.
             UIManager.setLookAndFeel( UIManager.getCrossPlatformLookAndFeelClassName( ) );
             InterfazSuperandes interfaz = new InterfazSuperandes( );
