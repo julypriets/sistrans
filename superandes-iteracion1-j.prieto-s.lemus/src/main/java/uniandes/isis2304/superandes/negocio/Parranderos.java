@@ -22,7 +22,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import com.google.gson.JsonObject;
 
-import uniandes.isis2304.superandes.persistencia.PersistenciaParranderos;
+import uniandes.isis2304.superandes.persistencia.PersistenciaSuperandes;
 
 /**
  * Clase principal del negocio
@@ -46,7 +46,7 @@ public class Parranderos
 	/**
 	 * El manejador de persistencia
 	 */
-	private PersistenciaParranderos pp;
+	private PersistenciaSuperandes pp;
 	
 	/* ****************************************************************
 	 * 			Métodos
@@ -56,7 +56,7 @@ public class Parranderos
 	 */
 	public Parranderos ()
 	{
-		pp = PersistenciaParranderos.getInstance ();
+		pp = PersistenciaSuperandes.getInstance ();
 	}
 	
 	/**
@@ -65,7 +65,7 @@ public class Parranderos
 	 */
 	public Parranderos (JsonObject tableConfig)
 	{
-		pp = PersistenciaParranderos.getInstance (tableConfig);
+		pp = PersistenciaSuperandes.getInstance (tableConfig);
 	}
 	
 	/**

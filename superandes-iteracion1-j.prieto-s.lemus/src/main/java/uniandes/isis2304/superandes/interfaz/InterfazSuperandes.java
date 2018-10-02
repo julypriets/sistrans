@@ -59,7 +59,7 @@ import uniandes.isis2304.superandes.negocio.VOBebedor;
  */
 @SuppressWarnings("serial")
 
-public class InterfazParranderosDemo extends JFrame implements ActionListener
+public class InterfazSuperandes extends JFrame implements ActionListener
 {
 	/* ****************************************************************
 	 * 			Constantes
@@ -67,7 +67,7 @@ public class InterfazParranderosDemo extends JFrame implements ActionListener
 	/**
 	 * Logger para escribir la traza de la ejecución
 	 */
-	private static Logger log = Logger.getLogger(InterfazParranderosDemo.class.getName());
+	private static Logger log = Logger.getLogger(InterfazSuperandes.class.getName());
 	
 	/**
 	 * Ruta al archivo de configuración de la interfaz
@@ -77,7 +77,7 @@ public class InterfazParranderosDemo extends JFrame implements ActionListener
 	/**
 	 * Ruta al archivo de configuración de los nombres de tablas de la base de datos
 	 */
-	private static final String CONFIG_TABLAS = "./src/main/resources/config/TablasBD_A.json"; 
+	private static final String CONFIG_TABLAS = "./src/main/resources/config/TablasBD_Superandes.json"; 
 	
 	/* ****************************************************************
 	 * 			Atributos
@@ -117,7 +117,7 @@ public class InterfazParranderosDemo extends JFrame implements ActionListener
      * Construye la ventana principal de la aplicación. <br>
      * <b>post:</b> Todos los componentes de la interfaz fueron inicializados.
      */
-    public InterfazParranderosDemo( )
+    public InterfazSuperandes( )
     {
         // Carga la configuración de la interfaz desde un archivo JSON
         guiConfig = openConfig ("Interfaz", CONFIG_INTERFAZ);
@@ -641,7 +641,7 @@ public class InterfazParranderosDemo extends JFrame implements ActionListener
 		String evento = pEvento.getActionCommand( );		
         try 
         {
-			Method req = InterfazParranderosDemo.class.getMethod ( evento );			
+			Method req = InterfazSuperandes.class.getMethod ( evento );			
 			req.invoke ( this );
 		} 
         catch (Exception e) 
@@ -664,7 +664,7 @@ public class InterfazParranderosDemo extends JFrame implements ActionListener
         	
             // Unifica la interfaz para Mac y para Windows.
             UIManager.setLookAndFeel( UIManager.getCrossPlatformLookAndFeelClassName( ) );
-            InterfazParranderosDemo interfaz = new InterfazParranderosDemo( );
+            InterfazSuperandes interfaz = new InterfazSuperandes( );
             interfaz.setVisible( true );
         }
         catch( Exception e )

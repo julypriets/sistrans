@@ -35,16 +35,13 @@ import uniandes.isis2304.superandes.negocio.Bebedor;
 
 
 /**
- * Clase para el manejador de persistencia del proyecto Parranderos
+ * Clase para el manejador de persistencia del proyecto Superandes
  * Traduce la información entre objetos Java y tuplas de la base de datos, en ambos sentidos
  * Sigue un patrón SINGLETON (Sólo puede haber UN objeto de esta clase) para comunicarse de manera correcta
  * con la base de datos
- * Se apoya en las clases SQLBar, SQLBebedor, SQLBebida, SQLGustan, SQLSirven, SQLTipoBebida y SQLVisitan, que son 
- * las que realizan el acceso a la base de datos
  * 
- * @author Germán Bravo
  */
-public class PersistenciaParranderos 
+public class PersistenciaSuperandes 
 {
 	/* ****************************************************************
 	 * 			Constantes
@@ -52,12 +49,43 @@ public class PersistenciaParranderos
 	/**
 	 * Logger para escribir la traza de la ejecución
 	 */
-	private static Logger log = Logger.getLogger(PersistenciaParranderos.class.getName());
+	private static Logger log = Logger.getLogger(PersistenciaSuperandes.class.getName());
 	
 	/**
 	 * Cadena para indicar el tipo de sentencias que se va a utilizar en una consulta
 	 */
 	public final static String SQL = "javax.jdo.query.SQL";
+	
+	/**
+	 * Cada una de las siguientes constantes hace referencia a todos los 
+	 * nombres de las tablas existentes en Superandes
+	 */
+	public static final String SUCURSAL = "SUCURSAL";
+	public static final String PRODUCTO = "PRODUCTO";
+	public static final String CATEGORÍA = "CATEGORÍA";
+	public static final String PERECEDERO = "PERECEDERO";
+	public static final String ORDEN = "ORDEN";
+	public static final String ESTANTE = "ESTANTE";
+	public static final String BODEGA = "BODEGA";
+	public static final String PEDIDO_BODEGA = "PEDIDO_BODEGA";
+	public static final String PROVEEDOR = "PROVEEDOR";
+	public static final String CLIENTE = "CLIENTE";
+	public static final String PERSONA_NATURAL = "PERSONA_NATURAL";
+	public static final String EMPRESA = "EMPRESA";
+	public static final String CAJERO = "CAJERO";
+	public static final String FACTURA = "FACTURA";
+	public static final String PROMOCION = "PROMOCION";
+	public static final String USUARIO = "USUARIO";
+	public static final String ABASTECIMIENTO_ESTANTE = "ABASTECIMIENTO_ESTANTE";
+	public static final String SURTIDO_ESTANTE = "SURTIDO_ESTANTE";
+	public static final String PRODUCTOS_ABASTECIMIENTO = "PRODUCTOS_ABASTECIMIENTO";
+	public static final String INVENTARIO = "INVENTARIO";
+	public static final String REORDEN_SUCURSAL = "REORDEN_SUCURSAL";
+	public static final String DETALLE_PEDIDO = "DETALLE_PEDIDO";
+	public static final String PEDIDO = "PEDIDO";
+	public static final String COMPRA_FACTURA = "COMPRA_FACTURA";
+	public static final String PRODUCTO_PROMOCION = "PRODUCTO_PROMOCION";
+	public static final String SUPA_SEQ = "Superandes_sequence";
 
 	/* ****************************************************************
 	 * 			Atributos
@@ -65,7 +93,7 @@ public class PersistenciaParranderos
 	/**
 	 * Atributo privado que es el único objeto de la clase - Patrón SINGLETON
 	 */
-	private static PersistenciaParranderos instance;
+	private static PersistenciaSuperandes instance;
 	
 	/**
 	 * Fábrica de Manejadores de persistencia, para el manejo correcto de las transacciones
@@ -74,7 +102,10 @@ public class PersistenciaParranderos
 	
 	/**
 	 * Arreglo de cadenas con los nombres de las tablas de la base de datos, en su orden:
-	 * Secuenciador, tipoBebida, bebida, bar, bebedor, gustan, sirven y visitan
+	 * Secuenciador, Sucursal, Producto, Categoría, Perecedero, Orden, Estante, Bodega,
+	 * Pedido_Bodega, Proveedor, Cliente, Persona_Natural, Empresa, Cajero, Factura, Promocion, Usuario,
+	 * Abastecimiento_Estante, Surtido_Estante, Productos_Abastecimiento, Inventario, Reorden_Sucursal,
+	 * Detalle_Pedido, Pedido, Compra_Factura, Producto_Promocion.
 	 */
 	private List <String> tablas;
 	
@@ -92,28 +123,45 @@ public class PersistenciaParranderos
 	/**
 	 * Constructor privado con valores por defecto - Patrón SINGLETON
 	 */
-	private PersistenciaParranderos ()
+	private PersistenciaSuperandes ()
 	{
-		pmf = JDOHelper.getPersistenceManagerFactory("Parranderos");		
+		pmf = JDOHelper.getPersistenceManagerFactory("Superandes");		
 		crearClasesSQL ();
 		
 		// Define los nombres por defecto de las tablas de la base de datos
 		tablas = new LinkedList<String> ();
-		tablas.add ("Parranderos_sequence");
-		tablas.add ("TIPOBEBIDA");
-		tablas.add ("BEBIDA");
-		tablas.add ("BAR");
-		tablas.add ("BEBEDOR");
-		tablas.add ("GUSTAN");
-		tablas.add ("SIRVEN");
-		tablas.add ("VISITAN");
-}
+		tablas.add ("Superandes_sequence");
+		tablas.add ("SUCURSAL");
+		tablas.add ("PRODUCTO");
+		tablas.add ("CATEGORÍA");
+		tablas.add ("PERECEDERO");
+		tablas.add ("ORDEN");
+		tablas.add ("ESTANTE");
+		tablas.add ("BODEGA");
+		tablas.add ("PEDIDO_BODEGA");
+		tablas.add ("PROVEEDOR");
+		tablas.add ("CLIENTE");
+		tablas.add ("PERSONA_NATURAL");
+		tablas.add ("EMPRESA");
+		tablas.add ("CAJERO");
+		tablas.add ("FACTURA");
+		tablas.add ("PROMOCION");
+		tablas.add ("USUARIO");
+		tablas.add ("ABASTECIMIENTO_ESTANTE");
+		tablas.add ("SURTIDO_ESTANTE");
+		tablas.add ("PRODUCTOS_ABASTECIMIENTO");
+		tablas.add ("INVENTARIO");
+		tablas.add ("REORDEN_SUCURSAL");
+		tablas.add ("DETALLE_PEDIDO");
+		tablas.add ("COMPRA_FACTURA");
+		tablas.add ("PRODUCTO_PROMOCION");
+	}
 
 	/**
 	 * Constructor privado, que recibe los nombres de las tablas en un objeto Json - Patrón SINGLETON
 	 * @param tableConfig - Objeto Json que contiene los nombres de las tablas y de la unidad de persistencia a manejar
 	 */
-	private PersistenciaParranderos (JsonObject tableConfig)
+	private PersistenciaSuperandes (JsonObject tableConfig)
 	{
 		crearClasesSQL ();
 		tablas = leerNombresTablas (tableConfig);
@@ -127,11 +175,11 @@ public class PersistenciaParranderos
 	/**
 	 * @return Retorna el único objeto PersistenciaParranderos existente - Patrón SINGLETON
 	 */
-	public static PersistenciaParranderos getInstance ()
+	public static PersistenciaSuperandes getInstance ()
 	{
 		if (instance == null)
 		{
-			instance = new PersistenciaParranderos ();
+			instance = new PersistenciaSuperandes ();
 		}
 		return instance;
 	}
@@ -141,11 +189,11 @@ public class PersistenciaParranderos
 	 * @param tableConfig - El objeto JSON con los nombres de las tablas
 	 * @return Retorna el único objeto PersistenciaParranderos existente - Patrón SINGLETON
 	 */
-	public static PersistenciaParranderos getInstance (JsonObject tableConfig)
+	public static PersistenciaSuperandes getInstance (JsonObject tableConfig)
 	{
 		if (instance == null)
 		{
-			instance = new PersistenciaParranderos (tableConfig);
+			instance = new PersistenciaSuperandes (tableConfig);
 		}
 		return instance;
 	}
@@ -185,69 +233,6 @@ public class PersistenciaParranderos
 		sqlUtil = new SQLUtil(this);
 	}
 
-	/**
-	 * @return La cadena de caracteres con el nombre del secuenciador de parranderos
-	 */
-	public String darSeqParranderos ()
-	{
-		return tablas.get (0);
-	}
-
-	/**
-	 * @return La cadena de caracteres con el nombre de la tabla de TipoBebida de parranderos
-	 */
-	public String darTablaTipoBebida ()
-	{
-		return tablas.get (1);
-	}
-
-	/**
-	 * @return La cadena de caracteres con el nombre de la tabla de Bebida de parranderos
-	 */
-	public String darTablaBebida ()
-	{
-		return tablas.get (2);
-	}
-
-	/**
-	 * @return La cadena de caracteres con el nombre de la tabla de Bar de parranderos
-	 */
-	public String darTablaBar ()
-	{
-		return tablas.get (3);
-	}
-
-	/**
-	 * @return La cadena de caracteres con el nombre de la tabla de Bebedor de parranderos
-	 */
-	public String darTablaBebedor ()
-	{
-		return tablas.get (4);
-	}
-
-	/**
-	 * @return La cadena de caracteres con el nombre de la tabla de Gustan de parranderos
-	 */
-	public String darTablaGustan ()
-	{
-		return tablas.get (5);
-	}
-
-	/**
-	 * @return La cadena de caracteres con el nombre de la tabla de Sirven de parranderos
-	 */
-	public String darTablaSirven ()
-	{
-		return tablas.get (6);
-	}
-
-	/**
-	 * @return La cadena de caracteres con el nombre de la tabla de Visitan de parranderos
-	 */
-	public String darTablaVisitan ()
-	{
-		return tablas.get (7);
-	}
 	
 	/**
 	 * Transacción para el generador de secuencia de Parranderos
