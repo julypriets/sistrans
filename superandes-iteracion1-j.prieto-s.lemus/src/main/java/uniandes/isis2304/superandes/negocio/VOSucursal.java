@@ -12,7 +12,7 @@ public interface VOSucursal {
 	 * 
 	 * @return El id de la sucursal
 	 */
-	public Long getId();
+	public long getId();
 
 	/**
 	 * 

@@ -128,7 +128,7 @@ public class Superandes
 	public Cliente adicionarEmpresa(String nombre, String correo, String nit, String direccion) {
 		log.info("Adicionando la empresa: " + nombre + "con nit: " + nit);
 		Cliente e = pa.adicionarEmpresa(nombre, correo, nit, direccion);
-		log.info("Adicionando el producto: " + e.toString());
+		log.info("Adicionando la empresa: " + e.toString());
 		return e;
 	} 
 	
@@ -148,6 +148,10 @@ public class Superandes
 		return p;
 		
 	} 
+	
+	public List<Cliente> darClientes(){
+		return pa.darClientes();
+	}
 	
 	
 	

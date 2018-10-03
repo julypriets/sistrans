@@ -8,11 +8,11 @@ package uniandes.isis2304.superandes.negocio;
  */
 public interface VOPedidoBodega {
 
-	public Long getId();
+	public long getId();
 
-	public Long getIdCategoria();
+	public long getIdCategoria();
 
-	public Long getIdEstante();
+	public long getIdEstante();
 	
 	@Override
 	public String toString();

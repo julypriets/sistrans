@@ -10,15 +10,15 @@ import java.sql.Timestamp;
  */
 public interface VOFactura {
 
-	public Long getId();
+	public long getId();
 
 	public Double getPrecioTotal();
 
 	public Timestamp getFecha();
 
-	public Long getIdCajero();
+	public long getIdCajero();
 
-	public Long getIdCliente();
+	public long getIdCliente();
 	
 	@Override
 	public String toString();

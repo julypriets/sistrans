@@ -9,17 +9,17 @@ import java.sql.Timestamp;
  */
 public class Factura implements VOFactura{
 
-	private Long id;
+	private long id;
 	
 	private Double precioTotal;
 	
 	private Timestamp fecha;
 	
-	private Long idCajero;
+	private long idCajero;
 	
-	private Long idCliente;
+	private long idCliente;
 
-	public Factura(Long id, Double precioTotal, Timestamp fecha, Long idCajero, Long idCliente) {
+	public Factura(long id, Double precioTotal, Timestamp fecha, long idCajero, long idCliente) {
 		this.id = id;
 		this.precioTotal = precioTotal;
 		this.fecha = fecha;
@@ -28,14 +28,14 @@ public class Factura implements VOFactura{
 	}
 	
 	public Factura(){
-		this.id = (long) 0;
+		this.id = 0;
 		this.precioTotal = 0.0;
 		this.fecha = new Timestamp(0);
-		this.idCajero = (long) 0;
-		this.idCliente = (long) 0;
+		this.idCajero = 0;
+		this.idCliente = 0;
 	}
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -59,7 +59,7 @@ public class Factura implements VOFactura{
 		this.fecha = fecha;
 	}
 	
-	public Long getIdCajero() {
+	public long getIdCajero() {
 		return idCajero;
 	}
 
@@ -67,7 +67,7 @@ public class Factura implements VOFactura{
 		this.idCajero = idCajero;
 	}
 
-	public Long getIdCliente() {
+	public long getIdCliente() {
 		return idCliente;
 	}
 

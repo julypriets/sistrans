@@ -10,7 +10,7 @@ import java.sql.Timestamp;
  */
 public interface VOOrden {
 	
-	public Long getId();
+	public long getId();
 
 	public Double getPrecio();
 
@@ -22,7 +22,7 @@ public interface VOOrden {
 
 	public Double getCalificacion();
 	
-	public Long getIdSucursal();
+	public long getIdSucursal();
 
 	@Override
 	public String toString();

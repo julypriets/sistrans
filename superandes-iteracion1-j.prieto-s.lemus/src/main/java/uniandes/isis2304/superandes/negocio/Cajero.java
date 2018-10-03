@@ -7,24 +7,24 @@ package uniandes.isis2304.superandes.negocio;
  */
 public class Cajero implements VOCajero{
 
-	private Long id;
+	private long id;
 	
 	private String nombre;
 	
-	private Long idSucursal;
+	private long idSucursal;
 
-	public Cajero(Long id, String nombre, Long idSucursal) {
+	public Cajero(long id, String nombre, long idSucursal) {
 		this.id = id;
 		this.nombre = nombre;
 		this.idSucursal = idSucursal;
 	}
 	
 	public Cajero() {
-		this.id = (long) 0;
-		this.idSucursal = (long) 0;
+		this.id = 0;
+		this.idSucursal = 0;
 	}
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 

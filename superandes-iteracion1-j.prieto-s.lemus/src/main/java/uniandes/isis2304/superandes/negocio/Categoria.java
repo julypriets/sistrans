@@ -7,7 +7,7 @@ package uniandes.isis2304.superandes.negocio;
  */
 public class Categoria implements VOCategoria{
 	
-	private Long id;
+	private long id;
 	
 	private String nombre;
 
@@ -16,8 +16,7 @@ public class Categoria implements VOCategoria{
 	 * @param id
 	 * @param nombre
 	 */
-	public Categoria(Long id, String nombre) {
-		super();
+	public Categoria(long id, String nombre) {
 		this.id = id;
 		this.nombre = nombre;
 	}
@@ -26,10 +25,11 @@ public class Categoria implements VOCategoria{
 	 * Constructor por defecto
 	 */
 	public Categoria(){
-		
+		this.id = 0;
+		this.nombre = "";
 	}
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 

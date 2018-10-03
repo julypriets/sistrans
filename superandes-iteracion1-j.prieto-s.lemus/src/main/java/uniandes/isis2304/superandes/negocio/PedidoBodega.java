@@ -7,13 +7,13 @@ package uniandes.isis2304.superandes.negocio;
  */
 public class PedidoBodega implements VOPedidoBodega{
 
-	private Long id;
+	private long id;
 	
-	private Long idCategoria;
+	private long idCategoria;
 	
-	private Long idEstante;
+	private long idEstante;
 
-	public PedidoBodega(Long id, Long idCategoria, Long idEstante) {
+	public PedidoBodega(long id, long idCategoria, long idEstante) {
 		this.id = id;
 		this.idCategoria = idCategoria;
 		this.idEstante = idEstante;
@@ -25,7 +25,7 @@ public class PedidoBodega implements VOPedidoBodega{
 		this.idEstante = (long) 0;
 	}
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -33,7 +33,7 @@ public class PedidoBodega implements VOPedidoBodega{
 		this.id = id;
 	}
 
-	public Long getIdCategoria() {
+	public long getIdCategoria() {
 		return idCategoria;
 	}
 
@@ -41,7 +41,7 @@ public class PedidoBodega implements VOPedidoBodega{
 		this.idCategoria = idCategoria;
 	}
 
-	public Long getIdEstante() {
+	public long getIdEstante() {
 		return idEstante;
 	}
 

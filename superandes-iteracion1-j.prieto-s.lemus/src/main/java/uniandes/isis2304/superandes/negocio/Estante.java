@@ -10,7 +10,7 @@ public class Estante implements VOEstante{
 	/**
 	 * Identificador único del Estante
 	 */
-	private Long id;
+	private long id;
 	
 	/**
 	 * Capacidad de peso del Estante
@@ -30,12 +30,12 @@ public class Estante implements VOEstante{
 	/**
 	 * El id de la categoría de los productos del estante
 	 */
-	private Long idCategoria;
+	private long idCategoria;
 	
 	/**
 	 * El id de la sucursal al que pertenece
 	 */
-	private Long idSucursal;
+	private long idSucursal;
 
 	/**
 	 * Constructor del Estante con valores
@@ -44,8 +44,8 @@ public class Estante implements VOEstante{
 	 * @param capacidadVolumen
 	 * @param nivelAbastecimiento
 	 */
-	public Estante(Long id, Double capacidadPeso, Double capacidadVolumen, Integer nivelAbastecimiento
-			, Long idCategoria, Long idSucursal) {
+	public Estante(long id, Double capacidadPeso, Double capacidadVolumen, Integer nivelAbastecimiento
+			, long idCategoria, long idSucursal) {
 		this.id = id;
 		this.capacidadPeso = capacidadPeso;
 		this.capacidadVolumen = capacidadVolumen;
@@ -58,19 +58,19 @@ public class Estante implements VOEstante{
 	 * Constructor por defecto
 	 */
 	public Estante(){
-		this.id = (long) 0;
+		this.id = 0;
 		this.capacidadPeso = 0.0;
 		this.capacidadVolumen = 0.0;
 		this.nivelAbastecimiento = 0;
-		this.idCategoria = (long) 0;
-		this.idSucursal = (long) 0;
+		this.idCategoria = 0;
+		this.idSucursal = 0;
 	}
 
 	/**
 	 * 
 	 * @return el id de estante
 	 */
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -151,7 +151,7 @@ public class Estante implements VOEstante{
 	 * 
 	 * @return el id de la sucursal
 	 */
-	public Long getIdSucursal() {
+	public long getIdSucursal() {
 		return idSucursal;
 	}
 
