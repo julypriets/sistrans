@@ -1,5 +1,5 @@
 {
-	"title": "Demostración de Parranderos Uniandes",
+	"title": "Demostración de Superandes",
 	"frameH": 600,
 	"frameW": 800,
 	"bannerPath": "./src/main/resources/config/logo.png",
@@ -28,6 +28,15 @@
 				{
 					"label": "Adicionar Persona Natural",
 					"event": "adicionarCliente"
+				}
+			]
+		},
+		{ "menuTitle": "Promoción",
+		  "options":
+			[
+				{
+					"label": "20 más populares",
+					"event": "dar20PromocionesMasPopulares"
 				}
 			]
 		}

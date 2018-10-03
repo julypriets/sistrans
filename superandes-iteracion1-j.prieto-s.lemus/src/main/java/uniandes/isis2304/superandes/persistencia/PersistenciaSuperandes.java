@@ -18,6 +18,7 @@ package uniandes.isis2304.superandes.persistencia;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,6 +35,8 @@ import com.google.gson.JsonObject;
 
 import uniandes.isis2304.superandes.negocio.Bebedor;
 import uniandes.isis2304.superandes.negocio.Cliente;
+import uniandes.isis2304.superandes.negocio.Compra;
+import uniandes.isis2304.superandes.negocio.ComprasPorPromocion;
 import uniandes.isis2304.superandes.negocio.Empresa;
 import uniandes.isis2304.superandes.negocio.PersonaNatural;
 import uniandes.isis2304.superandes.negocio.Producto;
@@ -88,7 +91,7 @@ public class PersistenciaSuperandes
 	public static final String REORDEN_SUCURSAL = "REORDEN_SUCURSAL";
 	public static final String DETALLE_PEDIDO = "DETALLE_PEDIDO";
 	public static final String PEDIDO = "PEDIDO";
-	public static final String COMPRA_FACTURA = "COMPRA_FACTURA";
+	public static final String COMPRA_FACTURA = "COMPRA";
 	public static final String PRODUCTO_PROMOCION = "PRODUCTO_PROMOCION";
 	public static final String SUPA_SEQ = "Superandes_sequence";
 
@@ -132,7 +135,12 @@ public class PersistenciaSuperandes
 	/**
 	 * Atributo para el acceso a la tabla PROMOCION
 	 */
-	private SQLPromocion sqlPromocion; 
+	private SQLPromocion sqlPromocion;
+	
+	/**
+	 * Atributo para el acceso a la tabla COMPRA
+	 */
+	private SQLCompra sqlCompra; 
 	
 
 	
@@ -257,6 +265,7 @@ public class PersistenciaSuperandes
 		sqlProducto = new SQLProducto(this);
 		sqlCliente = new SQLCliente(this);
 		sqlPromocion = new SQLPromocion(this);
+		sqlCompra = new SQLCompra(this);
 		sqlUtil = new SQLUtil(this);
 	}
 
@@ -344,8 +353,16 @@ public class PersistenciaSuperandes
         }
 	}
 	
+	/**
+	 * Retorna todos los productos existentes
+	 * @return
+	 */
 	public List<Producto> darProductos(){
 		return sqlProducto.darProductos(pmf.getPersistenceManager());
+	}
+	
+	public Producto darProductoPorId(long idProducto) {
+		return sqlProducto.darProductoPorId(pmf.getPersistenceManager(), idProducto);
 	}
 
 	/* ****************************************************************
@@ -436,6 +453,95 @@ public class PersistenciaSuperandes
 	
 	public List<Cliente> darClientes(){
 		return sqlCliente.darClientes(pmf.getPersistenceManager());
+	}
+	
+	/* ****************************************************************
+	 * 			Métodos para manejar las PROMOCIONES
+	 *****************************************************************/
+	
+	/**
+	 * Finaliza una promoción para todos los productos asociados
+	 * @param idPromocion
+	 * @return Número de tuplas modificadas 
+	 */
+	public long finalizarPromocion(Date fechaActual) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
+			long resp = sqlPromocion.finalizarPromocion(pm, fechaActual);
+			tx.commit();
+			return resp;
+			
+		} catch (Exception e) {
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return -1;
+		} finally {
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+
+		}
+	}
+	
+	/**
+	 * Retorna las 20 promociones más populares entre las que no están finalizadas
+	 * por tiempo o por bajas existencias
+	 * @return id de la promoción y su cantidad de compras 
+	 */
+	public List<ComprasPorPromocion> dar20PromocionesMasPopulares() {
+		return sqlPromocion.dar20PromocionesMasPopulares(pmf.getPersistenceManager());
+	}
+	
+	/* ****************************************************************
+	 * 			Métodos para manejar las COMPRAS
+	 *****************************************************************/
+	
+	/**
+	 * Retorna el número de compras realizadas para un producto
+	 * @param idProducto
+	 * @return
+	 */
+	public long darNumeroDeComprasPorProducto(long idProducto) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		return sqlCompra.darNumeroDeComprasPorProducto(pm, idProducto);
+	}
+	
+	/**
+	 * Registra una nueva compra dada la factura y el producto
+	 * @param idProducto
+	 * @param idFactura
+	 * @return
+	 */
+	public Compra adicionarCompra(long idProducto, long idFactura) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            long tuplasInsertadas = sqlCompra.adicionarCompra(pm, idProducto, idFactura);
+            tx.commit();
+            
+            log.trace ("Inserción de compra con producto:  " + idProducto + ": " + tuplasInsertadas + " tuplas insertadas");
+            
+            return new Compra(idProducto, idFactura);
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return null;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
 	}
 	
 //	/**

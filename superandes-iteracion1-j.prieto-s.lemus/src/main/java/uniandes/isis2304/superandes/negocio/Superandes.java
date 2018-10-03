@@ -16,6 +16,7 @@
 package uniandes.isis2304.superandes.negocio;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -153,7 +154,23 @@ public class Superandes
 		return pa.darClientes();
 	}
 	
+	/* ****************************************************************
+	 * 			Métodos para manejar las PROMOCIONES
+	 *****************************************************************/
 	
+	/**
+	 * Finaliza las promociones que ya se vencieron o cuyos productos
+	 * asociados hayan agotado sus existencias
+	 * @param fechaActual
+	 * @return número de tuplas eliminadas
+	 */
+	public long finalizarPromocion(Date fechaActual) {
+		return pa.finalizarPromocion(fechaActual);
+	}
+	
+	public List<ComprasPorPromocion> dar20PromocionesMasPopulares(){
+		return pa.dar20PromocionesMasPopulares();
+	}
 	
 //	/**
 //	 * Elimina todas las tuplas de todas las tablas de la base de datos de Parranderos

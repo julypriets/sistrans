@@ -27,7 +27,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.jdo.JDODataStoreException;
 import javax.swing.ImageIcon;
@@ -49,12 +52,14 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
 import uniandes.isis2304.superandes.interfaz.PanelDatos;
+import uniandes.isis2304.superandes.negocio.ComprasPorPromocion;
 import uniandes.isis2304.superandes.negocio.Producto;
 import uniandes.isis2304.superandes.negocio.Superandes;
 import uniandes.isis2304.superandes.negocio.VOBebedor;
 import uniandes.isis2304.superandes.negocio.VOCliente;
 import uniandes.isis2304.superandes.negocio.VOEmpresa;
 import uniandes.isis2304.superandes.negocio.VOProducto;
+import uniandes.isis2304.superandes.tareasTemporales.VerificacionPromocion;
 
 
 /**
@@ -142,7 +147,8 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 
         setLayout (new BorderLayout());
         add (new JLabel (new ImageIcon (path)), BorderLayout.NORTH );          
-        add( panelDatos, BorderLayout.CENTER );        
+        add( panelDatos, BorderLayout.CENTER );
+        VerificacionPromocion.intervaloLimpiezaPromocion(this, 10000);
     }
     
 	/* ****************************************************************
@@ -411,6 +417,30 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 			panelDatos.actualizarInterfaz(resultado);
 		}
     }
+    
+	/* ****************************************************************
+	 * 			Operaciones Promoción
+	 *****************************************************************/
+	/**
+	 * (RF8) Método para finalizar promociones cuando los productos se acaben o cuando ya llegó la fecha de vencimiento
+	 */
+	public void limpiarPromociones() {
+		Date fechaActual = new Date();
+		superandes.finalizarPromocion(fechaActual);		
+	}
+	
+	/**
+	 * (RFC2) Muestra las promociones (no finalizadas) con más ventas
+	 */
+	public void dar20PromocionesMasPopulares() {
+		List<ComprasPorPromocion> cs = superandes.dar20PromocionesMasPopulares();
+		String resultado = "dar20PromocionesMasPopulares \n\n";
+		
+		for (int i = 0; i < cs.size(); i++) {
+			resultado += (i + 1) + ". id_promoción: " + cs.get(i).getIdPromocion() + "; número_compras: " + cs.get(i).getNumCompras();
+		}
+		
+	}
 
 	/* ****************************************************************
 	 * 			Métodos administrativos
@@ -435,7 +465,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 	 * Limpia el contenido del log de parranderos
 	 * Muestra en el panel de datos la traza de la ejecución
 	 */
-	public void limpiarLogParranderos ()
+	public void limpiarLogSuperandes ()
 	{
 		// Ejecución de la operación y recolección de los resultados
 		boolean resp = limpiarArchivo ("parranderos.log");
@@ -552,179 +582,20 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     {
 		String resultado = "\n\n ************************************\n\n";
 		resultado += " * Universidad	de	los	Andes	(Bogotá	- Colombia)\n";
-		resultado += " * Departamento	de	Ingeniería	de	Sistemas	y	Computación\n";
-		resultado += " * Licenciado	bajo	el	esquema	Academic Free License versión 2.1\n";
 		resultado += " * \n";		
 		resultado += " * Curso: isis2304 - Sistemas Transaccionales\n";
-		resultado += " * Proyecto: Parranderos Uniandes\n";
+		resultado += " * Proyecto: Superandes\n";
 		resultado += " * @version 1.0\n";
-		resultado += " * @author Germán Bravo\n";
-		resultado += " * Julio de 2018\n";
+		resultado += " * @author Sebastián Lemus Cadena\n";
+		resultado += " * 2018\n";
 		resultado += " * \n";
-		resultado += " * Revisado por: Claudia Jiménez, Christian Ariza\n";
 		resultado += "\n ************************************\n\n";
 
 		panelDatos.actualizarInterfaz(resultado);
     }
     
 
-	/* ****************************************************************
-	 * 			Métodos privados para la presentación de resultados y otras operaciones
-	 *****************************************************************/
-//    /**
-//     * Genera una cadena de caracteres con la lista de los tipos de bebida recibida: una línea por cada tipo de bebida
-//     * @param lista - La lista con los tipos de bebida
-//     * @return La cadena con una líea para cada tipo de bebida recibido
-//     */
-//    private String listarTiposBebida(List<VOTipoBebida> lista) 
-//    {
-//    	String resp = "Los tipos de bebida existentes son:\n";
-//    	int i = 1;
-//        for (VOTipoBebida tb : lista)
-//        {
-//        	resp += i++ + ". " + tb.toString() + "\n";
-//        }
-//        return resp;
-//	}
-//
-//    /**
-//     * Genera una cadena de caracteres con la lista de bebidas recibida: una línea por cada bebida
-//     * @param lista - La lista con las bebidas
-//     * @return La cadena con una líea para cada bebida recibida
-//     */
-//    private String listarBebidas (List<VOBebida> lista) 
-//    {
-//    	String resp = "Las bebidas existentes son:\n";
-//    	int i = 1;
-//        for (VOBebida beb : lista)
-//        {
-//        	resp += i++ + ". " + beb.toString() + "\n";
-//        }
-//        return resp;
-//	}
-//
-//    /**
-//     * Genera una cadena de caracteres con la lista de bebedores recibida: una línea por cada bebedor
-//     * @param lista - La lista con los bebedores
-//     * @return La cadena con una líea para cada bebedor recibido
-//     */
-//    private String listarBebedores (List<VOBebedor> lista) 
-//    {
-//    	String resp = "Los bebedores existentes son:\n";
-//    	int i = 1;
-//        for (VOBebedor bdor : lista)
-//        {
-//        	resp += i++ + ". " + bdor.toString() + "\n";
-//        }
-//        return resp;
-//	}
-//
-//    /**
-//     * Genera una cadena de caracteres con la lista de bares recibida: una línea por cada bar
-//     * @param lista - La lista con los bares
-//     * @return La cadena con una líea para cada bar recibido
-//     */
-//    private String listarBares (List<VOBar> lista) 
-//    {
-//    	String resp = "Los bares existentes son:\n";
-//    	int i = 1;
-//        for (VOBar bar : lista)
-//        {
-//        	resp += i++ + ". " + bar.toString() + "\n";
-//        }
-//        return resp;
-//	}
-//
-//    /**
-//     * Genera una cadena de caracteres con la lista de gustan recibida: una línea por cada gusta
-//     * @param lista - La lista con los gustan
-//     * @return La cadena con una líea para cada gustan recibido
-//     */
-//    private String listarGustan (List<VOGustan> lista) 
-//    {
-//    	String resp = "Los gustan existentes son:\n";
-//    	int i = 1;
-//        for (VOGustan serv : lista)
-//        {
-//        	resp += i++ + ". " + serv.toString() + "\n";
-//        }
-//        return resp;
-//	}
-//
-//    /**
-//     * Genera una cadena de caracteres con la lista de sirven recibida: una línea por cada sirven
-//     * @param lista - La lista con los sirven
-//     * @return La cadena con una líea para cada sirven recibido
-//     */
-//    private String listarSirven (List<VOSirven> lista) 
-//    {
-//    	String resp = "Los sirven existentes son:\n";
-//    	int i = 1;
-//        for (VOSirven serv : lista)
-//        {
-//        	resp += i++ + ". " + serv.toString() + "\n";
-//        }
-//        return resp;
-//	}
-//
-//    /**
-//     * Genera una cadena de caracteres con la lista de visitan recibida: una línea por cada visitan
-//     * @param lista - La lista con los visitan
-//     * @return La cadena con una líea para cada visitan recibido
-//     */
-//    private String listarVisitan (List<VOVisitan> lista) 
-//    {
-//    	String resp = "Los visitan existentes son:\n";
-//    	int i = 1;
-//        for (VOVisitan vis : lista)
-//        {
-//        	resp += i++ + ". " + vis.toString() + "\n";
-//        }
-//        return resp;
-//	}
 
-    /**
-     * Genera una cadena de caracteres con la lista de parejas de números recibida: una línea por cada pareja
-     * @param lista - La lista con las pareja
-     * @return La cadena con una líea para cada pareja recibido
-     */
-    private String listarBaresYBebidas (List<long[]> lista) 
-    {
-    	String resp = "Los bares y el número de bebidas que sirven son:\n";
-    	int i = 1;
-        for ( long [] tupla : lista)
-        {
-			long [] datos = tupla;
-	        String resp1 = i++ + ". " + "[";
-			resp1 += "idBar: " + datos [0] + ", ";
-			resp1 += "numBebidas: " + datos [1];
-	        resp1 += "]";
-	        resp += resp1 + "\n";
-        }
-        return resp;
-	}
-
-    /**
-     * Genera una cadena de caracteres con la lista de parejas de objetos recibida: una línea por cada pareja
-     * @param lista - La lista con las parejas (Bebedor, numero visitas)
-     * @return La cadena con una línea para cada pareja recibido
-     */
-    private String listarBebedorYNumVisitas (List<Object[]> lista) 
-    {
-    	String resp = "Los bebedores y el número visitas realizadas son:\n";
-    	int i = 1;
-        for (Object [] tupla : lista)
-        {
-			VOBebedor bdor = (VOBebedor) tupla [0];
-			int numVisitas = (int) tupla [1];
-	        String resp1 = i++ + ". " + "[";
-			resp1 += bdor + ", ";
-			resp1 += "numVisitas: " + numVisitas;
-	        resp1 += "]";
-	        resp += resp1 + "\n";
-        }
-        return resp;
-	}
 
     /**
      * Genera una cadena de caracteres con la descripción de la excepcion e, haciendo énfasis en las excepcionsde JDO
@@ -794,6 +665,8 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 		}
 	}
 
+
+	
 	/* ****************************************************************
 	 * 			Métodos de la Interacción
 	 *****************************************************************/
@@ -824,6 +697,8 @@ public class InterfazSuperandes extends JFrame implements ActionListener
      * Este método ejecuta la aplicación, creando una nueva interfaz
      * @param args Arreglo de argumentos que se recibe por línea de comandos
      */
+    
+    
     public static void main( String[] args )
     {
         try
@@ -838,4 +713,6 @@ public class InterfazSuperandes extends JFrame implements ActionListener
             e.printStackTrace( );
         }
     }
+
+
 }

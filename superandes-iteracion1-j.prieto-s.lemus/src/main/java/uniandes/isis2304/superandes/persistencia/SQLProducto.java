@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
-
-
 import uniandes.isis2304.superandes.negocio.Producto;
 import uniandes.isis2304.superandes.persistencia.PersistenciaSuperandes;
 
@@ -94,6 +92,12 @@ public class SQLProducto {
 		Query q = pm.newQuery(SQL, "SELECT * FROM " + pa.PRODUCTO);
 		q.setResultClass(Producto.class);
 		return (List<Producto>) q.executeList();
+	}
+	
+	public Producto darProductoPorId(PersistenceManager pm, long idProducto) {
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pa.PRODUCTO + " WHERE codigo_barras = ?");
+		q.setResultClass(Producto.class);
+		return (Producto) q.execute(idProducto);
 	}
 	
 }
