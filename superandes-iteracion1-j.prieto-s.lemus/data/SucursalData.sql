@@ -1,0 +1,10 @@
+INSERT INTO Sucursal (id,NOMBRE,CIUDAD,DIRECCION) VALUES (1,'Rajasthan','Beawar','501-2050 Sit Street');
+INSERT INTO Sucursal (id,NOMBRE,CIUDAD,DIRECCION) VALUES (2,'QLD','Mackay','Ap #485-2857 Sit St.');
+INSERT INTO Sucursal (id,NOMBRE,CIUDAD,DIRECCION) VALUES (3,'São Paulo','Campinas','8686 Sem St.');
+INSERT INTO Sucursal (id,NOMBRE,CIUDAD,DIRECCION) VALUES (4,'Vienna','Vienna','P.O. Box 238, 1856 Suspendisse Av.');
+INSERT INTO Sucursal (id,NOMBRE,CIUDAD,DIRECCION) VALUES (5,'WB','Court-Saint-Etienne','Ap #317-3903 Ut Road');
+INSERT INTO Sucursal (id,NOMBRE,CIUDAD,DIRECCION) VALUES (6,'Nord-Pas-de-Calais','Béthune','955-6313 Fusce Rd.');
+INSERT INTO Sucursal (id,NOMBRE,CIUDAD,DIRECCION) VALUES (7,'Mississippi','Southaven','P.O. Box 290, 6221 Non Avenue');
+INSERT INTO Sucursal (id,NOMBRE,CIUDAD,DIRECCION) VALUES (8,'Montana','Missoula','Ap #228-4089 Diam Street');
+INSERT INTO Sucursal (id,NOMBRE,CIUDAD,DIRECCION) VALUES (9,'SC','Itajaí','940-9884 Dapibus Ave');
+INSERT INTO Sucursal (id,NOMBRE,CIUDAD,DIRECCION) VALUES (10,'BE','Berlin','296 Nec, Street');
