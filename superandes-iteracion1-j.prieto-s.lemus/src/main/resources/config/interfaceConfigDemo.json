@@ -28,6 +28,10 @@
 				{
 					"label": "Adicionar Persona Natural",
 					"event": "adicionarCliente"
+				},
+				{
+					"label": "Obtener todos los clientes",
+					"event": "darClientes"
 				}
 			]
 		},

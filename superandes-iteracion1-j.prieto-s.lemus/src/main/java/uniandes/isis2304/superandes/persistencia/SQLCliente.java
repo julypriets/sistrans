@@ -55,7 +55,7 @@ public class SQLCliente {
 		
         //q1.setParameters(id, nombre, correo);
         //q1.compile();
-        long num1 = (long) q1.setParameters(id, nombre, correo).execute();
+        long num1 = (long) q1.execute(id, nombre, correo);
         //return num1;
         
         // insertar en la tabla empresa
@@ -89,7 +89,7 @@ public class SQLCliente {
 	}
 	
 	public List<Cliente> darClientes(PersistenceManager pm) {
-		Query q = pm.newQuery(SQL, "SELECT ID, NOMBRE, CORREO FROM " + pa.CLIENTE);
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pa.CLIENTE);
 		q.setResultClass(Cliente.class);
 		return (List<Cliente>) q.executeList();
 	}

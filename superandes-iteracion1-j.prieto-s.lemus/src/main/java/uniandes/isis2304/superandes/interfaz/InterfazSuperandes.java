@@ -52,6 +52,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
 import uniandes.isis2304.superandes.interfaz.PanelDatos;
+import uniandes.isis2304.superandes.negocio.Cliente;
 import uniandes.isis2304.superandes.negocio.ComprasPorPromocion;
 import uniandes.isis2304.superandes.negocio.Producto;
 import uniandes.isis2304.superandes.negocio.Superandes;
@@ -418,6 +419,20 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 		}
     }
     
+    /**
+     * Muestra todos los clientes disponibles
+     */
+    public void darClientes() {
+    	String resultado = " en darClientes\n\n";
+		List<Cliente> cs = superandes.darClientes();
+		System.out.println(cs.size());
+		
+		for(Cliente c : cs) {
+			resultado += c.toString() + "\n";
+		}
+		panelDatos.actualizarInterfaz(resultado);
+    }
+    
 	/* ****************************************************************
 	 * 			Operaciones Promoción
 	 *****************************************************************/
@@ -434,11 +449,12 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 	 */
 	public void dar20PromocionesMasPopulares() {
 		List<ComprasPorPromocion> cs = superandes.dar20PromocionesMasPopulares();
-		String resultado = "dar20PromocionesMasPopulares \n\n";
+		String resultado = " en dar20PromocionesMasPopulares\n\n";
 		
 		for (int i = 0; i < cs.size(); i++) {
-			resultado += (i + 1) + ". id_promoción: " + cs.get(i).getIdPromocion() + "; número_compras: " + cs.get(i).getNumCompras();
+			resultado += (i + 1) + ". id_promoción: " + cs.get(i).getIdPromocion() + "; número_compras: " + cs.get(i).getNumCompras() + "\n";
 		}
+		panelDatos.actualizarInterfaz(resultado);
 		
 	}
 

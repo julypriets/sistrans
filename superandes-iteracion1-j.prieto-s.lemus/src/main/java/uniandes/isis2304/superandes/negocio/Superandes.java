@@ -150,6 +150,10 @@ public class Superandes
 		
 	} 
 	
+	/**
+	 * Retorna todos los clientes existentes
+	 * @return
+	 */
 	public List<Cliente> darClientes(){
 		return pa.darClientes();
 	}
