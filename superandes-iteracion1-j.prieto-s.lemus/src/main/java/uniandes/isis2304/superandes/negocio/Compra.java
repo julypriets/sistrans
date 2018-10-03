@@ -30,18 +30,32 @@ public class Compra implements VOCompra{
 		this.idFactura = 0;
 	}
 
+	/**
+	 * Retorna el identificador del producto adquirido
+	 */
 	public long getIdProducto() {
 		return idProducto;
 	}
 
+	/**
+	 * Modifica el identificador del producto adquirido
+	 * @param idProducto - nuevo identificador del producto adquirido
+	 */
 	public void setIdProducto(long idProducto) {
 		this.idProducto = idProducto;
 	}
 
+	/**
+	 * Obtiene el identificador de la factura
+	 */
 	public long getIdFactura() {
 		return idFactura;
 	}
 
+	/**
+	 * Modifica el identificador de la factura
+	 * @param idFactura
+	 */
 	public void setIdFactura(long idFactura) {
 		this.idFactura = idFactura;
 	}

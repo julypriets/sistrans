@@ -5,26 +5,27 @@ import java.sql.Timestamp;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+/**
+ * Clsae que encapsula los métodos que hacen acceso a la base de datos para el concepto ORDEN de SuperAndes.
+ * Nótese que es una clase que es sólo conocida en el paquete de persistencia.
+ * @author j.prieto
+ *
+ */
 public class SQLOrden {
-	
-	/**
-	 * Cadena que representa el tipo de consulta que se va a realizar en las sentencias de acceso a la base de datos
-	 * Se renombra acá para facilitar la escritura de las sentencias
-	 */
+
+	/*----------- CONSTANTES ------------------------------------*/
 	private final static String SQL = PersistenciaSuperandes.SQL;
 	
-	/**
-	 * El manejador de persistencia general de la aplicación
-	 */
+	
+	/*----------- ATRIBUTOS ------------------------------------*/
 	private PersistenciaSuperandes pa;
-
-	/**
-	 * Constructor
-	 * @param pa - Manejador de persistencia de la aplicación
-	 */
+	
+	
+	/*----------- MÉTODOS ------------------------------------*/
 	public SQLOrden(PersistenciaSuperandes pa) {
 		this.pa = pa;
 	}
+	
 	
 	public long adicionarOrden(PersistenceManager pm, long id, Double precio, Timestamp fechaEsperada, Timestamp fechaLlegada, String estado,
 			Double calificacion, long idSucursal, long idProveedor) {

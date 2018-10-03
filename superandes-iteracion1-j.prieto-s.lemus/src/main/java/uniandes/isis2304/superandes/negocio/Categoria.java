@@ -29,18 +29,32 @@ public class Categoria implements VOCategoria{
 		this.nombre = "";
 	}
 
+	/**
+	 * Obtiene el identificador de la categoría
+	 */
 	public long getId() {
 		return id;
 	}
 
+	/**
+	 * Modifica el identificador de la categoría
+	 * @param id - nuevo identificador de la categoría
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+	/**
+	 * Obtiene el nombre de la categoría
+	 */
 	public String getNombre() {
 		return nombre;
 	}
 
+	/**
+	 * Modifica el nombre de la categoría
+	 * @param nombre - nuevo nombre de la categoría
+	 */
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
