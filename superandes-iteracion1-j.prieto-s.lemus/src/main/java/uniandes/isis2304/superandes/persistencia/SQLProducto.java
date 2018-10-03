@@ -54,9 +54,7 @@ public class SQLProducto {
         		+ ", precio_unidadMedida, unidad_medida, empacado, codigo_barras"
         		+ ", id_categoria, nivel_reorden, existencias, id_sucursal) "
         		+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        q.setParameters(nombre, marca, precioUnitario, presentacion,
-    			precioUnidadMedida, unidadMedida, empacado, codigoBarras, nivelReorden,
-    			existencias, idCategoria, idSucursal);
+        q.setParameters();
         return (long) q.executeUnique();   
 	}
 	

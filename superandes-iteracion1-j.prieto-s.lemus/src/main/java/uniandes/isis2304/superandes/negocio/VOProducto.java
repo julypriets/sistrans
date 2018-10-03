@@ -72,7 +72,9 @@ public interface VOProducto {
 	 * 
 	 * @return el id de la categoría del producto
 	 */
-	public Long getIdCategoria();
+	public long getIdCategoria();
+	
+	public long getIdSucursal();
 
 	/**
 	 * Retorna una cadena de caractéres con la información básica

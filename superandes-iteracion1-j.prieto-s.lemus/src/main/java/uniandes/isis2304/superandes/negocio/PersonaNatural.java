@@ -2,11 +2,11 @@ package uniandes.isis2304.superandes.negocio;
 
 public class PersonaNatural extends Cliente implements VOPersonaNatural{
 	
-	private Long id;
+	private long id;
 	
 	private String identificacion;
 
-	public PersonaNatural(Long id, String nombre, String correo, String identificacion) {
+	public PersonaNatural(long id, String nombre, String correo, String identificacion) {
 		super(id, nombre, correo);
 		this.identificacion = identificacion;
 	}

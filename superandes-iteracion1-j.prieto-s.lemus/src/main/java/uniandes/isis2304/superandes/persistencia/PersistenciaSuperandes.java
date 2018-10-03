@@ -125,9 +125,14 @@ public class PersistenciaSuperandes
 	private SQLProducto sqlProducto;
 	
 	/**
-	 * Atributo para el acceso a la tabla CLIENTE
+	 * Atributo para el acceso a la tabla CLIENTE, EMPRESA y PERSONA_NATURAL
 	 */
 	private SQLCliente sqlCliente; 
+	
+	/**
+	 * Atributo para el acceso a la tabla PROMOCION
+	 */
+	private SQLPromocion sqlPromocion; 
 	
 
 	
@@ -240,6 +245,10 @@ public class PersistenciaSuperandes
 		return resp;
 	}
 	
+	public String darTablaCliente() {
+		return tablas.get(10);
+	}
+	
 	/**
 	 * Crea los atributos de clases de apoyo SQL
 	 */
@@ -247,6 +256,7 @@ public class PersistenciaSuperandes
 	{	
 		sqlProducto = new SQLProducto(this);
 		sqlCliente = new SQLCliente(this);
+		sqlPromocion = new SQLPromocion(this);
 		sqlUtil = new SQLUtil(this);
 	}
 
@@ -423,6 +433,10 @@ public class PersistenciaSuperandes
         }
 	}
 	
+	
+	public List<Cliente> darClientes(){
+		return sqlCliente.darClientes(pmf.getPersistenceManager());
+	}
 	
 //	/**
 //	 * Método que inserta, de manera transaccional, una tupla en la tabla BEBEDOR

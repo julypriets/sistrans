@@ -10,7 +10,7 @@ public class Sucursal implements VOSucursal{
 	/**
 	 * Identificador único de la sucursal
 	 */
-	private Long id;
+	private long id;
 	
 	/**
 	 * Nombre de la sucursal 
@@ -34,7 +34,7 @@ public class Sucursal implements VOSucursal{
 	 * @param ciudad
 	 * @param direccion
 	 */
-	public Sucursal(Long id, String nombre, String ciudad, String direccion) {
+	public Sucursal(long id, String nombre, String ciudad, String direccion) {
 		this.id = id;
 		this.nombre = nombre;
 		this.ciudad = ciudad;
@@ -45,7 +45,7 @@ public class Sucursal implements VOSucursal{
 	 * Constructor por defecto
 	 */
 	public Sucursal(){
-		this.id = (long) 0;
+		this.id = 0;
 		this.nombre = "";
 		this.ciudad = "";
 		this.direccion = "";
@@ -56,7 +56,7 @@ public class Sucursal implements VOSucursal{
 	 * 
 	 * @return El id de la sucursal
 	 */
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 

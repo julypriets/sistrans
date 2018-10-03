@@ -12,7 +12,7 @@ public class Orden implements VOOrden{
 	/**
 	 * Identificador único del pedido
 	 */
-	private Long id;
+	private long id;
 	
 	/**
 	 * Precio del pedido
@@ -42,7 +42,7 @@ public class Orden implements VOOrden{
 	/**
 	 * El id de la sucursal al que pertenece
 	 */
-	private Long idSucursal;
+	private long idSucursal;
 	
 	// Constantes
 	
@@ -66,8 +66,8 @@ public class Orden implements VOOrden{
 	 * @param estado
 	 * @param calificacion
 	 */
-	public Orden(Long id, Double precio, Timestamp fechaEsperada, Timestamp fechaLlegada, String estado,
-			Double calificacion, Long idSucursal) {
+	public Orden(long id, Double precio, Timestamp fechaEsperada, Timestamp fechaLlegada, String estado,
+			Double calificacion, long idSucursal) {
 		this.id = id;
 		this.precio = precio;
 		this.fechaEsperada = fechaEsperada;
@@ -81,16 +81,16 @@ public class Orden implements VOOrden{
 	 * Constructor por defecto
 	 */
 	public Orden(){
-		this.id = (long) 0;
+		this.id = 0;
 		this.precio = 0.0;
 		this.fechaEsperada = new Timestamp(0);
 		this.fechaLlegada = new Timestamp(0);
 		this.estado = "";
 		this.calificacion = 0.0;
-		this.idSucursal = (long) 0;
+		this.idSucursal = 0;
 	}
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -140,7 +140,7 @@ public class Orden implements VOOrden{
 	
 	
 
-	public Long getIdSucursal() {
+	public long getIdSucursal() {
 		return idSucursal;
 	}
 

@@ -8,7 +8,7 @@ package uniandes.isis2304.superandes.negocio;
  */
 public interface VOCajero {
 
-	public Long getId();
+	public long getId();
 
 	public String getNombre();
 

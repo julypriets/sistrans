@@ -1,13 +1,15 @@
 package uniandes.isis2304.superandes.negocio;
 
+import java.math.BigDecimal;
+
 /**
  * Clase que se encarga de modelar el concepto de CLIENTE en Superandes.
  * @author s.lemus
  *
  */
-public abstract class Cliente implements VOCliente{
+public class Cliente implements VOCliente{
 
-	private Long id;
+	private long id;
 	
 	private String nombre;
 	
@@ -19,14 +21,14 @@ public abstract class Cliente implements VOCliente{
 	
 	public static final String PERSONA_NATURAL = "PERSONA_NATURAL";
 
-	public Cliente(Long id, String nombre, String correo) {
+	public Cliente(long id, String nombre, String correo) {
 		this.id = id;
 		this.nombre = nombre;
 		this.correo = correo;
-	} 
+	}
 	
 	public Cliente(){
-		this.id = (long) 0;
+		this.id = 0;
 		this.nombre = "";
 		this.correo = "";
 	}
@@ -47,7 +49,7 @@ public abstract class Cliente implements VOCliente{
 		this.correo = correo;
 	}
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 

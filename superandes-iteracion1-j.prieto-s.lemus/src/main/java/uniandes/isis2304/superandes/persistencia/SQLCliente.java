@@ -1,10 +1,14 @@
 package uniandes.isis2304.superandes.persistencia;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+
+import uniandes.isis2304.superandes.negocio.Cliente;
+import uniandes.isis2304.superandes.negocio.Producto;
 
 public class SQLCliente {
 
@@ -40,24 +44,26 @@ public class SQLCliente {
 	public long adicionarEmpresa(PersistenceManager pm, long id, String nombre, String correo, String nit, String direccion) {
         // insertar en la tabla clientes
 		Query q1 = pm.newQuery(SQL, "INSERT INTO " + pa.CLIENTE + "(id, nombre, correo) "
-        		+ "values (:idEm, :nombreEm, :correoEm)");
-		Map<String, Object> params = new HashMap<>();
-		params.put("idEm", id);
-		params.put("nombreEm", nombre);
-		params.put("correoEm", correo);
-		
-		q1.setNamedParameters(params);
+				+ "values (?, ?, ?)");
+//        		+ "values ( " + id +", " + "'" + nombre + "', " + "'" + correo + "')");
+//		Map<String, Object> params = new HashMap<>();
+//		params.put("idEm", id);
+//		params.put("nombreEm", nombre);
+//		params.put("correoEm", correo);
+//		
+		//q1.setNamedParameters(params);
 		
         //q1.setParameters(id, nombre, correo);
         //q1.compile();
-        long num1 = (long) q1.executeUnique();
+        long num1 = (long) q1.setParameters(id, nombre, correo).execute();
+        //return num1;
         
         // insertar en la tabla empresa
-        Query q2 = pm.newQuery(SQL, "INSERT INTO " + pa.EMPRESA + "(id, nit, direccion) "
+        Query q2 = pm.newQuery(SQL, "INSERT INTO " + pa.EMPRESA + "(id_cliente, nit, direccion) "
         		+ "values (?, ?, ?)");
-        q2.setParameters(id, nit, direccion);
-        long num = (long) q2.executeUnique();
-        return (long) q2.executeUnique();
+        //q2.setParameters(id, nit, direccion);
+        //long num = (long) q2.executeUnique();
+        return (long) q2.execute(id, nit, direccion);
 	}
 	
 	/**
@@ -80,5 +86,11 @@ public class SQLCliente {
         		+ "values (?, ?)");
         q2.setParameters(id, identificacion);
         return (long) q2.executeUnique();
+	}
+	
+	public List<Cliente> darClientes(PersistenceManager pm) {
+		Query q = pm.newQuery(SQL, "SELECT ID, NOMBRE, CORREO FROM " + pa.CLIENTE);
+		q.setResultClass(Cliente.class);
+		return (List<Cliente>) q.executeList();
 	}
 }

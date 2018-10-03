@@ -12,7 +12,7 @@ public interface VOEstante {
 	 * 
 	 * @return el id de estante
 	 */
-	public Long getId();
+	public long getId();
 
 	/**
 	 * 
@@ -36,7 +36,7 @@ public interface VOEstante {
 	 * 
 	 * @return el id de la sucursal
 	 */
-	public Long getIdSucursal();
+	public long getIdSucursal();
 
 	/**
 	 * Retorna una cadena de caractéres con la información básica

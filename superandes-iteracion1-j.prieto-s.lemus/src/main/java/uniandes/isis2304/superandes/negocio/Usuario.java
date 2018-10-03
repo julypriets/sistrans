@@ -17,7 +17,7 @@ public class Usuario implements VOUsuario{
 	
 	private String tipo;
 	
-	private Long idSucursal;
+	private long idSucursal;
 	
 	private static final String USUARIO_SUPERMERCADO = "USUP";
 	
@@ -31,8 +31,7 @@ public class Usuario implements VOUsuario{
 	 * @param username
 	 * @param password
 	 */
-	public Usuario(String nombre, String apellido, String username, String password, String tipo, Long idSucursal) {
-		super();
+	public Usuario(String nombre, String apellido, String username, String password, String tipo, long idSucursal) {
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.username = username;
@@ -46,7 +45,7 @@ public class Usuario implements VOUsuario{
 		this.apellido = "";
 		this.username = "";
 		this.password = "";
-		this.idSucursal = (long) 0;
+		this.idSucursal = 0;
 	}
 
 	public String getNombre() {
@@ -89,7 +88,7 @@ public class Usuario implements VOUsuario{
 		this.tipo = tipo;
 	}
 
-	public Long getIdSucursal() {
+	public long getIdSucursal() {
 		return idSucursal;
 	}
 

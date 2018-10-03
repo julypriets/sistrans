@@ -60,9 +60,9 @@ public class Producto implements VOProducto{
 	/**
 	 * El id correspondiente a la Categoría del producto
 	 */
-	private Long idCategoria;
+	private long idCategoria;
 	
-	private Long idSucursal;
+	private long idSucursal;
 
 	/**
 	 * Constructor del Producto con valores
@@ -80,7 +80,7 @@ public class Producto implements VOProducto{
 	 */
 	public Producto(String nombre, String marca, Double precioUnitario, String presentacion,
 			Double precioUnidadMedida, String unidadMedida, String empacado, String codigoBarras, Integer nivelReorden,
-			Integer existencias, Long idCategoria, Long idSucursal) {
+			Integer existencias, long idCategoria, long idSucursal) {
 		this.nombre = nombre;
 		this.marca = marca;
 		this.precioUnitario = precioUnitario;
@@ -109,8 +109,8 @@ public class Producto implements VOProducto{
 		this.codigoBarras = "";
 		this.nivelReorden = 0;
 		this.existencias = 0;
-		this.idCategoria = (long) 0;
-		this.idSucursal = (long) 0;
+		this.idCategoria = 0;
+		this.idSucursal = 0;
 	}
 
 	/**
@@ -278,8 +278,16 @@ public class Producto implements VOProducto{
 	 * 
 	 * @return el id de la categoría del producto
 	 */
-	public Long getIdCategoria() {
+	public long getIdCategoria() {
 		return idCategoria;
+	}
+	
+	public long getIdSucursal() {
+		return idSucursal;
+	}
+
+	public void setIdSucursal(long idSucursal) {
+		this.idSucursal = idSucursal;
 	}
 
 	/**

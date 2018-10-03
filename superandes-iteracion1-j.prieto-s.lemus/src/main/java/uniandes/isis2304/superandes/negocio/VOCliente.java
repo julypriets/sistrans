@@ -12,7 +12,7 @@ public interface VOCliente {
 
 	public String getCorreo();
 	
-	public Long getId();
+	public long getId();
 
 	public String getTipo();
 

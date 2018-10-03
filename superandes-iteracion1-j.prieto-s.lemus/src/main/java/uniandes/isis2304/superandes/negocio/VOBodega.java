@@ -12,7 +12,7 @@ public interface VOBodega {
 	 * 
 	 * @return id de la bodega
 	 */
-	public Long getId();
+	public long getId();
 	/**
 	 * 
 	 * @return capacidad de la bodega
@@ -29,7 +29,7 @@ public interface VOBodega {
 	 * 
 	 * @return el id de la sucursal
 	 */
-	public Long getIdSucursal();
+	public long getIdSucursal();
 	
 	/**
 	 * Retorna una cadena de caractéres con la información básica

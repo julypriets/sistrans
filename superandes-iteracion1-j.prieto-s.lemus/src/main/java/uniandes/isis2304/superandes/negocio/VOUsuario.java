@@ -18,7 +18,7 @@ public interface VOUsuario {
 	
 	public String getTipo();
 
-	public Long getIdSucursal();
+	public long getIdSucursal();
 
 	@Override
 	public String toString();

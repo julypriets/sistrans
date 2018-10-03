@@ -10,7 +10,7 @@ public class Bodega implements VOBodega{
 	/**
 	 * Identificador único de la bodega
 	 */
-	private Long id;
+	private long id;
 	
 	/**
 	 * Capacidad de peso de la bodega
@@ -25,12 +25,12 @@ public class Bodega implements VOBodega{
 	/**
 	 * El id de la categoría de los productos del estante
 	 */
-	private Long idCategoria;
+	private long idCategoria;
 	
 	/**
 	 * El id de la sucursal al que pertenece
 	 */
-	private Long idSucursal;
+	private long idSucursal;
 
 	/**
 	 * Constructor de Bodega con valores
@@ -38,7 +38,7 @@ public class Bodega implements VOBodega{
 	 * @param capacidadPeso
 	 * @param capacidadVolumen
 	 */
-	public Bodega(Long id, Double capacidadPeso, Double capacidadVolumen, Long idCategoria, Long idSucursal) {
+	public Bodega(long id, Double capacidadPeso, Double capacidadVolumen, long idCategoria, long idSucursal) {
 		this.id = id;
 		this.capacidadPeso = capacidadPeso;
 		this.capacidadVolumen = capacidadVolumen;
@@ -61,7 +61,7 @@ public class Bodega implements VOBodega{
 	 * 
 	 * @return id de la bodega
 	 */
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -109,7 +109,7 @@ public class Bodega implements VOBodega{
 	 * 
 	 * @return el id de la sucursal
 	 */
-	public Long getIdSucursal() {
+	public long getIdSucursal() {
 		return idSucursal;
 	}
 
