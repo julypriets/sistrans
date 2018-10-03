@@ -50,4 +50,28 @@ public class SQLPromocion {
 		return (List<ComprasPorPromocion>) q.execute();
 	}
 	
+	/**
+	 * Finaliza una promoción para todos los productos asociados(remueve la relación) 
+	 * si las existencias del producto se acabaron o si finalizó la fecha 
+	 * @param pm - PersistenceManager
+	 * @param idPromocion
+	 * @return
+	 */
+	public long finalizarPromocion(PersistenceManager pm, Date fechaActual) {
+		String delete = "DELETE " + 
+				"FROM PRODUCTO_PROMOCION "+ 
+				"WHERE id_producto IN ( " + 
+				"    SELECT prom.id_producto " + 
+				"    FROM PROMOCION prom, PRODUCTO_PROMOCION prodprom, Producto prod " + 
+				"    WHERE " + 
+				"        prom.id_producto = prodprom.id_promocion AND " + 
+				"        prod.codigo_barras = prodprom.id_producto AND " + 
+				"        prod.existencias = 0 OR " +
+				"        prom.fecha_fin < fechaActual " +
+				") ";
+ 
+		Query q = pm.newQuery(SQL, delete);
+		return (long) q.execute();
+	}
+	
 }
