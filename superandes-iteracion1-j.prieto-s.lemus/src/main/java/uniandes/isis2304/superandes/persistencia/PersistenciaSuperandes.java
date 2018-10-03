@@ -145,7 +145,7 @@ public class PersistenciaSuperandes
 	/**
 	 * Atributo para el acceso a la tabla COMPRA
 	 */
-	private SQLCompra sqlOrden; 
+	private SQLOrden sqlOrden; 
 
 	
 	/* ****************************************************************
@@ -827,8 +827,8 @@ public class PersistenciaSuperandes
 //		return gustan;
 //	}
 
-		}
-	}
+		
+	
 	
 	/**
 	 * Retorna las 20 promociones más populares entre las que no están finalizadas

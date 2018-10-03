@@ -90,60 +90,107 @@ public class Orden implements VOOrden{
 		this.idSucursal = 0;
 	}
 
+	/**
+	 * Obtiene el identificador de la orden
+	 */
 	public long getId() {
 		return id;
 	}
 
+	/**
+	 * Modifica el identificador de la orden
+	 * @param id
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+	/**
+	 * Retorna el precio de la orden
+	 */
 	public Double getPrecio() {
 		return precio;
 	}
 
+	/**
+	 * Modifica el precio de la orden
+	 * @param precio - nuevo precio de la orden
+	 */
 	public void setPrecio(Double precio) {
 		this.precio = precio;
 	}
 
+	/**
+	 * Retorna la fecha esperada de la orden
+	 */
 	public Timestamp getFechaEsperada() {
 		return fechaEsperada;
 	}
 
+	/**
+	 * Modifica la fecha esperada de la orden
+	 * @param fechaEsperada - nueva fecha esperada de la orden
+	 */
 	public void setFechaEsperada(Timestamp fechaEsperada) {
 		this.fechaEsperada = fechaEsperada;
 	}
 
+	/**
+	 * Retorna la fecha de llegada de la orden
+	 */
 	public Timestamp getFechaLlegada() {
 		return fechaLlegada;
 	}
 
+	/**
+	 * Modifica la fecha de llegada de la orden
+	 * @param fechaLlegada
+	 */
 	public void setFechaLlegada(Timestamp fechaLlegada) {
 		this.fechaLlegada = fechaLlegada;
 	}
 
+	/**
+	 * Obtiene el estado de la orden
+	 */
 	public String getEstado() {
 		return estado;
 	}
 
+	/**
+	 * Modifica el estado de la orden
+	 * @param estado
+	 */
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
 
+	/**
+	 * Obtiene la calificación de la orden
+	 */
 	public Double getCalificacion() {
 		return calificacion;
 	}
 
+	/**
+	 * Modifica la calificación de la orden
+	 * @param calificacion - calificación de la orden
+	 */
 	public void setCalificacion(Double calificacion) {
 		this.calificacion = calificacion;
 	}
-	
-	
 
+	/**
+	 * Obtiene el identificador de la sucursal que realizó la orden
+	 */
 	public long getIdSucursal() {
 		return idSucursal;
 	}
 
+	/**
+	 * Modifica el identificador de la sucursal que realizó la orden
+	 * @param idSucursal
+	 */
 	public void setIdSucursal(Long idSucursal) {
 		this.idSucursal = idSucursal;
 	}
