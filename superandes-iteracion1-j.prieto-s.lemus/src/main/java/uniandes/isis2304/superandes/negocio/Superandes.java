@@ -107,6 +107,10 @@ public class Superandes
 	}
 	
 	
+	public List<Producto> darProductos(){
+		return pa.darProductos();
+	}
+	
 	/* ****************************************************************
 	 * 			Métodos para manejar los CLIENTES
 	 *****************************************************************/
@@ -121,9 +125,9 @@ public class Superandes
 	 * @param direccion
 	 * @return
 	 */
-	public Cliente adicionarEmpresa(Long id, String nombre, String correo, String nit, String direccion) {
+	public Cliente adicionarEmpresa(String nombre, String correo, String nit, String direccion) {
 		log.info("Adicionando la empresa: " + nombre + "con nit: " + nit);
-		Cliente e = pa.adicionarEmpresa(id, nombre, correo, nit, direccion);
+		Cliente e = pa.adicionarEmpresa(nombre, correo, nit, direccion);
 		log.info("Adicionando el producto: " + e.toString());
 		return e;
 	} 
@@ -137,9 +141,9 @@ public class Superandes
 	 * @param identificacion
 	 * @return
 	 */
-	public Cliente adicionarPersonaNatural(Long id, String nombre, String correo, String identificacion) {
+	public Cliente adicionarPersonaNatural(String nombre, String correo, String identificacion) {
 		log.info("Adicionando la persona: " + nombre + "con documento de identificación: " + identificacion);
-		Cliente p = pa.adicionarPersonaNatural(id, nombre, correo, identificacion);
+		Cliente p = pa.adicionarPersonaNatural(nombre, correo, identificacion);
 		log.info("Adicionando el producto: " + p.toString());
 		return p;
 		

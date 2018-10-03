@@ -333,6 +333,10 @@ public class PersistenciaSuperandes
             pm.close();
         }
 	}
+	
+	public List<Producto> darProductos(){
+		return sqlProducto.darProductos(pmf.getPersistenceManager());
+	}
 
 	/* ****************************************************************
 	 * 			Métodos para manejar los CLIENTES
@@ -348,7 +352,7 @@ public class PersistenciaSuperandes
 	 * @param direccion
 	 * @return
 	 */
-	public Cliente adicionarEmpresa(Long id, String nombre, String correo, String nit, String direccion)
+	public Cliente adicionarEmpresa(String nombre, String correo, String nit, String direccion)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx=pm.currentTransaction();
@@ -356,12 +360,12 @@ public class PersistenciaSuperandes
         {
             tx.begin();
             long idCliente = nextval ();
-            long tuplasInsertadas = sqlCliente.adicionarEmpresa(pm, id, nombre, correo, nit, direccion);
+            long tuplasInsertadas = sqlCliente.adicionarEmpresa(pm, idCliente, nombre, correo, nit, direccion);
             tx.commit();
             
             log.trace ("Inserción de producto: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
             
-            return new Empresa(id, nombre, correo, nit, direccion);
+            return new Empresa(idCliente, nombre, correo, nit, direccion);
         }
         catch (Exception e)
         {
@@ -388,7 +392,7 @@ public class PersistenciaSuperandes
 	 * @param identificacion
 	 * @return
 	 */
-	public Cliente adicionarPersonaNatural(Long id, String nombre, String correo, String identificacion)
+	public Cliente adicionarPersonaNatural(String nombre, String correo, String identificacion)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx=pm.currentTransaction();
@@ -396,12 +400,12 @@ public class PersistenciaSuperandes
         {
             tx.begin();
             long idCliente = nextval ();
-            long tuplasInsertadas = sqlCliente.adicionarPersonaNatural(pm, id, nombre, correo, identificacion);
+            long tuplasInsertadas = sqlCliente.adicionarPersonaNatural(pm, idCliente, nombre, correo, identificacion);
             tx.commit();
             
             log.trace ("Inserción de producto: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
             
-            return new PersonaNatural(id, nombre, correo, identificacion);
+            return new PersonaNatural(idCliente, nombre, correo, identificacion);
         }
         catch (Exception e)
         {

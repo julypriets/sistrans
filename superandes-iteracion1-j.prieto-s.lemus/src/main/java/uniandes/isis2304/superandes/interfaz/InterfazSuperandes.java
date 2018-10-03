@@ -49,6 +49,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
 import uniandes.isis2304.superandes.interfaz.PanelDatos;
+import uniandes.isis2304.superandes.negocio.Producto;
 import uniandes.isis2304.superandes.negocio.Superandes;
 import uniandes.isis2304.superandes.negocio.VOBebedor;
 import uniandes.isis2304.superandes.negocio.VOCliente;
@@ -271,13 +272,13 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     		    "precio unitario:", precioUnitario,
     		    "presentacion:", presentacion,
     		    "precioUnidadMedida:", precioUnidadMedida,
-    		    "precioUnidadMedida:", unidadMedida,
-    		    "precioUnidadMedida:", empacado,
-    		    "precioUnidadMedida:", codigoBarras,
-    		    "precioUnidadMedida:", nivelReorden,
-    		    "precioUnidadMedida:", existencias,
-    		    "precioUnidadMedida:", idCategoria,
-    		    "precioUnidadMedida:", idSucursal,
+    		    "unidadMedida:", unidadMedida,
+    		    "empacado:", empacado,
+    		    "codigoBarras:", codigoBarras,
+    		    "nivelReorden:", nivelReorden,
+    		    "existencias:", existencias,
+    		    "idCategoria:", idCategoria,
+    		    "idSucursal:", idSucursal,
     		};
     		int option = JOptionPane.showConfirmDialog(this, message, "Crear el producto ingresando todos sus valores", JOptionPane.OK_CANCEL_OPTION);
     		if (option == JOptionPane.OK_OPTION)
@@ -314,6 +315,18 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 		}
     }
     
+    public void darProductos() {
+    	String resultado = "En darProductos\n\n";
+    	List<Producto> ps = superandes.darProductos();
+    	
+    	for(Producto p : ps) {
+    		resultado += "Producto: " + p.toString() + "\n";
+    	}
+    	resultado += "Terminó proceso";
+    	panelDatos.actualizarInterfaz(resultado);
+    	
+    }
+    
     
 	/* ****************************************************************
 	 * 			Operaciones Cliente
@@ -323,13 +336,12 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     {
     	try 
     	{
-    		JTextField id = new JTextField();
+
     		JTextField nombre = new JTextField();
     		JTextField correo = new JTextField();
     		JTextField nit = new JTextField();
     		JTextField direccion = new JTextField();
     		Object[] message = {
-    		    "id:", id,
     		    "nombre:", nombre,
     		    "correo:", correo,
     		    "nit:", nit,
@@ -338,14 +350,14 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     		int option = JOptionPane.showConfirmDialog(this, message, "Adicionar una empresa ingresando todos sus valores", JOptionPane.OK_CANCEL_OPTION);
     		if (option == JOptionPane.OK_OPTION)
     		{
-    			Long idResp = Long.parseLong(id.getText());
+
         		String nombreResp = nombre.getText();
         		String correoResp = correo.getText();
         		String nitResp = nit.getText();
         		String direccionResp = direccion.getText();
 
         		
-        		VOCliente e = superandes.adicionarEmpresa(idResp, nombreResp, correoResp, nitResp, direccionResp);
+        		VOCliente e = superandes.adicionarEmpresa(nombreResp, correoResp, nitResp, direccionResp);
         		String resultado = "En adicionarEmpresa\n\n";
         		resultado += "Empresa adicionada exitosamente: " + e;
     			resultado += "\n Operación terminada";
@@ -367,12 +379,10 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     {
     	try 
     	{
-    		JTextField id = new JTextField();
     		JTextField nombre = new JTextField();
     		JTextField correo = new JTextField();
     		JTextField identificacion = new JTextField();
     		Object[] message = {
-    		    "id:", id,
     		    "nombre:", nombre,
     		    "correo:", correo,
     		    "identificacion:", identificacion,
@@ -380,12 +390,11 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     		int option = JOptionPane.showConfirmDialog(this, message, "Adicionar una empresa ingresando todos sus valores", JOptionPane.OK_CANCEL_OPTION);
     		if (option == JOptionPane.OK_OPTION)
     		{
-    			Long idResp = Long.parseLong(id.getText());
         		String nombreResp = nombre.getText();
         		String correoResp = correo.getText();
         		String identificacionResp = identificacion.getText();
         		
-        		VOCliente e = superandes.adicionarPersonaNatural(idResp, nombreResp, correoResp, identificacionResp);
+        		VOCliente e = superandes.adicionarPersonaNatural(nombreResp, correoResp, identificacionResp);
         		String resultado = "En adicionarPersonaNatural\n\n";
         		resultado += "Persona adicionada exitosamente: " + e;
     			resultado += "\n Operación terminada";

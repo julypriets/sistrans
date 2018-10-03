@@ -1,5 +1,8 @@
 package uniandes.isis2304.superandes.persistencia;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
@@ -34,17 +37,27 @@ public class SQLCliente {
 	 * @param direccion
 	 * @return el número de tuplas adicionadas
 	 */
-	public Long adicionarEmpresa(PersistenceManager pm, Long id, String nombre, String correo, String nit, String direccion) {
+	public long adicionarEmpresa(PersistenceManager pm, long id, String nombre, String correo, String nit, String direccion) {
         // insertar en la tabla clientes
-		Query q = pm.newQuery(SQL, "INSERT INTO " + pa.CLIENTE + "(id, nombre, correo) "
-        		+ "values (?, ?, ?)");
-        q.setParameters(id, nombre, correo);
+		Query q1 = pm.newQuery(SQL, "INSERT INTO " + pa.CLIENTE + "(id, nombre, correo) "
+        		+ "values (:idEm, :nombreEm, :correoEm)");
+		Map<String, Object> params = new HashMap<>();
+		params.put("idEm", id);
+		params.put("nombreEm", nombre);
+		params.put("correoEm", correo);
+		
+		q1.setNamedParameters(params);
+		
+        //q1.setParameters(id, nombre, correo);
+        //q1.compile();
+        long num1 = (long) q1.executeUnique();
         
         // insertar en la tabla empresa
-        q = pm.newQuery(SQL, "INSERT INTO " + pa.EMPRESA + "(id, nit, direccion) "
+        Query q2 = pm.newQuery(SQL, "INSERT INTO " + pa.EMPRESA + "(id, nit, direccion) "
         		+ "values (?, ?, ?)");
-        q.setParameters(id, nit, direccion);
-        return (long) q.executeUnique();
+        q2.setParameters(id, nit, direccion);
+        long num = (long) q2.executeUnique();
+        return (long) q2.executeUnique();
 	}
 	
 	/**
@@ -58,14 +71,14 @@ public class SQLCliente {
 	 */
 	public Long adicionarPersonaNatural(PersistenceManager pm, Long id, String nombre, String correo, String identificacion) {
         // insertar en la tabla clientes
-		Query q = pm.newQuery(SQL, "INSERT INTO " + pa.CLIENTE + "(id, nombre, correo) "
+		Query q1 = pm.newQuery(SQL, "INSERT INTO " + pa.CLIENTE + "(id, nombre, correo) "
         		+ "values (?, ?, ?)");
-        q.setParameters(id, nombre, correo);
+        q1.setParameters(id, nombre, correo);
         
         // insertar en la tabla persona_natural
-        q = pm.newQuery(SQL, "INSERT INTO " + pa.PERSONA_NATURAL + "(id, identificacion) "
+        Query q2 = pm.newQuery(SQL, "INSERT INTO " + pa.PERSONA_NATURAL + "(id, identificacion) "
         		+ "values (?, ?)");
-        q.setParameters(id, identificacion);
-        return (long) q.executeUnique();
+        q2.setParameters(id, identificacion);
+        return (long) q2.executeUnique();
 	}
 }

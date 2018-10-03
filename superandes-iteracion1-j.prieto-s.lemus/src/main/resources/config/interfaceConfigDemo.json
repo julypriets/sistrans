@@ -11,6 +11,10 @@
 				{
 					"label": "Adicionar",
 					"event": "adicionarProducto"
+				},
+				{
+					"label": "Obtener los productos",
+					"event": "darProductos"
 				}
 			]
 		},		
