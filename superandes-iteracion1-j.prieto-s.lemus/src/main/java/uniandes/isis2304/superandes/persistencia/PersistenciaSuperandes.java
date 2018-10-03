@@ -38,6 +38,7 @@ import uniandes.isis2304.superandes.negocio.Cliente;
 import uniandes.isis2304.superandes.negocio.Compra;
 import uniandes.isis2304.superandes.negocio.ComprasPorPromocion;
 import uniandes.isis2304.superandes.negocio.Empresa;
+import uniandes.isis2304.superandes.negocio.Orden;
 import uniandes.isis2304.superandes.negocio.PersonaNatural;
 import uniandes.isis2304.superandes.negocio.Producto;
 
@@ -143,9 +144,9 @@ public class PersistenciaSuperandes
 	private SQLCompra sqlCompra; 
 	
 	/**
-	 * Atributo para el acceso a la tabla COMPRA
+	 * Atributo para el acceso a la tabla ORDEN
 	 */
-	private SQLCompra sqlOrden; 
+	private SQLOrden sqlOrden; 
 
 	
 	/* ****************************************************************
@@ -270,6 +271,7 @@ public class PersistenciaSuperandes
 		sqlCliente = new SQLCliente(this);
 		sqlPromocion = new SQLPromocion(this);
 		sqlCompra = new SQLCompra(this);
+		sqlOrden = new SQLOrden(this);
 		sqlUtil = new SQLUtil(this);
 	}
 
@@ -551,6 +553,36 @@ public class PersistenciaSuperandes
 	/* ****************************************************************
 	 * 			Métodos para manejar las ÓRDENES
 	 *****************************************************************/
+	//Registra un pedido dados los valores
 	
-	
+	public Orden adicionarOrden(Double precio, Timestamp fechaEsperada, Timestamp fechaLlegada, String estado,
+			Double calificacion, long idSucursal, long idProveedor) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            long idOrden = nextval ();
+            long tuplasInsertadas = sqlOrden.adicionarOrden(pm, idOrden, precio, fechaEsperada, fechaLlegada, estado, calificacion, idSucursal, idProveedor);
+            tx.commit();
+            
+            log.trace ("Inserción de la orden:  " + idOrden + ": " + tuplasInsertadas + " tuplas insertadas");
+            
+            return new Orden(idOrden, precio, fechaEsperada, fechaLlegada, estado, calificacion, idSucursal);
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return null;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+	}
  }

@@ -147,7 +147,6 @@ public class Superandes
 		Cliente p = pa.adicionarPersonaNatural(nombre, correo, identificacion);
 		log.info("Adicionando el producto: " + p.toString());
 		return p;
-		
 	} 
 	
 	/**
@@ -163,7 +162,7 @@ public class Superandes
 	 *****************************************************************/
 	
 	/**
-	 * Finaliza las promociones que ya se vencieron o cuyos productos
+	 * (RF8) Finaliza las promociones que ya se vencieron o cuyos productos
 	 * asociados hayan agotado sus existencias
 	 * @param fechaActual
 	 * @return número de tuplas eliminadas
@@ -172,14 +171,37 @@ public class Superandes
 		return pa.finalizarPromocion(fechaActual);
 	}
 	
+	/**
+	 * (RFC2)
+	 * @return las 20 promociones con más compras
+	 */
 	public List<ComprasPorPromocion> dar20PromocionesMasPopulares(){
 		return pa.dar20PromocionesMasPopulares();
 	}
 	
+	/* ****************************************************************
+	 * 			Métodos para manejar las ORDENES
+	 *****************************************************************/
+	
+	/** (RF10)
+	 * Registra una orden en la base de datos
+	 * @param precio
+	 * @param fechaEsperada
+	 * @param fechaLlegada
+	 * @param estado
+	 * @param calificacion
+	 * @param idSucursal
+	 * @param idProveedor
+	 * @return
+	 */
+	public Orden adicionarOrden(Double precio, Timestamp fechaEsperada, Timestamp fechaLlegada, String estado,
+			Double calificacion, long idSucursal, long idProveedor) {
+		return pa.adicionarOrden(precio, fechaEsperada, fechaLlegada, estado, calificacion, idSucursal, idProveedor);
+		
+	}
+	
 //	/**
-//	 * Elimina todas las tuplas de todas las tablas de la base de datos de Parranderos
-//	 * @return Un arreglo con 7 números que indican el número de tuplas borradas en las tablas GUSTAN, SIRVEN, VISITAN, BEBIDA,
-//	 * TIPOBEBIDA, BEBEDOR y BAR, respectivamente
+//	 * Elimina todas las tuplas de todas las tablas de la base de datos 
 //	 */
 //	public long [] limpiarParranderos ()
 //	{

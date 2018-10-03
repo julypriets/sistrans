@@ -46,7 +46,7 @@ public class Prueba {
 		tableConfig = openConfig("Tablas BD", CONFIG_TABLAS);
 		Superandes superandes = new Superandes (tableConfig);
 		
-		//superandes.adicionarEmpresa("e4", "e4c", "1236", "cra4");
+		superandes.adicionarEmpresa("e4", "e4c", "1236", "cra4");
 		
 		List<Cliente> cs = superandes.darClientes();
 		System.out.println(cs.size());

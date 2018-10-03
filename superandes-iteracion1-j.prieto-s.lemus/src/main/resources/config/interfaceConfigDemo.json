@@ -43,6 +43,15 @@
 					"event": "dar20PromocionesMasPopulares"
 				}
 			]
+		},
+		{ "menuTitle": "Orden",
+		  "options":
+			[
+				{
+					"label": "Adicionar Orden",
+					"event": "adicionarOrden"
+				}
+			]
 		}
 	]
 }

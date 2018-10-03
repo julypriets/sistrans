@@ -59,6 +59,7 @@ import uniandes.isis2304.superandes.negocio.Superandes;
 import uniandes.isis2304.superandes.negocio.VOBebedor;
 import uniandes.isis2304.superandes.negocio.VOCliente;
 import uniandes.isis2304.superandes.negocio.VOEmpresa;
+import uniandes.isis2304.superandes.negocio.VOOrden;
 import uniandes.isis2304.superandes.negocio.VOProducto;
 import uniandes.isis2304.superandes.tareasTemporales.VerificacionPromocion;
 
@@ -457,6 +458,69 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 		panelDatos.actualizarInterfaz(resultado);
 		
 	}
+	
+	
+	/* ****************************************************************
+	 * 			Operaciones ORDENES
+	 *****************************************************************/
+
+	/**
+	 * (RF10) Registra una orden en la base de datos
+	 */
+    public void adicionarOrden( )
+    {
+    	try 
+    	{
+    		JTextField id = new JTextField();
+    		JTextField precio = new JTextField();
+    		JTextField fechaEsperada = new JTextField();
+    		JTextField fechaLlegada= new JTextField();
+    		JTextField estado = new JTextField();
+    		JTextField calificacion = new JTextField();
+    		JTextField idSucursal = new JTextField();
+    		JTextField idProveedor = new JTextField();
+    		Object[] message = {
+    		    "id:", id,
+    		    "precio:", precio,
+    		    "fechaEsperada:", fechaEsperada,
+    		    "fechaLlegada:", fechaLlegada,
+    		    "estado:", estado,
+    		    "calificacion:", calificacion,
+    		    "idSucursal:", idSucursal,
+    		    "idProveedor:", idProveedor,
+    		};
+    		int option = JOptionPane.showConfirmDialog(this, message, "Adicionar una orden ingresando todos sus valores", JOptionPane.OK_CANCEL_OPTION);
+    		if (option == JOptionPane.OK_OPTION)
+    		{
+        		long idResp = Long.parseLong(id.getText());
+        		double precioResp = Double.parseDouble(precio.getText());
+        		Timestamp fechaEsperadaResp = Timestamp.valueOf(fechaEsperada.getText());
+        		String estadoResp = estado.getText();
+        		long idSucursalResp = Long.parseLong(idSucursal.getText());
+        		long idProveedorResp = Long.parseLong(idProveedor.getText());
+        		Timestamp fechaLlegadaResp = Timestamp.valueOf(fechaLlegada.getText());
+        		double calificacionResp = Double.parseDouble(calificacion.getText());
+        		
+        		VOOrden e = superandes.adicionarOrden(precioResp, fechaEsperadaResp, fechaLlegadaResp, estadoResp, calificacionResp, idSucursalResp, idProveedorResp);
+        		String resultado = "En adicionarOrden\n\n";
+        		resultado += "Orden adicionada exitosamente: " + e;
+    			resultado += "\n Operación terminada";
+        		panelDatos.actualizarInterfaz(resultado);
+    		}else {
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+    }
+	
+	
+	
 
 	/* ****************************************************************
 	 * 			Métodos administrativos
