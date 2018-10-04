@@ -100,4 +100,32 @@ public class SQLProducto {
 		return (Producto) q.execute(idProducto);
 	}
 	
+	/**
+	 * Retorna los productos dado un rango de precios unitarios
+	 * @param pm
+	 * @param p1 - límite inferior
+	 * @param p2 - límite superior
+	 * @return
+	 */
+	public List<Producto> darProductosPorRangoDePrecioUnitario(PersistenceManager pm, double p1, double p2) {
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pa.PRODUCTO
+				+ " WHERE precio_unitario BETWEEN " + p1 + " AND " + p2);
+		q.setResultClass(Producto.class);
+		return (List<Producto>) q.executeList();
+	}
+	
+	/**
+	 * Retorna los productos dado un rango de precios por unidad de medida
+	 * @param pm
+	 * @param p1 - límite superior
+	 * @param p2 - límite inferior
+	 * @return
+	 */
+	public List<Producto> darProductosPorRangoDePrecioUM(PersistenceManager pm, double p1, double p2) {
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pa.PRODUCTO
+				+ " WHERE precio_unidadMedida BETWEEN " + p1 + " AND " + p2);
+		q.setResultClass(Producto.class);
+		return (List<Producto>) q.executeList();
+	}
+	
 }
