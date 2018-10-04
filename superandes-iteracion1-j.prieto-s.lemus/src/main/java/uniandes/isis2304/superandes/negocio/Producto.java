@@ -25,7 +25,7 @@ public class Producto implements VOProducto{
 	/**
 	 * Precio por unidad de producto
 	 */
-	private Double precio_Unitario;
+	private Double precioUnitario;
 	
 	/**
 	 * Presentación del producto
@@ -35,7 +35,7 @@ public class Producto implements VOProducto{
 	/**
 	 * Precio por cantidad (unidad de medida) del producto
 	 */
-	private Double precio_UnidadMedida;
+	private Double precioUnidadMedida;
 	
 	/**
 	 * Unidad de medida del producto 
@@ -50,7 +50,7 @@ public class Producto implements VOProducto{
 	/**
 	 * Nivel de reorden (límite de existencias permitidas como mínimo) del producto
 	 */
-	private Integer nivel_Reorden;
+	private Integer nivelReorden;
 	
 	/**
 	 * Número de productos disponibles
@@ -60,9 +60,9 @@ public class Producto implements VOProducto{
 	/**
 	 * El id correspondiente a la Categoría del producto
 	 */
-	private long id_Categoria;
+	private long idCategoria;
 	
-	private long id_Sucursal;
+	private long idSucursal;
 
 	/**
 	 * Constructor del Producto con valores
@@ -83,16 +83,16 @@ public class Producto implements VOProducto{
 			Integer existencias, long idCategoria, long idSucursal) {
 		this.nombre = nombre;
 		this.marca = marca;
-		this.precio_Unitario = precioUnitario;
+		this.precioUnitario = precioUnitario;
 		this.presentacion = presentacion;
-		this.precio_UnidadMedida = precioUnidadMedida;
+		this.precioUnidadMedida = precioUnidadMedida;
 		this.unidadMedida = unidadMedida;
 		this.empacado = empacado;
 		this.codigoBarras = codigoBarras;
-		this.nivel_Reorden = nivelReorden;
+		this.nivelReorden = nivelReorden;
 		this.existencias = existencias;
-		this.id_Categoria = idCategoria;
-		this.id_Sucursal = idSucursal;
+		this.idCategoria = idCategoria;
+		this.idSucursal = idSucursal;
 	}
 	
 	/**
@@ -101,16 +101,16 @@ public class Producto implements VOProducto{
 	public Producto(){
 		this.nombre = "";
 		this.marca = "";
-		this.precio_Unitario = 0.0;
+		this.precioUnitario = 0.0;
 		this.presentacion = "";
-		this.precio_UnidadMedida = 0.0;
+		this.precioUnidadMedida = 0.0;
 		this.unidadMedida = "";
 		this.empacado = "";
 		this.codigoBarras = "";
-		this.nivel_Reorden = 0;
+		this.nivelReorden = 0;
 		this.existencias = 0;
-		this.id_Categoria = 0;
-		this.id_Sucursal = 0;
+		this.idCategoria = 0;
+		this.idSucursal = 0;
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class Producto implements VOProducto{
 	 * 
 	 * @param codigoBarras - el nuevo código de barras del producto
 	 */
-	public void setCodigo_Barras(String codigoBarras) {
+	public void setCodigoBarras(String codigoBarras) {
 		this.codigoBarras = codigoBarras;
 	}
 
@@ -157,7 +157,7 @@ public class Producto implements VOProducto{
 	 * 
 	 * @param marca - la nueva marca del producto
 	 */
-	public void set_Marca(String marca) {
+	public void setMarca(String marca) {
 		this.marca = marca;
 	}
 
@@ -166,15 +166,15 @@ public class Producto implements VOProducto{
 	 * @return el precio unitario del producto
 	 */
 	public Double getPrecioUnitario() {
-		return precio_Unitario;
+		return precioUnitario;
 	}
 
 	/**
 	 * 
 	 * @param precioUnitario - el nuevo precio unitario del producto
 	 */
-	public void setPrecio_Unitario(Double precioUnitario) {
-		this.precio_Unitario = precioUnitario;
+	public void setPrecioUnitario(Double precioUnitario) {
+		this.precioUnitario = precioUnitario;
 	}
 
 	/**
@@ -198,15 +198,15 @@ public class Producto implements VOProducto{
 	 * @return el precio por unidad de medida del producto
 	 */
 	public Double getPrecioUnidadMedida() {
-		return precio_UnidadMedida;
+		return precioUnidadMedida;
 	}
 
 	/**
 	 * 
 	 * @param precioUnidadMedida - el nuevo precio por unidad de medida del producto
 	 */
-	public void setPrecio_UnidadMedida(Double precioUnidadMedida) {
-		this.precio_UnidadMedida = precioUnidadMedida;
+	public void setPrecioUnidadMedida(Double precioUnidadMedida) {
+		this.precioUnidadMedida = precioUnidadMedida;
 	}
 
 	/**
@@ -221,7 +221,7 @@ public class Producto implements VOProducto{
 	 * 
 	 * @param unidadMedida - la nueva unidad de medida del producto
 	 */
-	public void setUnidad_Medida(String unidadMedida) {
+	public void setUnidadMedida(String unidadMedida) {
 		this.unidadMedida = unidadMedida;
 	}
 
@@ -246,7 +246,7 @@ public class Producto implements VOProducto{
 	 * @return el nivel de reorden del producto
 	 */
 	public Integer getNivelReorden() {
-		return nivel_Reorden;
+		return nivelReorden;
 	}
 
 	/**
@@ -254,7 +254,7 @@ public class Producto implements VOProducto{
 	 * @param nivelReorden - el nuevo nivel de reorden del producto
 	 */
 	public void setNivelReorden(Integer nivelReorden) {
-		this.nivel_Reorden = nivelReorden;
+		this.nivelReorden = nivelReorden;
 	}
 
 	/**
@@ -279,23 +279,23 @@ public class Producto implements VOProducto{
 	 * @return el id de la categoría del producto
 	 */
 	public long getIdCategoria() {
-		return id_Categoria;
+		return idCategoria;
 	}
 	
 	public long getIdSucursal() {
-		return id_Sucursal;
+		return idSucursal;
 	}
 
-	public void setId_Sucursal(long idSucursal) {
-		this.id_Sucursal = idSucursal;
+	public void setIdSucursal(long idSucursal) {
+		this.idSucursal = idSucursal;
 	}
 
 	/**
 	 * 
 	 * @param idCategoria - el nuevo id de una nueva categoría para el producto
 	 */
-	public void setId_Categoria(Long idCategoria) {
-		this.id_Categoria = idCategoria;
+	public void setIdCategoria(Long idCategoria) {
+		this.idCategoria = idCategoria;
 	}
 
 	/**
@@ -305,9 +305,9 @@ public class Producto implements VOProducto{
 	@Override
 	public String toString() {
 		return "Producto [codigoBarras=" + codigoBarras + ", nombre=" + nombre + ", marca=" + marca
-				+ ", precioUnitario=" + precio_Unitario + ", presentacion=" + presentacion + ", precioUnidadMedida="
-				+ precio_UnidadMedida + ", unidadMedida=" + unidadMedida + ", empacado=" + empacado + ", nivelReorden="
-				+ nivel_Reorden + ", existencias=" + existencias + "]";
+				+ ", precioUnitario=" + precioUnitario + ", presentacion=" + presentacion + ", precioUnidadMedida="
+				+ precioUnidadMedida + ", unidadMedida=" + unidadMedida + ", empacado=" + empacado + ", nivelReorden="
+				+ nivelReorden + ", existencias=" + existencias + "]";
 	}
 	
 	
