@@ -89,13 +89,14 @@ public class SQLProducto {
 	 */
 	public List<Producto> darProductos (PersistenceManager pm)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM " + pa.PRODUCTO);
+		Query q = pm.newQuery(SQL, "SELECT nombre, marca, precio_unitario precioUnitario, presentacion, precio_unidadmedida precioUnidadMedida, empacado, codigo_barras codigobarras, id_categoria idCategoria, nivel_reorden nivelReorden, existencias FROM " + pa.PRODUCTO);
 		q.setResultClass(Producto.class);
 		return (List<Producto>) q.executeList();
 	}
 	
 	public Producto darProductoPorId(PersistenceManager pm, long idProducto) {
-		Query q = pm.newQuery(SQL, "SELECT * FROM " + pa.PRODUCTO + " WHERE codigo_barras = ?");
+		Query q = pm.newQuery(SQL, "SELECT nombre, marca, precio_unitario precioUnitario, presentacion, precio_unidadmedida precioUnidadMedida, empacado, codigo_barras codigobarras, id_categoria idCategoria, nivel_reorden nivelReorden, existencias"
+				+ " FROM " + pa.PRODUCTO + " WHERE codigo_barras = ?");
 		q.setResultClass(Producto.class);
 		return (Producto) q.execute(idProducto);
 	}
@@ -108,7 +109,8 @@ public class SQLProducto {
 	 * @return
 	 */
 	public List<Producto> darProductosPorRangoDePrecioUnitario(PersistenceManager pm, double p1, double p2) {
-		Query q = pm.newQuery(SQL, "SELECT * FROM " + pa.PRODUCTO
+		Query q = pm.newQuery(SQL, "SELECT nombre, marca, precio_unitario precioUnitario, presentacion, precio_unidadmedida precioUnidadMedida, empacado, codigo_barras codigobarras, id_categoria idCategoria, nivel_reorden nivelReorden, existencias"
+				+ " FROM " + pa.PRODUCTO
 				+ " WHERE precio_unitario BETWEEN " + p1 + " AND " + p2);
 		q.setResultClass(Producto.class);
 		return (List<Producto>) q.executeList();
@@ -122,7 +124,8 @@ public class SQLProducto {
 	 * @return
 	 */
 	public List<Producto> darProductosPorRangoDePrecioUM(PersistenceManager pm, double p1, double p2) {
-		Query q = pm.newQuery(SQL, "SELECT * FROM " + pa.PRODUCTO
+		Query q = pm.newQuery(SQL, "SELECT nombre, marca, precio_unitario precioUnitario, presentacion, precio_unidadmedida precioUnidadMedida, empacado, codigo_barras codigobarras, id_categoria idCategoria, nivel_reorden nivelReorden, existencias"
+				+ " FROM " + pa.PRODUCTO
 				+ " WHERE precio_unidadMedida BETWEEN " + p1 + " AND " + p2);
 		q.setResultClass(Producto.class);
 		return (List<Producto>) q.executeList();

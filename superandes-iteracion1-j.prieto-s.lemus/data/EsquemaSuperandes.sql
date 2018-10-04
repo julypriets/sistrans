@@ -1,6 +1,9 @@
 -- Sentencias SQL para la creación del esquema de SuperAndes
 
 -- Creación del secuenciador
+-- Inicialmente se crearon unas tuplas en las tablas sin tener en cuenta el sequenciador
+-- Por facilidad, teniendo en cuenta que el máximo número de tuplas para las tablas fue 500,
+-- Se inició el sequenciador desde 501
 create sequence superandes_sequence
   START WITH 501;
 
