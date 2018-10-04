@@ -72,7 +72,7 @@ public class PersistenciaSuperandes
 	 */
 	public static final String SUCURSAL = "SUCURSAL";
 	public static final String PRODUCTO = "PRODUCTO";
-	public static final String CATEGORÍA = "CATEGORÍA";
+	public static final String CATEGORIA = "CATEGORIA";
 	public static final String PERECEDERO = "PERECEDERO";
 	public static final String ORDEN = "ORDEN";
 	public static final String ESTANTE = "ESTANTE";
@@ -167,7 +167,7 @@ public class PersistenciaSuperandes
 		tablas.add ("Superandes_sequence"); //1
 		tablas.add ("SUCURSAL"); //2
 		tablas.add ("PRODUCTO"); //3
-		tablas.add ("CATEGORÍA"); //4
+		tablas.add ("CATEGORIA"); //4
 		tablas.add ("PERECEDERO"); //5
 		tablas.add ("ORDEN"); //6
 		tablas.add ("ESTANTE"); //7
