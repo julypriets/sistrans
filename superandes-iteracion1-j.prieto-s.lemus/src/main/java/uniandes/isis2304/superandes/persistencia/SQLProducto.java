@@ -102,7 +102,7 @@ public class SQLProducto {
 	
 	/**
 	 * Retorna los productos dado un rango de precios unitarios
-	 * @param pm
+	 * @param pm - PersistenceManager
 	 * @param p1 - límite inferior
 	 * @param p2 - límite superior
 	 * @return
@@ -116,7 +116,7 @@ public class SQLProducto {
 	
 	/**
 	 * Retorna los productos dado un rango de precios por unidad de medida
-	 * @param pm
+	 * @param pm - PersistenceManager
 	 * @param p1 - límite superior
 	 * @param p2 - límite inferior
 	 * @return
@@ -124,6 +124,21 @@ public class SQLProducto {
 	public List<Producto> darProductosPorRangoDePrecioUM(PersistenceManager pm, double p1, double p2) {
 		Query q = pm.newQuery(SQL, "SELECT * FROM " + pa.PRODUCTO
 				+ " WHERE precio_unidadMedida BETWEEN " + p1 + " AND " + p2);
+		q.setResultClass(Producto.class);
+		return (List<Producto>) q.executeList();
+	}
+	
+	/**
+	 * Retorna los productos de una sucursal dada
+	 * @param pm - PersistenceManager
+	 * @param idSucursal
+	 * @return
+	 */
+	public List<Producto> darProductosPorSucursal(PersistenceManager pm, long idSucursal){
+		Query q = pm.newQuery(SQL, "SELECT prod.* " + 
+				"FROM PRODUCTO prod, SUCURSAL_PRODUCTO sucprod " + 
+				"WHERE  " + 
+				"    prod.codigo_barras = sucprod.id_producto AND sucprod.id_sucursal = " + idSucursal);
 		q.setResultClass(Producto.class);
 		return (List<Producto>) q.executeList();
 	}
