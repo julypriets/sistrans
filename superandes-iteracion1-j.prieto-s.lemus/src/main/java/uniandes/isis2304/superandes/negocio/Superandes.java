@@ -20,6 +20,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.jdo.PersistenceManager;
+
 import org.apache.log4j.Logger;
 import com.google.gson.JsonObject;
 
@@ -110,6 +112,35 @@ public class Superandes
 	
 	public List<Producto> darProductos(){
 		return pa.darProductos();
+	}
+	
+	/**
+	 * (RFC4)Retorna los productos dado un rango de precios unitarios
+	 * @param p1 - límite inferior
+	 * @param p2 - límite superior
+	 * @return
+	 */
+	public List<Producto> darProductosPorRangoDePrecioUnitario(double p1, double p2) {
+		return pa.darProductosPorRangoDePrecioUnitario(p1, p2);
+	}
+	
+	/**
+	 * (RFC4)Retorna los productos dado un rango de precios por unidad de medida
+	 * @param p1 - límite superior
+	 * @param p2 - límite inferior
+	 * @return
+	 */
+	public List<Producto> darProductosPorRangoDePrecioUM(double p1, double p2) {
+		return pa.darProductosPorRangoDePrecioUM(p1, p2);
+	}
+	
+	/**
+	 * (RFC4)Retorna los productos de una sucursal dada
+	 * @param idSucursal
+	 * @return
+	 */
+	public List<Producto> darProductosPorSucursal(long idSucursal){
+		return pa.darProductosPorSucursal(idSucursal);
 	}
 	
 	/* ****************************************************************

@@ -1,7 +1,8 @@
 -- Sentencias SQL para la creación del esquema de SuperAndes
 
 -- Creación del secuenciador
-create sequence superandes_sequence;
+create sequence superandes_sequence
+  START WITH 501;
 
 -- Creación de la tabla SUCURSAL y especificación de sus restricciones
 CREATE TABLE SUCURSAL (

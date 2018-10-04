@@ -335,6 +335,109 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     	
     }
     
+	/**
+	 * (RFC4)Retorna los productos dado un rango de precios unitarios
+	 * @param p1 - límite inferior
+	 * @param p2 - límite superior
+	 * @return
+	 */
+	public void darProductosPorRangoDePrecioUnitario() {
+		
+		JTextField p1 = new JTextField();
+		JTextField p2 = new JTextField();
+		Object[] message = {
+		    "Límite inferior:", p1,
+		    "Límite superior:", p2,
+		};
+		int option = JOptionPane.showConfirmDialog(this, message, "Obtener los productos por rango de precio: ", JOptionPane.OK_CANCEL_OPTION);
+		if (option == JOptionPane.OK_OPTION)
+		{
+
+    		double p1Resp = Double.parseDouble(p1.getText());
+    		double p2Resp = Double.parseDouble(p2.getText());
+
+    		
+        	String resultado = "En darProductosPorRangoDePrecioUnitario\n\n";
+        	List<Producto> ps = superandes.darProductosPorRangoDePrecioUnitario(p1Resp, p2Resp);
+        	
+        	for(Producto p : ps) {
+        		resultado += "Producto: " + p.toString() + "\n";
+        	}
+        	resultado += "Terminó proceso";
+        	panelDatos.actualizarInterfaz(resultado);
+		}else {
+			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+		}
+		
+	}
+	
+	/**
+	 * (RFC4)Retorna los productos dado un rango de precios por unidad de medida
+	 * @param p1 - límite superior
+	 * @param p2 - límite inferior
+	 * @return
+	 */
+	public void darProductosPorRangoDePrecioUM() {
+		
+		JTextField p1 = new JTextField();
+		JTextField p2 = new JTextField();
+		Object[] message = {
+		    "Límite inferior:", p1,
+		    "Límite superior:", p2,
+		};
+		int option = JOptionPane.showConfirmDialog(this, message, "Obtener los productos por rango de precio: ", JOptionPane.OK_CANCEL_OPTION);
+		if (option == JOptionPane.OK_OPTION)
+		{
+
+    		double p1Resp = Double.parseDouble(p1.getText());
+    		double p2Resp = Double.parseDouble(p2.getText());
+
+    		
+        	String resultado = "En darProductosPorRangoDePrecioUM\n\n";
+        	List<Producto> ps = superandes.darProductosPorRangoDePrecioUM(p1Resp, p2Resp);
+        	
+        	for(Producto p : ps) {
+        		resultado += "Producto: " + p.toString() + "\n";
+        	}
+        	resultado += "Terminó proceso";
+        	panelDatos.actualizarInterfaz(resultado);
+		}else {
+			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+		}
+		
+	}
+	
+	/**
+	 * (RFC4)Retorna los productos de una sucursal dada
+	 * @param idSucursal
+	 * @return
+	 */
+	public void darProductosPorSucursal(){
+		
+		JTextField idSucursal = new JTextField();
+		Object[] message = {
+		    "idSucursal", idSucursal,
+		};
+		int option = JOptionPane.showConfirmDialog(this, message, "Obtener los productos por sucursal: ", JOptionPane.OK_CANCEL_OPTION);
+		if (option == JOptionPane.OK_OPTION)
+		{
+
+    		long p1Resp = Long.parseLong(idSucursal.getText());
+    		
+        	String resultado = "En darProductosPorSucursal\n\n";
+        	List<Producto> ps = superandes.darProductosPorSucursal(p1Resp);
+        	
+        	for(Producto p : ps) {
+        		resultado += "Producto: " + p.toString() + "\n";
+        	}
+        	resultado += "Terminó proceso";
+        	panelDatos.actualizarInterfaz(resultado);
+		}else {
+			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+		}
+
+	}
+    
     
 	/* ****************************************************************
 	 * 			Operaciones Cliente

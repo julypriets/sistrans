@@ -15,6 +15,18 @@
 				{
 					"label": "Obtener los productos",
 					"event": "darProductos"
+				},
+				{
+					"label": "Obtener los productos por rango de precio unitario",
+					"event": "darProductosPorRangoDePrecioUnitario"
+				},
+				{
+					"label": "Obtener los productos por rango de precio de unidad de medida",
+					"event": "darProductosPorRangoDePrecioUM"
+				},
+				{
+					"label": "Obtener los productos por sucursal",
+					"event": "darProductosPorSucursal"
 				}
 			]
 		},		

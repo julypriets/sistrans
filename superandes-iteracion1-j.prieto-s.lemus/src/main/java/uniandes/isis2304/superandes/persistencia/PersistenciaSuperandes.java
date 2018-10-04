@@ -26,6 +26,7 @@ import javax.jdo.JDODataStoreException;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
+import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import org.apache.log4j.Logger;
@@ -386,8 +387,46 @@ public class PersistenciaSuperandes
 		return sqlProducto.darProductos(pmf.getPersistenceManager());
 	}
 	
+	/**
+	 * Retorna el producto dado el id
+	 * @param idProducto
+	 * @return
+	 */
 	public Producto darProductoPorId(long idProducto) {
 		return sqlProducto.darProductoPorId(pmf.getPersistenceManager(), idProducto);
+	}
+	
+
+	/**
+	 * Retorna los productos dado un rango de precios unitarios
+	 * @param p1 - límite inferior
+	 * @param p2 - límite superior
+	 * @return
+	 */
+	public List<Producto> darProductosPorRangoDePrecioUnitario(double p1, double p2) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		return sqlProducto.darProductosPorRangoDePrecioUnitario(pm, p1, p2);
+	}
+	
+	/**
+	 * Retorna los productos dado un rango de precios por unidad de medida
+	 * @param p1 - límite superior
+	 * @param p2 - límite inferior
+	 * @return
+	 */
+	public List<Producto> darProductosPorRangoDePrecioUM(double p1, double p2) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		return sqlProducto.darProductosPorRangoDePrecioUM(pm, p1, p2);
+	}
+	
+	/**
+	 * Retorna los productos de una sucursal dada
+	 * @param idSucursal
+	 * @return
+	 */
+	public List<Producto> darProductosPorSucursal(long idSucursal){
+		PersistenceManager pm = pmf.getPersistenceManager();
+		return sqlProducto.darProductosPorSucursal(pm, idSucursal);
 	}
 
 	/* ****************************************************************

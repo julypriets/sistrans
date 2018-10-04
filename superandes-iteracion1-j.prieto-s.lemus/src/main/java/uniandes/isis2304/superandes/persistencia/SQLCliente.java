@@ -44,8 +44,8 @@ public class SQLCliente {
 	public long adicionarEmpresa(PersistenceManager pm, long id, String nombre, String correo, String nit, String direccion) {
         // insertar en la tabla clientes
 		Query q1 = pm.newQuery(SQL, "INSERT INTO " + pa.CLIENTE + "(id, nombre, correo) "
-				+ "values (?, ?, ?)");
-//        		+ "values ( " + id +", " + "'" + nombre + "', " + "'" + correo + "')");
+//				+ "values (?, ?, ?)");
+        		+ "values ( " + id +", " + "'" + nombre + "', " + "'" + correo + "')");
 //		Map<String, Object> params = new HashMap<>();
 //		params.put("idEm", id);
 //		params.put("nombreEm", nombre);
@@ -55,7 +55,7 @@ public class SQLCliente {
 		
         //q1.setParameters(id, nombre, correo);
         //q1.compile();
-        long num1 = (long) q1.execute(id, nombre, correo);
+        long num1 = (long) q1.execute();
         //return num1;
         
         // insertar en la tabla empresa
