@@ -1,30 +1,11 @@
-/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- * Universidad	de	los	Andes	(Bogotá	- Colombia)
- * Departamento	de	Ingeniería	de	Sistemas	y	Computación
- * Licenciado	bajo	el	esquema	Academic Free License versión 2.1
- * 		
- * Curso: isis2304 - Sistemas Transaccionales
- * Proyecto: Parranderos Uniandes
- * @version 1.0
- * @author Germán Bravo
- * Julio de 2018
- * 
- * Revisado por: Claudia Jiménez, Christian Ariza
- * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- */
-
 package uniandes.isis2304.superandes.negocio;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.jdo.PersistenceManager;
-
 import org.apache.log4j.Logger;
 import com.google.gson.JsonObject;
-
 import uniandes.isis2304.superandes.persistencia.PersistenciaSuperandes;
 
 /**
@@ -49,7 +30,7 @@ public class Superandes
 	/**
 	 * El manejador de persistencia
 	 */
-	private PersistenciaSuperandes pa;
+	private PersistenciaSuperandes ps;
 	
 	/* ****************************************************************
 	 * 			Métodos
@@ -59,7 +40,7 @@ public class Superandes
 	 */
 	public Superandes ()
 	{
-		pa = PersistenciaSuperandes.getInstance ();
+		ps = PersistenciaSuperandes.getInstance ();
 	}
 	
 	/**
@@ -68,7 +49,7 @@ public class Superandes
 	 */
 	public Superandes (JsonObject tableConfig)
 	{
-		pa = PersistenciaSuperandes.getInstance (tableConfig);
+		ps = PersistenciaSuperandes.getInstance (tableConfig);
 	}
 	
 	/**
@@ -76,169 +57,54 @@ public class Superandes
 	 */
 	public void cerrarUnidadPersistencia ()
 	{
-		pa.cerrarUnidadPersistencia ();
+		ps.cerrarUnidadPersistencia ();
 	}
 	
+	
+	/*
+	 * REQUERIMIENTOS FUNCIONALES
+	 * 
+	 *  Registrar proveedores
+	 *  
+	 *  Registrar productos
+	 *  
+	 *  Registrar clientes
+	 *  
+	 *  Registar una sucursal
+	 *  
+	 *  Registrar una bodega a una sucursal
+	 *  
+	 *  Registrar un estante en una sucursal
+	 *  
+	 *  Registrar una promoción
+	 *  
+	 *  Finalizar una promoción
+	 *  
+	 *  Registrar un pedido de un producto a un proveedor para una sucursal
+	 *  
+	 *  Registrar la llegada de un pedido de un producto a una sucursal
+	 *  
+	 *  Regsistrar una venta de un producto en una sucursal
+	 *  
+	 */
+
 	/* ****************************************************************
-	 * 			Métodos para manejar los PRODUCTOS
+	 * 			Métodos para administración
 	 *****************************************************************/
 
 	/**
-	 * Se encarga de adicionar un producto según los valores dados
-	 * y de retornar la representación en Objeto respectiva
-	 * @param nombre
-	 * @param marca
-	 * @param precioUnitario
-	 * @param presentacion
-	 * @param precioUnidadMedida
-	 * @param unidadMedida
-	 * @param empacado
-	 * @param codigoBarras
-	 * @param nivelReorden
-	 * @param existencias
-	 * @param idCategoria
-	 * @param idSucursal
-	 * @return La representación del producto
+	 * Elimina todas las tuplas de todas las tablas de la base de datos de Superandes
+	 * @return Un arreglo con 24 números que indican el número de tuplas borradas en las tablas: 
+	 * SUCURSAL, CATEGORIA, PRODUCTO, ORDEN, ESTANTE, BODEGA, ABASTECIMIENTO, PROVEEDOR, PERSONA,
+	 * EMPRESA, CAJERO, FACTURA, PROMOCION, USUARIO, ABASTECIMIENTO_BODEGA, SURTIDO, PRODUCTO_ABASTECIMIENTO, 
+	 * INVENTARIO, PRODUCTO_ORDEN, CATALOGO, ORDEN_PROVEEDOR, COMPRA, PRODUCTO_PROMOCION y FACTURA_PROMOCION,
+	 * respectivamente.
 	 */
-	public Producto adicionarProducto(String nombre, String marca, Double precioUnitario, String presentacion,
-			Double precioUnidadMedida, String unidadMedida, String empacado, String codigoBarras, Integer nivelReorden,
-			Integer existencias, Long idCategoria, Long idSucursal) {
-		log.info("Adicionando el producto: " + nombre + "con código de barras: " + codigoBarras);
-		Producto p = pa.adicionarProducto(nombre, marca, precioUnitario, presentacion, precioUnidadMedida, unidadMedida, empacado, codigoBarras, nivelReorden, existencias, idCategoria, idSucursal);
-		log.info("Adicionando el producto: " + p.toString());
-		return p;
+	public long [] limpiarParranderos ()
+	{
+        log.info ("Limpiando la BD de Parranderos");
+        long [] borrrados = ps.limpiarParranderos();	
+        log.info ("Limpiando la BD de Parranderos: Listo!");
+        return borrrados;
 	}
-	
-	
-	public List<Producto> darProductos(){
-		return pa.darProductos();
-	}
-	
-	/**
-	 * (RFC4)Retorna los productos dado un rango de precios unitarios
-	 * @param p1 - límite inferior
-	 * @param p2 - límite superior
-	 * @return
-	 */
-	public List<Producto> darProductosPorRangoDePrecioUnitario(double p1, double p2) {
-		return pa.darProductosPorRangoDePrecioUnitario(p1, p2);
-	}
-	
-	/**
-	 * (RFC4)Retorna los productos dado un rango de precios por unidad de medida
-	 * @param p1 - límite superior
-	 * @param p2 - límite inferior
-	 * @return
-	 */
-	public List<Producto> darProductosPorRangoDePrecioUM(double p1, double p2) {
-		return pa.darProductosPorRangoDePrecioUM(p1, p2);
-	}
-	
-	/**
-	 * (RFC4)Retorna los productos de una sucursal dada
-	 * @param idSucursal
-	 * @return
-	 */
-	public List<Producto> darProductosPorSucursal(long idSucursal){
-		return pa.darProductosPorSucursal(idSucursal);
-	}
-	
-	/* ****************************************************************
-	 * 			Métodos para manejar los CLIENTES
-	 *****************************************************************/
-	
-	/**
-	 * Se encarga de adicionar una empresa según los valores dados
-	 * y de retornar la representación en Objeto respectiva
-	 * @param id
-	 * @param nombre
-	 * @param correo
-	 * @param nit
-	 * @param direccion
-	 * @return
-	 */
-	public Cliente adicionarEmpresa(String nombre, String correo, String nit, String direccion) {
-		log.info("Adicionando la empresa: " + nombre + "con nit: " + nit);
-		Cliente e = pa.adicionarEmpresa(nombre, correo, nit, direccion);
-		log.info("Adicionando la empresa: " + e.toString());
-		return e;
-	} 
-	
-	/**
-	 * Se encarga de adicionar una persona natural según los valores dados
-	 * y de retornar la representación en Objeto respectiva
-	 * @param id
-	 * @param nombre
-	 * @param correo
-	 * @param identificacion
-	 * @return
-	 */
-	public Cliente adicionarPersonaNatural(String nombre, String correo, String identificacion) {
-		log.info("Adicionando la persona: " + nombre + "con documento de identificación: " + identificacion);
-		Cliente p = pa.adicionarPersonaNatural(nombre, correo, identificacion);
-		log.info("Adicionando el producto: " + p.toString());
-		return p;
-	} 
-	
-	/**
-	 * Retorna todos los clientes existentes
-	 * @return
-	 */
-	public List<Cliente> darClientes(){
-		return pa.darClientes();
-	}
-	
-	/* ****************************************************************
-	 * 			Métodos para manejar las PROMOCIONES
-	 *****************************************************************/
-	
-	/**
-	 * (RF8) Finaliza las promociones que ya se vencieron o cuyos productos
-	 * asociados hayan agotado sus existencias
-	 * @param fechaActual
-	 * @return número de tuplas eliminadas
-	 */
-	public long finalizarPromocion(Date fechaActual) {
-		return pa.finalizarPromocion(fechaActual);
-	}
-	
-	/**
-	 * (RFC2)
-	 * @return las 20 promociones con más compras
-	 */
-	public List<ComprasPorPromocion> dar20PromocionesMasPopulares(){
-		return pa.dar20PromocionesMasPopulares();
-	}
-	
-	/* ****************************************************************
-	 * 			Métodos para manejar las ORDENES
-	 *****************************************************************/
-	
-	/** (RF10)
-	 * Registra una orden en la base de datos
-	 * @param precio
-	 * @param fechaEsperada
-	 * @param fechaLlegada
-	 * @param estado
-	 * @param calificacion
-	 * @param idSucursal
-	 * @param idProveedor
-	 * @return
-	 */
-	public Orden adicionarOrden(Double precio, Timestamp fechaEsperada, Timestamp fechaLlegada, String estado,
-			Double calificacion, long idSucursal, long idProveedor) {
-		return pa.adicionarOrden(precio, fechaEsperada, fechaLlegada, estado, calificacion, idSucursal, idProveedor);
-		
-	}
-	
-//	/**
-//	 * Elimina todas las tuplas de todas las tablas de la base de datos 
-//	 */
-//	public long [] limpiarParranderos ()
-//	{
-//        log.info ("Limpiando la BD de Parranderos");
-//        long [] borrrados = pp.limpiarParranderos();	
-//        log.info ("Limpiando la BD de Parranderos: Listo!");
-//        return borrrados;
-//	}
 }
