@@ -5,7 +5,7 @@ public class ProductoPromocion implements VOProductoPromocion{
 	/**
 	 * El id del producto con la promoción
 	 */
-	private long idProducto;
+	private String idProducto;
 	
 	/**
 	 * El id de la promoción del producto
@@ -17,7 +17,7 @@ public class ProductoPromocion implements VOProductoPromocion{
 	 * @param idProducto
 	 * @param idPromocion
 	 */
-	public ProductoPromocion(long idProducto, long idPromocion) {
+	public ProductoPromocion(String idProducto, long idPromocion) {
 		this.idProducto = idProducto;
 		this.idPromocion = idPromocion;
 	}
@@ -25,7 +25,7 @@ public class ProductoPromocion implements VOProductoPromocion{
 	/**
 	 * Obtiene el id del producto relacionado con la promoción
 	 */
-	public long getIdProducto() {
+	public String getIdProducto() {
 		return idProducto;
 	}
 
@@ -33,7 +33,7 @@ public class ProductoPromocion implements VOProductoPromocion{
 	 * Modifica el id del producto relacionado con la promoción
 	 * @param idProducto
 	 */
-	public void setIdProducto(long idProducto) {
+	public void setIdProducto(String idProducto) {
 		this.idProducto = idProducto;
 	}
 

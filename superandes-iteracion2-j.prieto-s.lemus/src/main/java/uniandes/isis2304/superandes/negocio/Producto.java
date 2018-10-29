@@ -1,5 +1,7 @@
 package uniandes.isis2304.superandes.negocio;
 
+import java.sql.Timestamp;
+
 /**
  * Clase que se encarga de modelar el concepto de PRODUCTO en Superandes.
  * @author s.lemus
@@ -62,25 +64,35 @@ public class Producto implements VOProducto{
 	 */
 	private long idCategoria;
 	
+	/**
+	 * El id de la Sucursal a la que pertenece el producto
+	 */
 	private long idSucursal;
+	
+	/**
+	 * Fecha de vencimiento del producto en caso de ser PERECEDERO
+	 */
+	private Timestamp fechaVencimiento;
+	
 
 	/**
 	 * Constructor del Producto con valores
-	 * @param id
-	 * @param nombre
-	 * @param marca
-	 * @param precioUnitario
-	 * @param presentacion
-	 * @param precioUnidadMedida
-	 * @param unidadMedida
-	 * @param empacado
-	 * @param codigoBarras
-	 * @param nivelReorden
-	 * @param existencias
+	 * @param nombre - nombre del producto
+	 * @param marca - marca del producto
+	 * @param precioUnitario - precioUnitario del producto
+	 * @param presentacion - presentación del producto
+	 * @param precioUnidadMedida - precio por unidad de medida del producto
+	 * @param unidadMedida - unidad de medida del producto
+	 * @param empacado - empacado del producto
+	 * @param codigoBarras - código de barras del producto
+	 * @param idCategoria - identificador de la categoría del producto
+	 * @param nivelReorden - nivel de reorden del producto
+	 * @param existencias - existencias del producto
+	 * @param fechaVencimiento - fecha de vencimiento del producto
 	 */
 	public Producto(String nombre, String marca, Double precioUnitario, String presentacion,
 			Double precioUnidadMedida, String unidadMedida, String empacado, String codigoBarras, Integer nivelReorden,
-			Integer existencias, long idCategoria, long idSucursal) {
+			Integer existencias, long idCategoria, long idSucursal, Timestamp fechaVencimiento) {
 		this.nombre = nombre;
 		this.marca = marca;
 		this.precioUnitario = precioUnitario;
@@ -93,6 +105,7 @@ public class Producto implements VOProducto{
 		this.existencias = existencias;
 		this.idCategoria = idCategoria;
 		this.idSucursal = idSucursal;
+		this.fechaVencimiento = fechaVencimiento;
 	}
 	
 	/**
@@ -111,6 +124,7 @@ public class Producto implements VOProducto{
 		this.existencias = 0;
 		this.idCategoria = 0;
 		this.idSucursal = 0;
+		this.fechaVencimiento = null;
 	}
 
 	/**
@@ -291,6 +305,30 @@ public class Producto implements VOProducto{
 	}
 
 	/**
+	 * Obtiene la fecha de vencimiento del producto
+	 * @return - fecha de vencimiento del producto
+	 */
+	public Timestamp getFechaVencimiento() {
+		return fechaVencimiento;
+	}
+
+	/**
+	 * Modifica la fecha de vencimiento del producto
+	 * @param fechaVencimiento - nueva fecha de vencimiento del producto
+	 */
+	public void setFechaVencimiento(Timestamp fechaVencimiento) {
+		this.fechaVencimiento = fechaVencimiento;
+	}
+
+	/**
+	 * Modifica el id de la categoria del producto
+	 * @param idCategoria - nuevo id de la categoria del producto
+	 */
+	public void setIdCategoria(long idCategoria) {
+		this.idCategoria = idCategoria;
+	}
+	
+	/**
 	 * 
 	 * @param idCategoria - el nuevo id de una nueva categoría para el producto
 	 */
@@ -307,8 +345,8 @@ public class Producto implements VOProducto{
 		return "Producto [codigoBarras=" + codigoBarras + ", nombre=" + nombre + ", marca=" + marca
 				+ ", precioUnitario=" + precioUnitario + ", presentacion=" + presentacion + ", precioUnidadMedida="
 				+ precioUnidadMedida + ", unidadMedida=" + unidadMedida + ", empacado=" + empacado + ", nivelReorden="
-				+ nivelReorden + ", existencias=" + existencias + "]";
+				+ nivelReorden + ", existencias=" + existencias + ", fechaVencimiento=" + fechaVencimiento.toString() + "]";
 	}
-	
+
 	
 }

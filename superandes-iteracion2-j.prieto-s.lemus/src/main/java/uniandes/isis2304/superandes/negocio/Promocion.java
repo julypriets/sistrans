@@ -42,7 +42,7 @@ public class Promocion implements VOPromocion{
 	/**
 	 * Cantidad de descuento resultante al aplicar algún tipo de promoción
 	 */
-	private double descuento;
+	private int descuento;
 	
 	/**
 	 * Sucursal a la que pertenece
@@ -52,7 +52,7 @@ public class Promocion implements VOPromocion{
 	/**
 	 * El producto al cual pertenece el descuento
 	 */
-	private long idProducto;
+	private String idProducto;
 	
 	// Las siguientes constantes representan el tipo de descuento:
 	
@@ -98,7 +98,7 @@ public class Promocion implements VOPromocion{
 	 * @param idProducto
 	 */
 	public Promocion(long id, int tipo, double precio, Timestamp fechaInicio, Timestamp fechaFin, int cantidad1,
-			int cantidad2, double descuento, long idSucural, long idProducto) {
+			int cantidad2, int descuento, long idSucural, String idProducto) {
 		this.id = id;
 		this.tipo = tipo;
 		this.precio = precio;
@@ -122,9 +122,9 @@ public class Promocion implements VOPromocion{
 		this.fechaFin = new Timestamp(0);
 		this.cantidad1 = 0;
 		this.cantidad2 = 0;
-		this.descuento = 0.0;
+		this.descuento = 0;
 		this.idSucural = 0;
-		this.idProducto = 0;
+		this.idProducto = "";
 	}
 
 	public long getId() {
@@ -183,11 +183,11 @@ public class Promocion implements VOPromocion{
 		this.cantidad2 = cantidad2;
 	}
 
-	public double getDescuento() {
+	public int getDescuento() {
 		return descuento;
 	}
 
-	public void setDescuento(double descuento) {
+	public void setDescuento(int descuento) {
 		this.descuento = descuento;
 	}
 
@@ -199,11 +199,11 @@ public class Promocion implements VOPromocion{
 		this.idSucural = idSucural;
 	}
 
-	public long getIdProducto() {
+	public String getIdProducto() {
 		return idProducto;
 	}
 
-	public void setIdProducto(long idProducto) {
+	public void setIdProducto(String idProducto) {
 		this.idProducto = idProducto;
 	}
 

@@ -47,7 +47,7 @@ public class Factura implements VOFactura{
 	/**
 	 * Indica si la factura fue comprada o no
 	 */
-	private boolean comprada;
+	private int comprada;
 	
 	
 	/**
@@ -61,7 +61,7 @@ public class Factura implements VOFactura{
 	 * @param cliente - tipo de cliente que hizo la compra
 	 * @param comprada - indica si la compra se realizó o no
 	 */
-	public Factura(long id, Double precioTotal, Timestamp fecha, long idCajero, long idPersona, long idEmpresa, String cliente, boolean comprada ) {
+	public Factura(long id, Double precioTotal, Timestamp fecha, long idCajero, long idPersona, long idEmpresa, String cliente, int comprada ) {
 		this.id = id;
 		this.precioTotal = precioTotal;
 		this.fecha = fecha;
@@ -83,7 +83,7 @@ public class Factura implements VOFactura{
 		this.idPersona = 0;
 		this.idEmpresa = 0;
 		this.cliente = "";
-		this.comprada = false;
+		this.comprada = 0;
 	}
 
 	/**
@@ -203,7 +203,7 @@ public class Factura implements VOFactura{
 	 * Indica si la compra se hizo o no
 	 * @return - si la compra se hizo o no
 	 */
-	public boolean isComprada() {
+	public int getComprada() {
 		return comprada;
 	}
 
@@ -211,7 +211,7 @@ public class Factura implements VOFactura{
 	 * Modifica si la compra se hizo o no
 	 * @param comprada - si la compra se hizo o no
 	 */
-	public void setComprada(boolean comprada) {
+	public void setComprada(int comprada) {
 		this.comprada = comprada;
 	}
 
@@ -223,12 +223,5 @@ public class Factura implements VOFactura{
 	public void setIdCajero(long idCajero) {
 		this.idCajero = idCajero;
 	}
-
-	@Override
-	public long getIdCliente() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
 	
 }

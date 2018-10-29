@@ -5,7 +5,7 @@ public class Compra implements VOCompra{
 	/**
 	 * El producto comprado
 	 */
-	private long idProducto;
+	private String idProducto;
 	
 	/**
 	 * La factura respectiva de la compra
@@ -17,7 +17,7 @@ public class Compra implements VOCompra{
 	 * @param idProducto
 	 * @param idFactura
 	 */
-	public Compra(long idProducto, long idFactura) {
+	public Compra(String idProducto, long idFactura) {
 		this.idProducto = idProducto;
 		this.idFactura = idFactura;
 	}
@@ -26,14 +26,14 @@ public class Compra implements VOCompra{
 	 * Constructor por defecto
 	 */
 	public Compra() {
-		this.idProducto = 0;
+		this.idProducto = "";
 		this.idFactura = 0;
 	}
 
 	/**
 	 * Retorna el identificador del producto adquirido
 	 */
-	public long getIdProducto() {
+	public String getIdProducto() {
 		return idProducto;
 	}
 
@@ -41,7 +41,7 @@ public class Compra implements VOCompra{
 	 * Modifica el identificador del producto adquirido
 	 * @param idProducto - nuevo identificador del producto adquirido
 	 */
-	public void setIdProducto(long idProducto) {
+	public void setIdProducto(String idProducto) {
 		this.idProducto = idProducto;
 	}
 

@@ -18,11 +18,11 @@ public interface VOPromocion {
 
 	public int getCantidad2();
 
-	public double getDescuento();
+	public int getDescuento();
 
 	public long getIdSucural();
 
-	public long getIdProducto();
+	public String getIdProducto();
 	
 	@Override
 	public String toString();

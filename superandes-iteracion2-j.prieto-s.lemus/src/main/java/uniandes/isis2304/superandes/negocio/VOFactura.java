@@ -17,8 +17,12 @@ public interface VOFactura {
 	public Timestamp getFecha();
 
 	public long getIdCajero();
-
-	public long getIdCliente();
+	
+	public long getIdPersona();
+	
+	public long getIdEmpresa();
+	
+	public int getComprada();
 	
 	@Override
 	public String toString();

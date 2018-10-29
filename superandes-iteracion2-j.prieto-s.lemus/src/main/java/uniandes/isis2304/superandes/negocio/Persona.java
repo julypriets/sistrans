@@ -1,38 +1,48 @@
 package uniandes.isis2304.superandes.negocio;
 
-public class Persona implements VOPersona{
-
+public class Persona extends Cliente implements VOPersona{
+	
 	/**
-	 * Identificación de la persona que realiza la compra
+	 * Identificador del cliente
+	 */
+	private long id;
+	
+	/**
+	 * Identificacion de la persona
 	 */
 	private String identificacion;
-	
-	/**
-	 * Nombre de la persona
-	 */
-	private String nombre;
-	
-	/**
-	 * Correo electrónico de la persona
-	 */
-	private String correo;
 
+	/**
+	 * Crea una nueva persona
+	 * @param id - identificador del cliente
+	 * @param nombre - nombre del cliente
+	 * @param correo - correo del cliente
+	 * @param identificacion - identificacion del cliente
+	 */
 	public Persona(long id, String nombre, String correo, String identificacion) {
+		super(id, nombre, correo);
 		this.identificacion = identificacion;
-		this.nombre=nombre;
-		this.correo=correo;
 	}
 	
+	/**
+	 * Constructor por defecto
+	 */
 	public Persona(){
+		super();
 		identificacion = "";
-		nombre="";
-		correo="";
 	}
 
+	/**
+	 * Obtiene la identificación de la persona
+	 */
 	public String getIdentificacion() {
 		return identificacion;
 	}
 
+	/**
+	 * Modifica la identificación de la persona
+	 * @param identificacion
+	 */
 	public void setIdentificacion(String identificacion) {
 		this.identificacion = identificacion;
 	}
@@ -41,37 +51,6 @@ public class Persona implements VOPersona{
 	public String toString() {
 		return "PersonaNatural [identificacion=" + identificacion + "]";
 	}
-
-	/**
-	 * Retorna el nombre de la persona
-	 * @return - nombre de la persona
-	 */
-	public String getNombre() {
-		return nombre;
-	}
-
-	/**
-	 * Modifica el nombre de la persona
-	 * @param nombre - nuevo nombre de la persona
-	 */
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	/**
-	 * Retorna el correo electrónico de la persona
-	 * @return - correo electrónico de la persona
-	 */
-	public String getCorreo() {
-		return correo;
-	}
-
-	/**
-	 * Modifica el correo electrónico de la persona
-	 * @param correo - correo electrónico de la persona
-	 */
-	public void setCorreo(String correo) {
-		this.correo = correo;
-	}
+	
 	
 }

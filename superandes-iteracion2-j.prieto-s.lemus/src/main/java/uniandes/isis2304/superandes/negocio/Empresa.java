@@ -1,6 +1,11 @@
 package uniandes.isis2304.superandes.negocio;
 
-public class Empresa implements VOEmpresa {
+public class Empresa extends Cliente implements VOEmpresa {
+	
+	/**
+	 * Identificador de la empresa
+	 */
+	private long id;
 	
 	/**
 	 * NIT único de la empresa
@@ -8,19 +13,9 @@ public class Empresa implements VOEmpresa {
 	private String nit;
 	
 	/**
-	 * Nombre de la empresa
-	 */
-	private String nombre;
-	
-	/**
 	 * Dirección de la empresa
 	 */
 	private String direccion;
-	
-	/**
-	 * Correo electrónico de la empresa
-	 */
-	private String correo;
 	
 	/**
 	 * Crea una nueva empresa
@@ -31,10 +26,9 @@ public class Empresa implements VOEmpresa {
 	 * @param direccion - dirección de la empresa
 	 */
 	public Empresa(long id, String nombre, String correo, String nit, String direccion) {
+		super(id, nombre, correo);
 		this.nit = nit;
 		this.direccion = direccion;
-		this.correo = correo;
-		this.nombre = nombre;
 	}
 
 	/**
@@ -43,9 +37,7 @@ public class Empresa implements VOEmpresa {
 	public Empresa(){
 		super();
 		nit = "";
-		nombre="";
 		direccion = "";
-		correo="";
 	}
 
 	/**
@@ -71,7 +63,7 @@ public class Empresa implements VOEmpresa {
 	}
 
 	/**
-	 * Modifica la dirección de la emrpesa
+	 * Modifica la dirección de la empresa
 	 * @param direccion - dirección de la empresa
 	 */
 	public void setDireccion(String direccion) {
@@ -81,38 +73,6 @@ public class Empresa implements VOEmpresa {
 	@Override
 	public String toString() {
 		return "Empresa [nit=" + nit + ", direccion=" + direccion + "]";
-	}
-
-	/**
-	 * Retorna el nombre de la empresa
-	 * @return - nombre de la empresa
-	 */
-	public String getNombre() {
-		return nombre;
-	}
-
-	/**
-	 * Modifica el nombre de la empresa
-	 * @param nombre - nuevo nombre de la empresa
-	 */
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	/**
-	 * Retorna el correo electrónico de la empresa
-	 * @return - correo electrónico de la empresa
-	 */
-	public String getCorreo() {
-		return correo;
-	}
-
-	/**
-	 * Modifica el correo electrónico de la empresa
-	 * @param correo - nuevo correo electrónico de la empresa
-	 */
-	public void setCorreo(String correo) {
-		this.correo = correo;
 	}
 	
 
