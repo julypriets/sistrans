@@ -95,16 +95,16 @@ public class Superandes
 	/**
 	 * Elimina todas las tuplas de todas las tablas de la base de datos de Superandes
 	 * @return Un arreglo con 24 números que indican el número de tuplas borradas en las tablas: 
-	 * SUCURSAL, CATEGORIA, PRODUCTO, ORDEN, ESTANTE, BODEGA, ABASTECIMIENTO, PROVEEDOR, PERSONA,
-	 * EMPRESA, CAJERO, FACTURA, PROMOCION, USUARIO, ABASTECIMIENTO_BODEGA, SURTIDO, PRODUCTO_ABASTECIMIENTO, 
-	 * INVENTARIO, PRODUCTO_ORDEN, CATALOGO, ORDEN_PROVEEDOR, COMPRA, PRODUCTO_PROMOCION y FACTURA_PROMOCION,
+	 * SUCURSAL, CATEGORIA, PRODUCTO, ORDEN, ESTANTE, BODEGA, ABASTECIMIENTO, PROVEEDOR, CLIENTE, PERSONA,
+	 * EMPRESA, CAJERO, FACTURA, PROMOCION, USUARIO, CARRITO, ABASTECIMIENTO_BODEGA, SURTIDO, PRODUCTO_ABASTECIMIENTO, 
+	 * INVENTARIO, PRODUCTO_ORDEN, CATALOGO, ORDEN_PROVEEDOR, COMPRA, PRODUCTO_PROMOCION, FACTURA_PROMOCION y CARRITO_PRODUCTO
 	 * respectivamente.
 	 */
 	public long [] limpiarParranderos ()
 	{
-        log.info ("Limpiando la BD de Parranderos");
-        long [] borrrados = ps.limpiarParranderos();	
-        log.info ("Limpiando la BD de Parranderos: Listo!");
+        log.info ("Limpiando la BD de Superandes");
+        long [] borrrados = ps.limpiarSuperandes();	
+        log.info ("Limpiando la BD de Superanes: Listo!");
         return borrrados;
 	}
 }

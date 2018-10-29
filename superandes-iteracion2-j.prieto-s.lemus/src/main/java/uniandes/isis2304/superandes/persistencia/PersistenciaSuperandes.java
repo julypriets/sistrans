@@ -24,9 +24,9 @@ import com.google.gson.JsonObject;
  * con la base de datos
  * Se apoya en las clases:
  * SQLSucursal, SQLCategoria SQLProducto, SQLOrden, SQLEstante, SQLBodega, SQLAbastecimiento,
- * SQLProveedor, SQLPersona, SQLEmpresa, SQLCajero, SQLFactura, SQLPromocion, SQLUsuario, 
- * SQLAbastecimientoBodega, SQLSurtido, SQLProductoAbastecimiento, SQLInventario,
- * SQLProductoOrden, SQLCatalogo, SQLOrdenProveedor, SQLCompra, SQLProductoPromocion y SQLFacturaPromocion, 
+ * SQLProveedor, SQLCliente, SQLPersona, SQLEmpresa, SQLCajero, SQLFactura, SQLPromocion, SQLUsuario, 
+ * SQLCarrito, SQLAbastecimientoBodega, SQLSurtido, SQLProductoAbastecimiento, SQLInventario,
+ * SQLProductoOrden, SQLCatalogo, SQLOrdenProveedor, SQLCompra, SQLProductoPromocion, SQLFacturaPromocion y SQLCarritoProducto
  * que son las que realizan el acceso a la base de datos
  * 
  */
@@ -543,6 +543,58 @@ public class PersistenciaSuperandes {
 	 */
 	public String darTablaCarritoProducto() {
 		return tablas.get(27);
+	}
+	
+	/**
+	 * Extrae el mensaje de la exception JDODataStoreException embebido en la Exception e, que da el detalle específico del problema encontrado
+	 * @param e - La excepción que ocurrio
+	 * @return El mensaje de la excepción JDO
+	 */
+	private String darDetalleException(Exception e) 
+	{
+		String resp = "";
+		if (e.getClass().getName().equals("javax.jdo.JDODataStoreException"))
+		{
+			JDODataStoreException je = (javax.jdo.JDODataStoreException) e;
+			return je.getNestedExceptions() [0].getMessage();
+		}
+		return resp;
+	}
+	
+	/**
+	 * Elimina todas las tuplas de todas las tablas de la base de datos de Parranderos
+	 * Crea y ejecuta las sentencias SQL para cada tabla de la base de datos - EL ORDEN ES IMPORTANTE 
+	 * @return Un arreglo con 7 números que indican el número de tuplas borradas en las tablas GUSTAN, SIRVEN, VISITAN, BEBIDA,
+	 * TIPOBEBIDA, BEBEDOR y BAR, respectivamente
+	 */
+	public long [] limpiarSuperandes()
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            long [] resp = sqlUtil.limpiarSuperandes (pm);
+            tx.commit ();
+            log.info ("Borrada la base de datos");
+            return resp;
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return new long[] {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
+        			-1, -1, -1, -1, -1, -1, -1};
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+		
 	}
 
 }
