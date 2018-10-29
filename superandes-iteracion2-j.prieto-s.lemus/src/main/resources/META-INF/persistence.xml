@@ -3,15 +3,15 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd" version="1.0">
 
-    <!-- Parranderos "unit" -->
-    <persistence-unit name="Parranderos">
+    <!-- Superandes "unit" -->
+    <persistence-unit name="Superandes">
         <exclude-unlisted-classes/>
         <properties>
             <!-- ENABLE THESE FOR Oracle -->
             <property name="javax.jdo.option.ConnectionURL" value="jdbc:oracle:thin:@fn3.oracle.virtual.uniandes.edu.co:1521:prod"/>
             <property name="javax.jdo.option.ConnectionDriverName" value="oracle.jdbc.driver.OracleDriver"/>
-            <property name="javax.jdo.option.ConnectionUserName" value=""/>
-            <property name="javax.jdo.option.ConnectionPassword" value=""/>
+            <property name="javax.jdo.option.ConnectionUserName" value="ISIS2304B171820"/>
+            <property name="javax.jdo.option.ConnectionPassword" value="Nv2DM8HK2h"></property>
             <property name="javax.jdo.option.Mapping" value="oracle"/>
 
             <property name="datanucleus.schema.autoCreateAll" value="false"/>
@@ -19,8 +19,8 @@
         </properties>
     </persistence-unit>
 
-    <!-- ParranderosError "unit" Definición de una base de datos que no existe, para verificar el comportamiento en caso de error o caida de la BD-->
-    <persistence-unit name="ParranderosErrorDS">
+    <!--SuperandesError "unit" Definición de una base de datos que no existe, para verificar el comportamiento en caso de error o caida de la BD-->
+    <persistence-unit name="SuperandesErrorDS">
         <exclude-unlisted-classes/>
         <properties>
             <!-- ENABLE THESE FOR Oracle -->
@@ -35,8 +35,8 @@
         </properties>
     </persistence-unit>
 
-    <!-- ParranderosErrorUser "unit" Definición de una base de datos que no existe, para verificar el comportamiento en caso de error en las credenciales del usuario -->
-    <persistence-unit name="ParranderosErrorUser">
+    <!--SuperandesErrorUser "unit" Definición de una base de datos que no existe, para verificar el comportamiento en caso de error en las credenciales del usuario -->
+    <persistence-unit name="SuperandesErrorUser">
         <exclude-unlisted-classes/>
         <properties>
             <!-- ENABLE THESE FOR Oracle -->
