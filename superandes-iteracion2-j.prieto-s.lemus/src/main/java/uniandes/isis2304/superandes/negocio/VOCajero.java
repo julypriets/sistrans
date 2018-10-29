@@ -8,8 +8,16 @@ package uniandes.isis2304.superandes.negocio;
  */
 public interface VOCajero {
 
+	/**
+	 * Obtiene el id del cajero
+	 * @return
+	 */
 	public long getId();
 
+	/**
+	 * Obtiene el nombre del cajero
+	 * @return
+	 */
 	public String getNombre();
 
 	@Override
