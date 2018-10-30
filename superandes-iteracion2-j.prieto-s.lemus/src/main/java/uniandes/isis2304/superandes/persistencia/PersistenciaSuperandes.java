@@ -19,7 +19,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import uniandes.isis2304.superandes.negocio.Categoria;
+import uniandes.isis2304.superandes.negocio.Cliente;
 import uniandes.isis2304.superandes.negocio.ComprasPorPromocion;
+import uniandes.isis2304.superandes.negocio.Empresa;
+import uniandes.isis2304.superandes.negocio.Persona;
 import uniandes.isis2304.superandes.negocio.Producto;
 import uniandes.isis2304.superandes.negocio.Proveedor;
 import uniandes.isis2304.superandes.negocio.Sucursal;
@@ -780,5 +783,99 @@ public class PersistenciaSuperandes {
             }
             pm.close();
         }
+	}
+	
+	/* ****************************************************************
+	 * 			Métodos para manejar los CLIENTES
+	 *****************************************************************/
+	
+	/**
+	 * Se encarga de adicionar una empresa según los valores dados
+	 * y de retornar la representación en Objeto respectiva
+	 * @param id
+	 * @param nombre
+	 * @param correo
+	 * @param nit
+	 * @param direccion
+	 * @return
+	 */
+	public Cliente registrarEmpresa(String nombre, String correo, String nit, String direccion)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            long idCliente = nextval ();
+            long tuplasInsertadas = sqlCliente.registarEmpresa(pm, idCliente, nombre, correo, nit, direccion);
+            tx.commit();
+            
+            log.trace ("Inserción de producto: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+            
+            return new Empresa(idCliente, nombre, correo, nit, direccion);
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return null;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+	}
+	
+	/**
+	 * Se encarga de adicionar una persona natural según los valores dados
+	 * y de retornar la representación en Objeto respectiva
+	 * @param id
+	 * @param nombre
+	 * @param correo
+	 * @param identificacion
+	 * @return
+	 */
+	public Cliente registrarPersona(String nombre, String correo, String identificacion)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            long idCliente = nextval ();
+            long tuplasInsertadas = sqlCliente.registrarPersonaNatural(pm, idCliente, nombre, correo, identificacion);
+     
+            tx.commit();
+            
+            log.trace ("Inserción de producto: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+            
+            return new Persona(idCliente, nombre, correo, identificacion);
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return null;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+	}
+	
+	/**
+	 * 
+	 * @return todos los clientes registrados
+	 */
+	public List<Cliente> darClientes(){
+		return sqlCliente.darClientes(pmf.getPersistenceManager());
 	}
 }

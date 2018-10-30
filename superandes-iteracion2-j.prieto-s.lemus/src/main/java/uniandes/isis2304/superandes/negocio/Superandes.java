@@ -210,4 +210,49 @@ public class Superandes
 		return p;
 	}
 	
+	
+	/* ****************************************************************
+	 * 			Métodos para manejar los Clientes
+	 *****************************************************************/
+	
+	/**
+	 * (RF3) Se encarga de adicionar una empresa según los valores dados
+	 * y de retornar la representación en Objeto respectiva
+	 * @param id
+	 * @param nombre
+	 * @param correo
+	 * @param nit
+	 * @param direccion
+	 * @return
+	 */
+	public Cliente registrarEmpresa(String nombre, String correo, String nit, String direccion) {
+		log.info("Adicionando la empresa: " + nombre + "con nit: " + nit);
+		Cliente e = ps.registrarEmpresa(nombre, correo, nit, direccion);
+		log.info("Adicionando la empresa: " + e.toString());
+		return e;
+	} 
+	
+	/**
+	 * (RF3) Se encarga de adicionar una persona natural según los valores dados
+	 * y de retornar la representación en Objeto respectiva
+	 * @param id
+	 * @param nombre
+	 * @param correo
+	 * @param identificacion
+	 * @return
+	 */
+	public Cliente registrarPersona(String nombre, String correo, String identificacion) {
+		log.info("Adicionando la persona: " + nombre + "con documento de identificación: " + identificacion);
+		Cliente p = ps.registrarPersona(nombre, correo, identificacion);
+		log.info("Adicionando la persona: " + p.toString());
+		return p;
+	} 
+	
+	/**
+	 * Retorna todos los clientes existentes
+	 * @return
+	 */
+	public List<Cliente> darClientes(){
+		return ps.darClientes();
+	}
 }

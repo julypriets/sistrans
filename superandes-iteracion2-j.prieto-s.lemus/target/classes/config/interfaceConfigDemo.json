@@ -36,5 +36,22 @@
 				}
 			]
 		},
+		{ "menuTitle": "Cliente",
+			"options":
+			[
+				{
+					"label": "Registrar Empresa",
+					"event": "registrarEmpresa"
+				},
+				{
+					"label": "Registrar Persona Natural",
+					"event": "registrarPersona"
+				},
+				{
+					"label": "Obtener todos los clientes",
+					"event": "darClientes"
+				}
+			]
+		}
 	]
 }

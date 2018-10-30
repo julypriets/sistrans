@@ -499,103 +499,114 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 	 * 			Operaciones Cliente
 	 *****************************************************************/
     
-    public void adicionarEmpresa( )
+	/**
+	 * (RF3) Registra una empresa (Cliente) de acuerdo a los valores dados por el usuario
+	 */
+    public void registrarEmpresa( )
     {
-//    	try 
-//    	{
-//
-//    		JTextField nombre = new JTextField();
-//    		JTextField correo = new JTextField();
-//    		JTextField nit = new JTextField();
-//    		JTextField direccion = new JTextField();
-//    		Object[] message = {
-//    		    "nombre:", nombre,
-//    		    "correo:", correo,
-//    		    "nit:", nit,
-//    		    "direccion:", direccion,
-//    		};
-//    		int option = JOptionPane.showConfirmDialog(this, message, "Adicionar una empresa ingresando todos sus valores", JOptionPane.OK_CANCEL_OPTION);
-//    		if (option == JOptionPane.OK_OPTION)
-//    		{
-//
-//        		String nombreResp = nombre.getText();
-//        		String correoResp = correo.getText();
-//        		String nitResp = nit.getText();
-//        		String direccionResp = direccion.getText();
-//
-//        		
-//        		VOCliente e = superandes.adicionarEmpresa(nombreResp, correoResp, nitResp, direccionResp);
-//        		String resultado = "En adicionarEmpresa\n\n";
-//        		resultado += "Empresa adicionada exitosamente: " + e;
-//    			resultado += "\n Operación terminada";
-//        		panelDatos.actualizarInterfaz(resultado);
-//    		}else {
-//    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-//    		}
-//
-//		} 
-//    	catch (Exception e) 
-//    	{
-////			e.printStackTrace();
-//			String resultado = generarMensajeError(e);
-//			panelDatos.actualizarInterfaz(resultado);
-//		}
+    	try 
+    	{
+
+    		JTextField nombre = new JTextField();
+    		JTextField correo = new JTextField();
+    		JTextField nit = new JTextField();
+    		JTextField direccion = new JTextField();
+    		Object[] message = {
+    		    "nombre:", nombre,
+    		    "correo:", correo,
+    		    "nit:", nit,
+    		    "direccion:", direccion,
+    		};
+    		int option = JOptionPane.showConfirmDialog(this, message, "Adicionar una empresa ingresando todos sus valores", JOptionPane.OK_CANCEL_OPTION);
+    		if (option == JOptionPane.OK_OPTION)
+    		{
+
+        		String nombreResp = nombre.getText();
+        		String correoResp = correo.getText();
+        		String nitResp = nit.getText();
+        		String direccionResp = direccion.getText();
+
+        		
+        		VOCliente e = superandes.registrarEmpresa(nombreResp, correoResp, nitResp, direccionResp);
+        		String resultado = "En adicionarEmpresa\n\n";
+        		resultado += "Empresa adicionada exitosamente: " + e;
+    			resultado += "\n Operación terminada";
+        		panelDatos.actualizarInterfaz(resultado);
+    		}else {
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
     }
     
-    public void adicionarPersonaNatural( )
+	/**
+	 * (RF3) Registra una persona natural (Cliente) de acuerdo a los valores dados por el usuario
+	 */
+    public void registrarPersona( )
     {
-//    	try 
-//    	{
-//    		JTextField nombre = new JTextField();
-//    		JTextField correo = new JTextField();
-//    		JTextField identificacion = new JTextField();
-//    		Object[] message = {
-//    		    "nombre:", nombre,
-//    		    "correo:", correo,
-//    		    "identificacion:", identificacion,
-//    		};
-//    		int option = JOptionPane.showConfirmDialog(this, message, "Adicionar una empresa ingresando todos sus valores", JOptionPane.OK_CANCEL_OPTION);
-//    		if (option == JOptionPane.OK_OPTION)
-//    		{
-//        		String nombreResp = nombre.getText();
-//        		String correoResp = correo.getText();
-//        		String identificacionResp = identificacion.getText();
-//        		
-//        		VOCliente e = superandes.adicionarPersonaNatural(nombreResp, correoResp, identificacionResp);
-//        		String resultado = "En adicionarPersonaNatural\n\n";
-//        		resultado += "Persona adicionada exitosamente: " + e;
-//    			resultado += "\n Operación terminada";
-//        		panelDatos.actualizarInterfaz(resultado);
-//    		}else {
-//    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-//    		}
-//
-//		} 
-//    	catch (Exception e) 
-//    	{
-////			e.printStackTrace();
-//			String resultado = generarMensajeError(e);
-//			panelDatos.actualizarInterfaz(resultado);
-//		}
+    	try 
+    	{
+    		JTextField nombre = new JTextField();
+    		JTextField correo = new JTextField();
+    		JTextField identificacion = new JTextField();
+    		Object[] message = {
+    		    "nombre:", nombre,
+    		    "correo:", correo,
+    		    "identificacion:", identificacion,
+    		};
+    		int option = JOptionPane.showConfirmDialog(this, message, "Adicionar una empresa ingresando todos sus valores", JOptionPane.OK_CANCEL_OPTION);
+    		if (option == JOptionPane.OK_OPTION)
+    		{
+        		String nombreResp = nombre.getText();
+        		String correoResp = correo.getText();
+        		String identificacionResp = identificacion.getText();
+        		
+        		VOCliente e = superandes.registrarPersona(nombreResp, correoResp, identificacionResp);
+        		String resultado = "En adicionarPersonaNatural\n\n";
+        		resultado += "Persona adicionada exitosamente: " + e;
+    			resultado += "\n Operación terminada";
+        		panelDatos.actualizarInterfaz(resultado);
+    		}else {
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
     }
     
     /**
      * Muestra todos los clientes disponibles
      */
     public void darClientes() {
-//    	String resultado = " en darClientes\n\n";
-//		List<Cliente> cs = superandes.darClientes();
-//		System.out.println(cs.size());
-//		
-//		for(Cliente c : cs) {
-//			resultado += c.toString() + "\n";
-//		}
-//		panelDatos.actualizarInterfaz(resultado);
+    	String resultado = " en darClientes\n\n";
+		List<Cliente> cs = superandes.darClientes();
+		
+		if(cs.size() == 0){
+			resultado += "no hay clientes registrados\n\n";
+		}else{
+			for(Cliente c : cs) {
+				resultado += c.toString() + "\n";
+			}
+		}
+		resultado += "Proceso terminado";
+		panelDatos.actualizarInterfaz(resultado);
     }
     
 	/* ****************************************************************
 	 * 			Operaciones Promoción
 	 *****************************************************************/
+    
 	/**
 	 * (RF8) Método para finalizar promociones cuando los productos se acaben o cuando ya llegó la fecha de vencimiento
 	 */
