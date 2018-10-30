@@ -61,6 +61,7 @@ import uniandes.isis2304.superandes.negocio.VOCliente;
 import uniandes.isis2304.superandes.negocio.VOEmpresa;
 import uniandes.isis2304.superandes.negocio.VOOrden;
 import uniandes.isis2304.superandes.negocio.VOProducto;
+import uniandes.isis2304.superandes.negocio.VOProveedor;
 import uniandes.isis2304.superandes.tareasTemporales.VerificacionPromocion;
 
 
@@ -257,6 +258,9 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 	 * 			Operaciones PRODUCTO
 	 *****************************************************************/
 
+    /**
+     * (RF2) Registra un producto de acuerdo a los valores dados por el usuario
+     */
     public void registrarProducto( )
     {
     	try 
@@ -444,7 +448,52 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 //		}
 
 	}
+	
+	/* ****************************************************************
+	 * 			Operaciones Proveedor
+	 *****************************************************************/
     
+	/**
+	 * Registra un nuevo proveedor de acuerdo a los valores dados por el usuario
+	 */
+	public void registrarProveedor(){
+    	try 
+    	{
+    		//String nombreTipo = JOptionPane.showInputDialog (this, "Nombre del tipo de bedida?", "Adicionar tipo de bebida", JOptionPane.QUESTION_MESSAGE);
+    		JTextField nit = new JTextField();
+    		JTextField nombre = new JTextField();
+    		JTextField calificación = new JTextField();
+
+    		Object[] message = {
+    		    "nit:", nit,
+    		    "nombre:", nombre,
+    		    "calificación (entre 0 y 5):", calificación,
+    		};
+    		int option = JOptionPane.showConfirmDialog(this, message, "Registrar el proveedor ingresando todos sus valores", JOptionPane.OK_CANCEL_OPTION);
+    		if (option == JOptionPane.OK_OPTION)
+    		{
+        		String nombreResp = nombre.getText();
+        		String nitResp = nit.getText();
+        		Double calificacionResp = Double.parseDouble(calificación.getText());
+        		
+        		VOProveedor p = superandes.registrarProveedor(nitResp, nombreResp, calificacionResp);
+        		String resultado = "En registrarProveedor\n\n";
+        		resultado += "Proveedor adicionado exitosamente: " + p;
+    			resultado += "\n Operación terminada";
+        		panelDatos.actualizarInterfaz(resultado);
+    		}else {
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+	
     
 	/* ****************************************************************
 	 * 			Operaciones Cliente

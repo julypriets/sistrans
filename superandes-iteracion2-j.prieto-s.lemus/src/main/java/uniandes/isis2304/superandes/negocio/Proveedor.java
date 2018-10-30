@@ -7,7 +7,7 @@ package uniandes.isis2304.superandes.negocio;
  */
 public class Proveedor implements VOProveedor{
 
-	private Integer NIT;
+	private String nit;
 	
 	private String nombre;
 	
@@ -15,12 +15,12 @@ public class Proveedor implements VOProveedor{
 
 	/**
 	 * Constructor del Proveedor con valores
-	 * @param nIT
+	 * @param nit
 	 * @param nombre
 	 * @param calificacion
 	 */
-	public Proveedor(Integer nIT, String nombre, Double calificacion) {
-		NIT = nIT;
+	public Proveedor(String nit, String nombre, Double calificacion) {
+		this.nit = nit;
 		this.nombre = nombre;
 		this.calificacion = calificacion;
 	}
@@ -29,17 +29,17 @@ public class Proveedor implements VOProveedor{
 	 * Constructor por defecto
 	 */
 	public Proveedor(){
-		NIT = 0;
+		nit = "";
 		this.nombre = "";
 		this.calificacion = 0.0;
 	}
 
-	public Integer getNIT() {
-		return NIT;
+	public String getNit() {
+		return nit;
 	}
 
-	public void setNIT(Integer nIT) {
-		NIT = nIT;
+	public void setNit(String nit) {
+		this.nit = nit;
 	}
 
 	public String getNombre() {
@@ -60,7 +60,7 @@ public class Proveedor implements VOProveedor{
 
 	@Override
 	public String toString() {
-		return "Proveedor [NIT=" + NIT + ", nombre=" + nombre + ", calificacion=" + calificacion + "]";
+		return "Proveedor [NIT=" + nit + ", nombre=" + nombre + ", calificacion=" + calificacion + "]";
 	}
 	
 	

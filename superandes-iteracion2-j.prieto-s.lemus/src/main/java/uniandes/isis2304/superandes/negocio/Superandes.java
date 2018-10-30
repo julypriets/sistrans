@@ -114,6 +114,24 @@ public class Superandes
 	 * 			Métodos para manejar las PRODUCTOS
 	 *****************************************************************/
 	
+	/**
+	 * (RF1)
+	 * @param nombre
+	 * @param marca
+	 * @param precioUnitario
+	 * @param presentacion
+	 * @param precioUnidadMedida
+	 * @param unidadMedida
+	 * @param empacado
+	 * @param codigoBarras
+	 * @param nivelReorden
+	 * @param existencias
+	 * @param idCategoria
+	 * @param idSucursal
+	 * @param fechaVencimiento
+	 * @return La instancia de producto de acuerdo a los parámetros asignados
+	 * @throws Exception si alguno de los valores no son válidos
+	 */
 	public Producto registrarProducto(String nombre, String marca, Double precioUnitario, String presentacion,
 			Double precioUnidadMedida, String unidadMedida, String empacado, String codigoBarras, Integer nivelReorden,
 			Integer existencias, Long idCategoria, Long idSucursal, String fechaVencimiento) 
@@ -176,4 +194,20 @@ public class Superandes
 	public List<ComprasPorPromocion> dar20PromocionesMasPopulares(){
 		return ps.dar20PromocionesMasPopulares();
 	}
+	
+	/* ****************************************************************
+	 * 			Métodos para manejar los PROVEEDORES
+	 *****************************************************************/
+	
+	public Proveedor registrarProveedor(String nit, String nombre, double calificacion) throws Exception{
+		if (calificacion < 0 || calificacion > 5) {
+			throw new Exception("La calificación ingresada no es válida");
+		}
+		
+		log.info("Adicionando el proveedor: " + nombre + "con nit: " + nit);
+		Proveedor p = ps.registrarProveedor(nit, nombre, calificacion);
+		log.info("Adicionando el proveedor: " + p.toString());
+		return p;
+	}
+	
 }

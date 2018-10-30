@@ -21,6 +21,7 @@ import com.google.gson.JsonObject;
 import uniandes.isis2304.superandes.negocio.Categoria;
 import uniandes.isis2304.superandes.negocio.ComprasPorPromocion;
 import uniandes.isis2304.superandes.negocio.Producto;
+import uniandes.isis2304.superandes.negocio.Proveedor;
 import uniandes.isis2304.superandes.negocio.Sucursal;
 
 /**
@@ -746,5 +747,38 @@ public class PersistenciaSuperandes {
 	
 	public Sucursal darSucursalPorId(long idSucursal){
 		return sqlSucursal.darSucursalPorId(pmf.getPersistenceManager(), idSucursal);
+	}
+	
+	/* ****************************************************************
+	 * 			Métodos para manejar las Proveedor
+	 *****************************************************************/
+	
+	public Proveedor registrarProveedor(String nit, String nombre, double calificacion){
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            long tuplasInsertadas = sqlProveedor.registarProveedor(pm, nit, nombre, calificacion);
+            tx.commit();
+            
+            log.trace ("Inserción de proveedor: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+            
+            return new Proveedor(nit, nombre, calificacion);
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return null;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
 	}
 }

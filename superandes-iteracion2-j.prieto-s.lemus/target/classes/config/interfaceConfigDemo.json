@@ -9,7 +9,7 @@
 		  "options":
 			[
 				{
-					"label": "Adicionar",
+					"label": "Registrar",
 					"event": "registrarProducto"
 				},
 				{
@@ -26,6 +26,15 @@
 					"event": "dar20PromocionesMasPopulares"
 				}
 			]
-		}
+		},
+		{ "menuTitle": "Proveedor",
+			"options":
+			[
+				{
+					"label": "Registrar",
+					"event": "registrarProveedor"
+				}
+			]
+		},
 	]
 }

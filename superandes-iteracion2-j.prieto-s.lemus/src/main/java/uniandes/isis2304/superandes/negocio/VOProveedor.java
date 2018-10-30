@@ -8,7 +8,7 @@ package uniandes.isis2304.superandes.negocio;
  */
 public interface VOProveedor {
 
-	public Integer getNIT();
+	public String getNit();
 
 	public String getNombre();
 
