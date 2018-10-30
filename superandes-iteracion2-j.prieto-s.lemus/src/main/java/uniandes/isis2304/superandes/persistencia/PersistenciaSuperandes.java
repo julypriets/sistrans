@@ -18,6 +18,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import uniandes.isis2304.superandes.negocio.Bodega;
 import uniandes.isis2304.superandes.negocio.Categoria;
 import uniandes.isis2304.superandes.negocio.Cliente;
 import uniandes.isis2304.superandes.negocio.ComprasPorPromocion;
@@ -797,6 +798,44 @@ public class PersistenciaSuperandes {
 	/* ****************************************************************
 	 * 			Métodos para manejar las BODEGAS
 	 *****************************************************************/
+	
+	/**
+	 * 
+	 * @param idCategoria
+	 * @param capacidadPeso
+	 * @param capacidadVolumen
+	 * @param idSucursal
+	 * @return La bodega registrada
+	 */
+	public Bodega registrarBodega(long idCategoria, double capacidadPeso, double capacidadVolumen, long idSucursal){
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            long idBodega = nextval();
+            long tuplasInsertadas = sqlBodega.registrarBodega(pm, idBodega, idCategoria, capacidadPeso, capacidadVolumen, idSucursal);
+            tx.commit();
+            
+            log.trace ("Inserción de bodega: " + idBodega + ": " + tuplasInsertadas + " tuplas insertadas");
+            
+            return new Bodega(idBodega, capacidadPeso, capacidadVolumen, idCategoria, idSucursal);
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return null;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+	}
 	
 	
 	/* ****************************************************************

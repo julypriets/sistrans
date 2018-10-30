@@ -274,4 +274,33 @@ public class Superandes
 		log.info("Adicionando la sucursal: " + s.toString());
 		return s;
 	}
+	
+	/* ****************************************************************
+	 * 			Métodos para manejar las Bodegas
+	 *****************************************************************/
+	
+	/**
+	 * (RF5) Se encarga de adicionar una bodega a una sucursal según los valores dados
+	 * y de retornar la representación en Objeto respectiva
+	 * @param idCategoria
+	 * @param capacidadPeso
+	 * @param capacidadVolumen
+	 * @param idSucursal
+	 * @return
+	 */
+	public Bodega registrarBodega(long idCategoria, double capacidadPeso, double capacidadVolumen, long idSucursal) throws Exception{
+		
+		if(ps.darSucursalPorId(idSucursal) == null){
+			throw new Exception("El id de la sucursal ingresado no es válido");
+		}
+		
+		if(ps.darCategoriaPorId(idCategoria) == null){
+			throw new Exception("El id de la categoría ingresado no es válido");
+		}
+		
+		log.info("Adicionando una bodega de categoría: " + idCategoria + "en la sucursal: " + idSucursal);
+		Bodega b = ps.registrarBodega(idCategoria, capacidadPeso, capacidadVolumen, idSucursal);
+		log.info("Adicionando la bodega: " + b.toString());
+		return b;
+	}
 }

@@ -57,6 +57,7 @@ import uniandes.isis2304.superandes.negocio.ComprasPorPromocion;
 import uniandes.isis2304.superandes.negocio.Producto;
 import uniandes.isis2304.superandes.negocio.Superandes;
 import uniandes.isis2304.superandes.negocio.VOBebedor;
+import uniandes.isis2304.superandes.negocio.VOBodega;
 import uniandes.isis2304.superandes.negocio.VOCliente;
 import uniandes.isis2304.superandes.negocio.VOEmpresa;
 import uniandes.isis2304.superandes.negocio.VOOrden;
@@ -674,6 +675,51 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 			panelDatos.actualizarInterfaz(resultado);
 		}
 	}
+	
+	
+	/* ****************************************************************
+	 * 			Operaciones Bodega
+	 *****************************************************************/
+	
+	public void registrarBodega(){
+    	try 
+    	{
+    		JTextField capacidadPeso = new JTextField();
+    		JTextField capacidadVolumen = new JTextField();
+    		JTextField idCategoria = new JTextField();
+    		JTextField idSucursal = new JTextField();
+    		Object[] message = {
+    		    "capacidad de peso:", capacidadPeso,
+    		    "capacidad de volumen:", capacidadVolumen,
+    		    "id de categoría:", idCategoria,
+    		    "id de sucursal:", idSucursal,
+    		};
+    		int option = JOptionPane.showConfirmDialog(this, message, "Adicionar una bodega a una sucursal ingresando todos sus valores", JOptionPane.OK_CANCEL_OPTION);
+    		if (option == JOptionPane.OK_OPTION)
+    		{
+        		double capacidadPesoResp = Double.parseDouble(capacidadPeso.getText());
+        		double capacidadVolumenResp = Double.parseDouble(capacidadVolumen.getText());
+        		long idCategoriaResp = Long.parseLong(idCategoria.getText());
+        		long idSucursalResp = Long.parseLong(idSucursal.getText());
+        		
+        		VOBodega e = superandes.registrarBodega(idCategoriaResp, capacidadPesoResp, capacidadVolumenResp, idSucursalResp);
+        		String resultado = "En registrarBodega\n\n";
+        		resultado += "Bodega adicionada exitosamente: " + e;
+    			resultado += "\n Operación terminada";
+        		panelDatos.actualizarInterfaz(resultado);
+    		}else {
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+	
 	
 	/* ****************************************************************
 	 * 			Operaciones ORDENES

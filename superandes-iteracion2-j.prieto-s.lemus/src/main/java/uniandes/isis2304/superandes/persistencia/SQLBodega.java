@@ -48,7 +48,7 @@ public class SQLBodega {
 	 * @param idSucursal - identificador de la sucursal a la que pertenece la bodega
 	 * @return El número de tuplas insertadas
 	 */
-	public long registrarEstante(PersistenceManager pm, long id, long idCategoria, double capacidadPeso, double capacidadVolumen, long idSucursal ) {
+	public long registrarBodega(PersistenceManager pm, long id, long idCategoria, double capacidadPeso, double capacidadVolumen, long idSucursal ) {
 		Query q = pm.newQuery(SQL, "INSERT INTO " + ps.darTablaBodega() + " VALUES (?, ?, ?, ?, ?)");
 		q.setParameters(id, idCategoria, capacidadPeso, capacidadVolumen, idSucursal);
 		return (long) q.executeUnique();
