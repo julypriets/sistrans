@@ -10,40 +10,11 @@
 			[
 				{
 					"label": "Adicionar",
-					"event": "adicionarProducto"
+					"event": "registrarProducto"
 				},
 				{
 					"label": "Obtener los productos",
 					"event": "darProductos"
-				},
-				{
-					"label": "Obtener los productos por rango de precio unitario",
-					"event": "darProductosPorRangoDePrecioUnitario"
-				},
-				{
-					"label": "Obtener los productos por rango de precio de unidad de medida",
-					"event": "darProductosPorRangoDePrecioUM"
-				},
-				{
-					"label": "Obtener los productos por sucursal",
-					"event": "darProductosPorSucursal"
-				}
-			]
-		},		
-		{ "menuTitle": "Cliente",
-		  "options":
-			[
-				{
-					"label": "Adicionar Empresa",
-					"event": "adicionarEmpresa"
-				},
-				{
-					"label": "Adicionar Persona Natural",
-					"event": "adicionarCliente"
-				},
-				{
-					"label": "Obtener todos los clientes",
-					"event": "darClientes"
 				}
 			]
 		},
@@ -55,16 +26,6 @@
 					"event": "dar20PromocionesMasPopulares"
 				}
 			]
-		},
-		{ "menuTitle": "Orden",
-		  "options":
-			[
-				{
-					"label": "Adicionar Orden",
-					"event": "adicionarOrden"
-				}
-			]
 		}
 	]
 }
-	

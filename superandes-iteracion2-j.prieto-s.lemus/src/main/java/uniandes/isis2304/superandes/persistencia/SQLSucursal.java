@@ -1,5 +1,6 @@
 package uniandes.isis2304.superandes.persistencia;
 
+import uniandes.isis2304.superandes.negocio.Producto;
 import uniandes.isis2304.superandes.negocio.Sucursal;
 
 import javax.jdo.PersistenceManager;
@@ -55,6 +56,32 @@ public class SQLSucursal {
 		Query q = pm.newQuery(SQL, "INSERT INTO " + ps.darTablaSucursal() + " VALUES (?, ?, ?, ?)");
 		q.setParameters(idSucursal, nombre, ciudad, direccion);
 		return (long) q.executeUnique();
+	}
+	
+	/**
+	 * 
+	 * @param pm - PersistenceManager
+	 * @param idSucursal 
+	 * @return La sucursal correspondiente al id
+	 */
+	public Sucursal darSucursalPorId(PersistenceManager pm, long idSucursal) {
+		Query q = pm.newQuery(SQL, "SELECT id, nombre, ciudad, direccion"
+				+ " FROM " + ps.darTablaSucursal() + " WHERE id = ?");
+		q.setResultClass(Sucursal.class);
+		return (Sucursal) q.execute(idSucursal);
+	}
+	
+	/**
+	 * 
+	 * @param pm - PersistenceManager
+	 * @param nombreSucursal 
+	 * @return La sucursal correspondiente al nombre
+	 */
+	public Sucursal darSucursalPorNombre(PersistenceManager pm, String nombreSucursal) {
+		Query q = pm.newQuery(SQL, "SELECT id, nombre, ciudad, direccion"
+				+ " FROM " + ps.darTablaSucursal() + " WHERE nombre = ?");
+		q.setResultClass(Sucursal.class);
+		return (Sucursal) q.execute(nombreSucursal);
 	}
 
 }

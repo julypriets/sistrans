@@ -81,4 +81,18 @@ public class SQLProducto {
 		q.setResultClass(Producto.class);
 		return (List<Producto>) q.executeList();
 	}
+	
+	/**
+	 * 
+	 * @param pm - PersistenceManager
+	 * @param idProducto 
+	 * @return El producto correspondiente al id
+	 */
+	public Producto darProductoPorId(PersistenceManager pm, long idProducto) {
+		Query q = pm.newQuery(SQL, "SELECT nombre, marca, precio_unitario precioUnitario, presentacion, precio_unidadmedida precioUnidadMedida, empacado, codigo_barras codigobarras, id_categoria idCategoria, nivel_reorden nivelReorden, existencias"
+				+ " FROM " + ps.darTablaProducto() + " WHERE codigo_barras = ?");
+		q.setResultClass(Producto.class);
+		return (Producto) q.execute(idProducto);
+	}
+	
 }

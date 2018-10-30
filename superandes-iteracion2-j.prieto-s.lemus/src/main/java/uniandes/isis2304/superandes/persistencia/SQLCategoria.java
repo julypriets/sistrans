@@ -1,5 +1,10 @@
 package uniandes.isis2304.superandes.persistencia;
 
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
+
+import uniandes.isis2304.superandes.negocio.Categoria;
+import uniandes.isis2304.superandes.negocio.Producto;
 import uniandes.isis2304.superandes.persistencia.PersistenciaSuperandes;
 
 /**
@@ -38,4 +43,29 @@ public class SQLCategoria {
 		this.ps = ps;
 	}
 
+	/**
+	 * 
+	 * @param pm - PersistenceManager
+	 * @param idCategoria 
+	 * @return La categoría correspondiente al id
+	 */
+	public Categoria darCategoriaPorId(PersistenceManager pm, long idCategoria) {
+		Query q = pm.newQuery(SQL, "SELECT id, nombre"
+				+ " FROM " + ps.darTablaCategoria() + " WHERE id = ?");
+		q.setResultClass(Categoria.class);
+		return (Categoria) q.execute(idCategoria);
+	}
+	
+	/**
+	 * 
+	 * @param pm - PersistenceManager
+	 * @param nombreCategoria 
+	 * @return La categoría correspondiente al nombre
+	 */
+	public Categoria darCategoriaPorNombre(PersistenceManager pm, String nombreCategoria) {
+		Query q = pm.newQuery(SQL, "SELECT id, nombre"
+				+ " FROM " + ps.darTablaCategoria() + " WHERE nombre = ?");
+		q.setResultClass(Categoria.class);
+		return (Categoria) q.execute(nombreCategoria);
+	}
 }

@@ -18,8 +18,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import uniandes.isis2304.superandes.negocio.Categoria;
 import uniandes.isis2304.superandes.negocio.ComprasPorPromocion;
 import uniandes.isis2304.superandes.negocio.Producto;
+import uniandes.isis2304.superandes.negocio.Sucursal;
 
 /**
  * Clase para el manejador de persistencia del proyecto Superandes
@@ -634,38 +636,38 @@ public class PersistenciaSuperandes {
 	 * @param idSucursal
 	 * @return
 	 */
-//	public Producto adicionarProducto(String nombre, String marca, Double precioUnitario, String presentacion,
-//			Double precioUnidadMedida, String unidadMedida, String empacado, String codigoBarras, Integer nivelReorden,
-//			Integer existencias, Long idCategoria, Long idSucursal)
-//	{
-//		PersistenceManager pm = pmf.getPersistenceManager();
-//        Transaction tx=pm.currentTransaction();
-//        try
-//        {
-//            tx.begin();
-//            long idProducto = nextval ();
-//            long tuplasInsertadas = sqlProducto.registarProducto(pm, nombre, marca, precioUnitario, presentacion, precioUnidadMedida, unidadMedida, empacado, codigoBarras, idCategoria, nivelReorden, existencias, fechaVencimiento);
-//            tx.commit();
-//            
-//            log.trace ("Inserción de producto: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
-//            
-//            return new Producto(nombre, marca, precioUnitario, presentacion, precioUnidadMedida, unidadMedida, empacado, codigoBarras, nivelReorden, existencias, idCategoria, idSucursal);
-//        }
-//        catch (Exception e)
-//        {
-////        	e.printStackTrace();
-//        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-//        	return null;
-//        }
-//        finally
-//        {
-//            if (tx.isActive())
-//            {
-//                tx.rollback();
-//            }
-//            pm.close();
-//        }
-//	}
+	public Producto registrarProducto(String nombre, String marca, Double precioUnitario, String presentacion,
+			Double precioUnidadMedida, String unidadMedida, String empacado, String codigoBarras, Integer nivelReorden,
+			Integer existencias, Long idCategoria, Long idSucursal, Timestamp fechaVencimiento)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            long idProducto = nextval ();
+            long tuplasInsertadas = sqlProducto.registarProducto(pm, nombre, marca, precioUnitario, presentacion, precioUnidadMedida, unidadMedida, empacado, codigoBarras, idCategoria, nivelReorden, existencias, fechaVencimiento);
+            tx.commit();
+            
+            log.trace ("Inserción de producto: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+            
+            return new Producto(nombre, marca, precioUnitario, presentacion, precioUnidadMedida, unidadMedida, empacado, codigoBarras, nivelReorden, existencias, idCategoria, idSucursal, fechaVencimiento);
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return null;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+	}
 	
 	/**
 	 * Retorna todos los productos existentes
@@ -716,4 +718,33 @@ public class PersistenciaSuperandes {
 		return sqlPromocion.dar20PromocionesMasPopulares(pmf.getPersistenceManager());
 	}
 	
+	/* ****************************************************************
+	 * 			Métodos para manejar las CATEGORÍAS
+	 *****************************************************************/
+	
+	/**
+	 * 
+	 * @param idCategoria
+	 * @return La categoría correspondiente al id
+	 */
+	public Categoria darCategoriaPorId(long idCategoria){
+		return sqlCategoria.darCategoriaPorId(pmf.getPersistenceManager(), idCategoria);
+	}
+	
+	/**
+	 * 
+	 * @param nombreCategoria
+	 * @return La categoría correspondiente al nombre
+	 */
+	public Categoria darCategoriaPorNombre(String nombreCategoria){
+		return sqlCategoria.darCategoriaPorNombre(pmf.getPersistenceManager(), nombreCategoria);
+	}
+	
+	/* ****************************************************************
+	 * 			Métodos para manejar las SUCURSALES
+	 *****************************************************************/
+	
+	public Sucursal darSucursalPorId(long idSucursal){
+		return sqlSucursal.darSucursalPorId(pmf.getPersistenceManager(), idSucursal);
+	}
 }

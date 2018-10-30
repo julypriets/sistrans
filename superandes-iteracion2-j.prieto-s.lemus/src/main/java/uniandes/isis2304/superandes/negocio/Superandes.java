@@ -1,6 +1,7 @@
 package uniandes.isis2304.superandes.negocio;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -113,6 +114,42 @@ public class Superandes
 	 * 			Métodos para manejar las PRODUCTOS
 	 *****************************************************************/
 	
+	public Producto registrarProducto(String nombre, String marca, Double precioUnitario, String presentacion,
+			Double precioUnidadMedida, String unidadMedida, String empacado, String codigoBarras, Integer nivelReorden,
+			Integer existencias, Long idCategoria, Long idSucursal, String fechaVencimiento) 
+			throws Exception
+	{
+		if(precioUnitario < 0 || precioUnidadMedida < 0 || nivelReorden < 0 || existencias < 0){
+			throw new Exception("Los valores del precio, existencias o nivel de reorden son inválidos");
+		}
+		
+		if(ps.darSucursalPorId(idSucursal) == null){
+			throw new Exception("El id de la sucursal ingresado no es válido");
+		}
+		
+		if(ps.darCategoriaPorId(idCategoria) == null){
+			throw new Exception("El id de la categoría ingresado no es válido");
+		}
+		
+		Timestamp fechaVencimientoFormateada = (Timestamp) new Date();
+		
+		try{
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+			Date parsedDate = dateFormat.parse(fechaVencimiento);
+			fechaVencimientoFormateada = new Timestamp(parsedDate.getTime());
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		log.info("Adicionando el producto: " + nombre + "con código de barras: " + codigoBarras);
+		Producto p = ps.registrarProducto(nombre, marca, precioUnitario, presentacion, precioUnidadMedida, unidadMedida, empacado, codigoBarras, nivelReorden, existencias, idCategoria, idSucursal, fechaVencimientoFormateada);
+		log.info("Adicionando el producto: " + p.toString());
+		return p;
+	}
+	/**
+	 * 
+	 * @return Una lista de todos los productos disponibles
+	 */
 	public List<Producto> darProductos(){
 		return ps.darProductos();
 	}

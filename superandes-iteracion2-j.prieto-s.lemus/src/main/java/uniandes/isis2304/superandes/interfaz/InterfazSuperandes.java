@@ -257,78 +257,85 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 	 * 			Operaciones PRODUCTO
 	 *****************************************************************/
 
-    public void adicionarProducto( )
+    public void registrarProducto( )
     {
-//    	try 
-//    	{
-//    		//String nombreTipo = JOptionPane.showInputDialog (this, "Nombre del tipo de bedida?", "Adicionar tipo de bebida", JOptionPane.QUESTION_MESSAGE);
-//    		JTextField nombre = new JTextField();
-//    		JTextField marca = new JTextField();
-//    		JTextField precioUnitario = new JTextField();
-//    		JTextField presentacion = new JTextField();
-//    		JTextField precioUnidadMedida = new JTextField();
-//    		JTextField unidadMedida = new JTextField();
-//    		JTextField empacado = new JTextField();
-//    		JTextField codigoBarras = new JTextField();
-//    		JTextField nivelReorden = new JTextField();
-//    		JTextField existencias = new JTextField();
-//    		JTextField idCategoria = new JTextField();
-//    		JTextField idSucursal = new JTextField();
-//    		Object[] message = {
-//    		    "nombre:", nombre,
-//    		    "marca:", marca,
-//    		    "precio unitario:", precioUnitario,
-//    		    "presentacion:", presentacion,
-//    		    "precioUnidadMedida:", precioUnidadMedida,
-//    		    "unidadMedida:", unidadMedida,
-//    		    "empacado:", empacado,
-//    		    "codigoBarras:", codigoBarras,
-//    		    "nivelReorden:", nivelReorden,
-//    		    "existencias:", existencias,
-//    		    "idCategoria:", idCategoria,
-//    		    "idSucursal:", idSucursal,
-//    		};
-//    		int option = JOptionPane.showConfirmDialog(this, message, "Crear el producto ingresando todos sus valores", JOptionPane.OK_CANCEL_OPTION);
-//    		if (option == JOptionPane.OK_OPTION)
-//    		{
-//        		String nombreResp = nombre.getText();
-//        		String marcaResp = marca.getText();
-//        		Double precioUnitarioResp = Double.parseDouble(precioUnitario.getText());
-//        		String presentacionResp = presentacion.getText();
-//        		Double precioUnidadMedidaResp = Double.parseDouble(precioUnidadMedida.getText());
-//        		String unidadMedidaResp = unidadMedida.getText();
-//        		String empacadoResp = empacado.getText();
-//        		String codigoBarrasResp = codigoBarras.getText();
-//        		Integer nivelReordenResp = Integer.parseInt(nivelReorden.getText());
-//        		Integer existenciasResp = Integer.parseInt(existencias.getText());
-//        		Long idCategoriaResp = Long.parseLong(idCategoria.getText());
-//        		Long idSucursalResp = Long.parseLong(idSucursal.getText());
-//        		
-//        		VOProducto p = superandes.adicionarProducto(nombreResp, marcaResp, precioUnitarioResp, presentacionResp, precioUnidadMedidaResp, 
-//        				unidadMedidaResp, empacadoResp, codigoBarrasResp, nivelReordenResp, existenciasResp, idCategoriaResp, idSucursalResp);
-//        		String resultado = "En adicionarProducto\n\n";
-//        		resultado += "Producto adicionado exitosamente: " + p;
-//    			resultado += "\n Operación terminada";
-//        		panelDatos.actualizarInterfaz(resultado);
-//    		}else {
-//    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-//    		}
-//
-//		} 
-//    	catch (Exception e) 
-//    	{
-////			e.printStackTrace();
-//			String resultado = generarMensajeError(e);
-//			panelDatos.actualizarInterfaz(resultado);
-//		}
+    	try 
+    	{
+    		//String nombreTipo = JOptionPane.showInputDialog (this, "Nombre del tipo de bedida?", "Adicionar tipo de bebida", JOptionPane.QUESTION_MESSAGE);
+    		JTextField nombre = new JTextField();
+    		JTextField marca = new JTextField();
+    		JTextField precioUnitario = new JTextField();
+    		JTextField presentacion = new JTextField();
+    		JTextField precioUnidadMedida = new JTextField();
+    		JTextField unidadMedida = new JTextField();
+    		JTextField empacado = new JTextField();
+    		JTextField codigoBarras = new JTextField();
+    		JTextField nivelReorden = new JTextField();
+    		JTextField existencias = new JTextField();
+    		JTextField idCategoria = new JTextField();
+    		JTextField idSucursal = new JTextField();
+    		JTextField fechaVencimiento = new JTextField();
+    		Object[] message = {
+    		    "nombre:", nombre,
+    		    "marca:", marca,
+    		    "precio unitario:", precioUnitario,
+    		    "presentacion:", presentacion,
+    		    "precioUnidadMedida:", precioUnidadMedida,
+    		    "unidadMedida:", unidadMedida,
+    		    "empacado:", empacado,
+    		    "codigoBarras:", codigoBarras,
+    		    "nivelReorden:", nivelReorden,
+    		    "existencias:", existencias,
+    		    "idCategoria:", idCategoria,
+    		    "idSucursal:", idSucursal,
+    		    "fechaVencimiento (debe estar en formato año/mes/día: yyyy/MM/dd ):", fechaVencimiento,
+    		};
+    		int option = JOptionPane.showConfirmDialog(this, message, "Crear el producto ingresando todos sus valores", JOptionPane.OK_CANCEL_OPTION);
+    		if (option == JOptionPane.OK_OPTION)
+    		{
+        		String nombreResp = nombre.getText();
+        		String marcaResp = marca.getText();
+        		Double precioUnitarioResp = Double.parseDouble(precioUnitario.getText());
+        		String presentacionResp = presentacion.getText();
+        		Double precioUnidadMedidaResp = Double.parseDouble(precioUnidadMedida.getText());
+        		String unidadMedidaResp = unidadMedida.getText();
+        		String empacadoResp = empacado.getText();
+        		String codigoBarrasResp = codigoBarras.getText();
+        		Integer nivelReordenResp = Integer.parseInt(nivelReorden.getText());
+        		Integer existenciasResp = Integer.parseInt(existencias.getText());
+        		Long idCategoriaResp = Long.parseLong(idCategoria.getText());
+        		Long idSucursalResp = Long.parseLong(idSucursal.getText());
+        		String fechaVencimientoResp = fechaVencimiento.getText();
+        		
+        		VOProducto p = superandes.registrarProducto(nombreResp, marcaResp, precioUnitarioResp, presentacionResp, precioUnidadMedidaResp, unidadMedidaResp, empacadoResp, 
+        				codigoBarrasResp, nivelReordenResp, existenciasResp, idCategoriaResp, idSucursalResp, fechaVencimientoResp);
+        		String resultado = "En adicionarProducto\n\n";
+        		resultado += "Producto adicionado exitosamente: " + p;
+    			resultado += "\n Operación terminada";
+        		panelDatos.actualizarInterfaz(resultado);
+    		}else {
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
     }
     
     public void darProductos() {
     	String resultado = "En darProductos\n\n";
     	List<Producto> ps = superandes.darProductos();
     	
-    	for(Producto p : ps) {
-    		resultado += "Producto: " + p.toString() + "\n";
+    	if(ps.size() == 0){
+    		resultado += "No hay productos disponibles\n\n";
+    	}else{
+        	for(Producto p : ps) {
+        		resultado += "Producto: " + p.toString() + "\n";
+        	}
     	}
     	resultado += "Terminó proceso";
     	panelDatos.actualizarInterfaz(resultado);
@@ -555,9 +562,14 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 		List<ComprasPorPromocion> cs = superandes.dar20PromocionesMasPopulares();
 		String resultado = " en dar20PromocionesMasPopulares\n\n";
 		
-		for (int i = 0; i < cs.size(); i++) {
-			resultado += (i + 1) + ". id_promoción: " + cs.get(i).getIdPromocion() + "; número_compras: " + cs.get(i).getNumCompras() + "\n";
+		if(cs.size() == 0){
+			resultado += "no hay promociones disponibles\n\n";
+		}else{
+			for (int i = 0; i < cs.size(); i++) {
+				resultado += (i + 1) + ". id_promoción: " + cs.get(i).getIdPromocion() + "; número_compras: " + cs.get(i).getNumCompras() + "\n";
+			}
 		}
+		resultado += "Terminó proceso";
 		panelDatos.actualizarInterfaz(resultado);
 		
 	}
