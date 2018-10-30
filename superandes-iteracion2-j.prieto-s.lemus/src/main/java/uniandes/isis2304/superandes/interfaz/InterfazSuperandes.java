@@ -62,6 +62,7 @@ import uniandes.isis2304.superandes.negocio.VOEmpresa;
 import uniandes.isis2304.superandes.negocio.VOOrden;
 import uniandes.isis2304.superandes.negocio.VOProducto;
 import uniandes.isis2304.superandes.negocio.VOProveedor;
+import uniandes.isis2304.superandes.negocio.VOSucursal;
 import uniandes.isis2304.superandes.tareasTemporales.VerificacionPromocion;
 
 
@@ -634,6 +635,45 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 		
 	}
 	
+	/* ****************************************************************
+	 * 			Operaciones Sucursal
+	 *****************************************************************/
+	
+	public void registrarSucursal(){
+    	try 
+    	{
+    		JTextField nombre = new JTextField();
+    		JTextField ciudad = new JTextField();
+    		JTextField direccion = new JTextField();
+    		Object[] message = {
+    		    "nombre:", nombre,
+    		    "ciudad:", ciudad,
+    		    "direccion:", direccion,
+    		};
+    		int option = JOptionPane.showConfirmDialog(this, message, "Adicionar una sucursal ingresando todos sus valores", JOptionPane.OK_CANCEL_OPTION);
+    		if (option == JOptionPane.OK_OPTION)
+    		{
+        		String nombreResp = nombre.getText();
+        		String ciudadResp = ciudad.getText();
+        		String direccionResp = direccion.getText();
+        		
+        		VOSucursal e = superandes.registrarSucursal(nombreResp, ciudadResp, direccionResp);
+        		String resultado = "En RegistrarSucursal\n\n";
+        		resultado += "Sucursal adicionada exitosamente: " + e;
+    			resultado += "\n Operación terminada";
+        		panelDatos.actualizarInterfaz(resultado);
+    		}else {
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
 	
 	/* ****************************************************************
 	 * 			Operaciones ORDENES

@@ -748,14 +748,68 @@ public class PersistenciaSuperandes {
 	 * 			Métodos para manejar las SUCURSALES
 	 *****************************************************************/
 	
+	/**
+	 * 
+	 * @param nombre
+	 * @param ciudad
+	 * @param direccion
+	 * @return la sucursal registrada 
+	 */
+	public Sucursal registrarSucursal(String nombre, String ciudad, String direccion){
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            long idSucursal = nextval();
+            long tuplasInsertadas = sqlSucursal.registrarSucursal(pm, idSucursal, nombre, ciudad, direccion);
+            tx.commit();
+            
+            log.trace ("Inserción de sucursal: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+            
+            return new Sucursal(idSucursal, nombre, ciudad, direccion);
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return null;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+	}
+	
+	/**
+	 * 
+	 * @param idSucursal
+	 * @return La sucursal correspondiente al id
+	 */
 	public Sucursal darSucursalPorId(long idSucursal){
 		return sqlSucursal.darSucursalPorId(pmf.getPersistenceManager(), idSucursal);
 	}
 	
 	/* ****************************************************************
-	 * 			Métodos para manejar las Proveedor
+	 * 			Métodos para manejar las BODEGAS
 	 *****************************************************************/
 	
+	
+	/* ****************************************************************
+	 * 			Métodos para manejar los PROVEEDORES
+	 *****************************************************************/
+	
+	/**
+	 * 
+	 * @param nit
+	 * @param nombre
+	 * @param calificacion
+	 * @return El proveedor registrado
+	 */
 	public Proveedor registrarProveedor(String nit, String nombre, double calificacion){
 		PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx=pm.currentTransaction();

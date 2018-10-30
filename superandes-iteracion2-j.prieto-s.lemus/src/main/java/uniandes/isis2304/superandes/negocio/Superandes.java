@@ -255,4 +255,23 @@ public class Superandes
 	public List<Cliente> darClientes(){
 		return ps.darClientes();
 	}
+	
+	/* ****************************************************************
+	 * 			Métodos para manejar las Sucursales
+	 *****************************************************************/
+	
+	/**
+	 * (RF4) Se encarga de adicionar una sucursal según los valores dados
+	 * y de retornar la representación en Objeto respectiva
+	 * @param nombre
+	 * @param ciudad
+	 * @param direccion
+	 * @return la sucursal creada
+	 */
+	public Sucursal registrarSucursal(String nombre, String ciudad, String direccion){
+		log.info("Adicionando la sucursal: " + nombre + "con dirección: " + direccion);
+		Sucursal s = ps.registrarSucursal(nombre, ciudad, direccion);
+		log.info("Adicionando la sucursal: " + s.toString());
+		return s;
+	}
 }
