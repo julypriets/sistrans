@@ -3,6 +3,7 @@ package uniandes.isis2304.superandes.persistencia;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,6 +17,9 @@ import org.apache.log4j.Logger;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+import uniandes.isis2304.superandes.negocio.ComprasPorPromocion;
+import uniandes.isis2304.superandes.negocio.Producto;
 
 /**
  * Clase para el manejador de persistencia del proyecto Superandes
@@ -596,5 +600,120 @@ public class PersistenciaSuperandes {
         }
 		
 	}
+	
+	/**
+	 * Transacción para el generador de secuencia de Superandes
+	 * Adiciona entradas al log de la aplicación
+	 * @return El siguiente número del secuenciador de Superandes
+	 */
+	private long nextval ()
+	{
+        long resp = sqlUtil.nextval (pmf.getPersistenceManager());
+        log.trace ("Generando secuencia: " + resp);
+        return resp;
+    }
+	
+	/* ****************************************************************
+	 * 			Métodos para manejar los PRODUCTOS
+	 *****************************************************************/
+	
+	/**
+	 * Se encarga de adicionar un producto según los valores dados
+	 * y de retornar la representación en Objeto respectiva
+	 * @param nombre
+	 * @param marca
+	 * @param precioUnitario
+	 * @param presentacion
+	 * @param precioUnidadMedida
+	 * @param unidadMedida
+	 * @param empacado
+	 * @param codigoBarras
+	 * @param nivelReorden
+	 * @param existencias
+	 * @param idCategoria
+	 * @param idSucursal
+	 * @return
+	 */
+//	public Producto adicionarProducto(String nombre, String marca, Double precioUnitario, String presentacion,
+//			Double precioUnidadMedida, String unidadMedida, String empacado, String codigoBarras, Integer nivelReorden,
+//			Integer existencias, Long idCategoria, Long idSucursal)
+//	{
+//		PersistenceManager pm = pmf.getPersistenceManager();
+//        Transaction tx=pm.currentTransaction();
+//        try
+//        {
+//            tx.begin();
+//            long idProducto = nextval ();
+//            long tuplasInsertadas = sqlProducto.registarProducto(pm, nombre, marca, precioUnitario, presentacion, precioUnidadMedida, unidadMedida, empacado, codigoBarras, idCategoria, nivelReorden, existencias, fechaVencimiento);
+//            tx.commit();
+//            
+//            log.trace ("Inserción de producto: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+//            
+//            return new Producto(nombre, marca, precioUnitario, presentacion, precioUnidadMedida, unidadMedida, empacado, codigoBarras, nivelReorden, existencias, idCategoria, idSucursal);
+//        }
+//        catch (Exception e)
+//        {
+////        	e.printStackTrace();
+//        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+//        	return null;
+//        }
+//        finally
+//        {
+//            if (tx.isActive())
+//            {
+//                tx.rollback();
+//            }
+//            pm.close();
+//        }
+//	}
+	
+	/**
+	 * Retorna todos los productos existentes
+	 * @return
+	 */
+	public List<Producto> darProductos(){
+		return sqlProducto.darProductos(pmf.getPersistenceManager());
+	}
+	
 
+	/* ****************************************************************
+	 * 			Métodos para manejar las PROMOCIONES
+	 *****************************************************************/
+	
+	/**
+	 * Finaliza una promoción para todos los productos asociados
+	 * @param idPromocion
+	 * @return Número de tuplas modificadas 
+	 */
+	public long finalizarPromocion(Date fechaActual) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
+			long resp = sqlPromocion.finalizarPromocion(pm, fechaActual);
+			tx.commit();
+			return resp;
+			
+		} catch (Exception e) {
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return -1;
+		} finally {
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+ 
+	}
+
+	/**
+	 * Retorna las 20 promociones más populares entre las que no están finalizadas
+	 * por tiempo o por bajas existencias
+	 * @return id de la promoción y su cantidad de compras 
+	 */
+	public List<ComprasPorPromocion> dar20PromocionesMasPopulares() {
+		return sqlPromocion.dar20PromocionesMasPopulares(pmf.getPersistenceManager());
+	}
+	
 }

@@ -1,5 +1,6 @@
 package uniandes.isis2304.superandes.persistencia;
 import uniandes.isis2304.superandes.persistencia.PersistenciaSuperandes;
+import uniandes.isis2304.superandes.negocio.Producto;
 import uniandes.isis2304.superandes.negocio.Sucursal;
 
 import javax.jdo.PersistenceManager;
@@ -67,5 +68,17 @@ public class SQLProducto {
 		q.setParameters(nombre, marca, precioUnitario, presentacion, precioUnidadMedida, unidadMedida, empacado, codigoBarras, 
 				idCategoria, nivelReorden, existencias, fechaVencimiento);
 		return (long) q.executeUnique();
+	}
+	
+	/**
+	 * 
+	 * @param pm - PersistenceManager
+	 * @return todos los productos disponibles
+	 */
+	public List<Producto> darProductos (PersistenceManager pm)
+	{
+		Query q = pm.newQuery(SQL, "SELECT nombre, marca, precio_unitario precioUnitario, presentacion, precio_unidadmedida precioUnidadMedida, empacado, codigo_barras codigobarras, id_categoria idCategoria, nivel_reorden nivelReorden, existencias FROM " + ps.darTablaProducto());
+		q.setResultClass(Producto.class);
+		return (List<Producto>) q.executeList();
 	}
 }

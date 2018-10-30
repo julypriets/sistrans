@@ -1,6 +1,7 @@
 package uniandes.isis2304.superandes.negocio;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -106,5 +107,36 @@ public class Superandes
         long [] borrrados = ps.limpiarSuperandes();	
         log.info ("Limpiando la BD de Superanes: Listo!");
         return borrrados;
+	}
+	
+	/* ****************************************************************
+	 * 			Métodos para manejar las PRODUCTOS
+	 *****************************************************************/
+	
+	public List<Producto> darProductos(){
+		return ps.darProductos();
+	}
+
+
+	/* ****************************************************************
+	 * 			Métodos para manejar las PROMOCIONES
+	 *****************************************************************/
+	
+	/**
+	 * (RF8) Finaliza las promociones que ya se vencieron o cuyos productos
+	 * asociados hayan agotado sus existencias
+	 * @param fechaActual
+	 * @return número de tuplas eliminadas
+	 */
+	public long finalizarPromocion(Date fechaActual) {
+		return ps.finalizarPromocion(fechaActual);
+	}
+	
+	/**
+	 * (RFC2)
+	 * @return las 20 promociones con más compras
+	 */
+	public List<ComprasPorPromocion> dar20PromocionesMasPopulares(){
+		return ps.dar20PromocionesMasPopulares();
 	}
 }
