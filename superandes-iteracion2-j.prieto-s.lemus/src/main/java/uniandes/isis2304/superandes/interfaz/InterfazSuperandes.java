@@ -60,6 +60,7 @@ import uniandes.isis2304.superandes.negocio.VOBebedor;
 import uniandes.isis2304.superandes.negocio.VOBodega;
 import uniandes.isis2304.superandes.negocio.VOCliente;
 import uniandes.isis2304.superandes.negocio.VOEmpresa;
+import uniandes.isis2304.superandes.negocio.VOEstante;
 import uniandes.isis2304.superandes.negocio.VOOrden;
 import uniandes.isis2304.superandes.negocio.VOProducto;
 import uniandes.isis2304.superandes.negocio.VOProveedor;
@@ -639,7 +640,9 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 	/* ****************************************************************
 	 * 			Operaciones Sucursal
 	 *****************************************************************/
-	
+	/**
+	 * (RF4) Registra una sucursal
+	 */
 	public void registrarSucursal(){
     	try 
     	{
@@ -681,6 +684,9 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 	 * 			Operaciones Bodega
 	 *****************************************************************/
 	
+	/**
+	 * (RF5) Registra una bodega dada una sucursal
+	 */
 	public void registrarBodega(){
     	try 
     	{
@@ -705,6 +711,52 @@ public class InterfazSuperandes extends JFrame implements ActionListener
         		VOBodega e = superandes.registrarBodega(idCategoriaResp, capacidadPesoResp, capacidadVolumenResp, idSucursalResp);
         		String resultado = "En registrarBodega\n\n";
         		resultado += "Bodega adicionada exitosamente: " + e;
+    			resultado += "\n Operación terminada";
+        		panelDatos.actualizarInterfaz(resultado);
+    		}else {
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+	
+	/* ****************************************************************
+	 * 			Operaciones Estante
+	 *****************************************************************/
+	
+	/**
+	 * (RF6) Registra un estante dada una sucursal
+	 */
+	public void registrarEstante(){
+    	try 
+    	{
+    		JTextField capacidadPeso = new JTextField();
+    		JTextField capacidadVolumen = new JTextField();
+    		JTextField idCategoria = new JTextField();
+    		JTextField idSucursal = new JTextField();
+    		Object[] message = {
+    		    "capacidad de peso:", capacidadPeso,
+    		    "capacidad de volumen:", capacidadVolumen,
+    		    "id de categoría:", idCategoria,
+    		    "id de sucursal:", idSucursal,
+    		};
+    		int option = JOptionPane.showConfirmDialog(this, message, "Adicionar un estatne a una sucursal ingresando todos sus valores", JOptionPane.OK_CANCEL_OPTION);
+    		if (option == JOptionPane.OK_OPTION)
+    		{
+        		double capacidadPesoResp = Double.parseDouble(capacidadPeso.getText());
+        		double capacidadVolumenResp = Double.parseDouble(capacidadVolumen.getText());
+        		long idCategoriaResp = Long.parseLong(idCategoria.getText());
+        		long idSucursalResp = Long.parseLong(idSucursal.getText());
+        		
+        		VOEstante e = superandes.registrarEstante(idCategoriaResp, capacidadPesoResp, capacidadVolumenResp, idSucursalResp);
+        		String resultado = "En registrarEstante\n\n";
+        		resultado += "Estante adicionada exitosamente: " + e;
     			resultado += "\n Operación terminada";
         		panelDatos.actualizarInterfaz(resultado);
     		}else {

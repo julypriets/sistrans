@@ -63,6 +63,10 @@
 				{
 					"label": "Registrar Bodega en una Sucursal",
 					"event": "registrarBodega"
+				},
+				{
+					"label": "Registrar Estante en una Sucursal",
+					"event": "registrarEstante"
 				}
 			]
 		}

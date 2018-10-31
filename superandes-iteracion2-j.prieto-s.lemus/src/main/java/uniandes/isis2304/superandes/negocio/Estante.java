@@ -65,6 +65,23 @@ public class Estante implements VOEstante{
 		this.idCategoria = 0;
 		this.idSucursal = 0;
 	}
+	
+	/**
+	 * Constructor provisional sin nivel de abastecimiento
+	 * @param id
+	 * @param capacidadPeso
+	 * @param capacidadVolumen
+	 * @param idCategoria
+	 * @param idSucursal
+	 */
+	public Estante(long id, Double capacidadPeso, Double capacidadVolumen
+			, long idCategoria, long idSucursal) {
+		this.id = id;
+		this.capacidadPeso = capacidadPeso;
+		this.capacidadVolumen = capacidadVolumen;
+		this.idCategoria = idCategoria;
+		this.idSucursal = idSucursal;
+	}
 
 	/**
 	 * 

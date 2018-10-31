@@ -23,6 +23,7 @@ import uniandes.isis2304.superandes.negocio.Categoria;
 import uniandes.isis2304.superandes.negocio.Cliente;
 import uniandes.isis2304.superandes.negocio.ComprasPorPromocion;
 import uniandes.isis2304.superandes.negocio.Empresa;
+import uniandes.isis2304.superandes.negocio.Estante;
 import uniandes.isis2304.superandes.negocio.Persona;
 import uniandes.isis2304.superandes.negocio.Producto;
 import uniandes.isis2304.superandes.negocio.Proveedor;
@@ -820,6 +821,40 @@ public class PersistenciaSuperandes {
             log.trace ("Inserción de bodega: " + idBodega + ": " + tuplasInsertadas + " tuplas insertadas");
             
             return new Bodega(idBodega, capacidadPeso, capacidadVolumen, idCategoria, idSucursal);
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return null;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+	}
+	
+	/* ****************************************************************
+	 * 			Métodos para manejar los ESTANTES
+	 *****************************************************************/
+	
+	public Estante registrarEstante(long idCategoria, double capacidadPeso, double capacidadVolumen, long idSucursal){
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            long idEstante = nextval();
+            long tuplasInsertadas = sqlEstante.registrarEstante(pm, idEstante, idCategoria, capacidadPeso, capacidadVolumen, idSucursal);
+            tx.commit();
+            
+            log.trace ("Inserción de estante: " + idEstante + ": " + tuplasInsertadas + " tuplas insertadas");
+            
+            return new Estante(idEstante, capacidadPeso, capacidadVolumen, idCategoria, idSucursal);
         }
         catch (Exception e)
         {

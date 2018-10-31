@@ -303,4 +303,34 @@ public class Superandes
 		log.info("Adicionando la bodega: " + b.toString());
 		return b;
 	}
+	
+	/* ****************************************************************
+	 * 			Métodos para manejar los Estantes
+	 *****************************************************************/
+	
+	/**
+	 * (RF6) Se encarga de adicionar una bodega a una sucursal según los valores dados
+	 * y de retornar la representación en Objeto respectiva
+	 * @param idCategoria
+	 * @param capacidadPeso
+	 * @param capacidadVolumen
+	 * @param idSucursal
+	 * @return
+	 * @throws Exception
+	 */
+	public Estante registrarEstante(long idCategoria, double capacidadPeso, double capacidadVolumen, long idSucursal) throws Exception{
+		
+		if(ps.darSucursalPorId(idSucursal) == null){
+			throw new Exception("El id de la sucursal ingresado no es válido");
+		}
+		
+		if(ps.darCategoriaPorId(idCategoria) == null){
+			throw new Exception("El id de la categoría ingresado no es válido");
+		}
+		
+		log.info("Adicionando un estante de categoría: " + idCategoria + "en la sucursal: " + idSucursal);
+		Estante e = ps.registrarEstante(idCategoria, capacidadPeso, capacidadVolumen, idSucursal);
+		log.info("Adicionando la bodega: " + e.toString());
+		return e;
+	}
 }
