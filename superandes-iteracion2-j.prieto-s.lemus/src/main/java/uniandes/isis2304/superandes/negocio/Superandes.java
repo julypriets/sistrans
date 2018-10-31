@@ -178,6 +178,55 @@ public class Superandes
 	 *****************************************************************/
 	
 	/**
+	 * (RF7) Se encarga de adicionar una promoción según los valores dados
+	 * y de retornar la representación en Objeto respectiva
+	 * @param tipo
+	 * @param precio
+	 * @param fechaInicio
+	 * @param fechaFin
+	 * @param idSucursal
+	 * @param idProducto
+	 * @param cantidad1
+	 * @param cantidad2
+	 * @param descuento
+	 * @return
+	 */
+	public Promocion registrarPromocion(int tipo, double precio, String fechaInicio, 
+			String fechaFin, long idSucursal, String idProducto, int cantidad1, int cantidad2, double descuento) throws Exception{
+		if(precio < 0){
+			throw new Exception("El valor ingresado para el precio es inválido");
+		}
+		if(descuento < 0 || descuento > 100){
+			throw new Exception("El valor ingresado para el descuento es inválido");
+		}
+		if(cantidad1 < 0 || cantidad2 < 0){
+			throw new Exception("Los valores ingresados para las cantidades son inválidas");
+		}
+		
+		Timestamp fechaInicioFormateada = (Timestamp) new Date();
+		Timestamp fechaFinFormateada = (Timestamp) new Date();
+		
+		try{
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+			Date parsedDateIni = dateFormat.parse(fechaInicio);
+			fechaInicioFormateada = new Timestamp(parsedDateIni.getTime());
+			
+			Date parsedDateFin = dateFormat.parse(fechaFin);
+			fechaFinFormateada = new Timestamp(parsedDateFin.getTime());
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		// falta verificar los tipos
+		
+		log.info("Adicionando la promoción: " + tipo + "con descuento: " + descuento);
+		Promocion p = ps.registrarPromocion(tipo, precio, fechaInicioFormateada, fechaFinFormateada, idSucursal, idProducto, cantidad1, cantidad2, descuento);
+		log.info("Adicionando el producto: " + p.toString());
+		return p;
+	}
+	
+	/**
 	 * (RF8) Finaliza las promociones que ya se vencieron o cuyos productos
 	 * asociados hayan agotado sus existencias
 	 * @param fechaActual
@@ -212,7 +261,7 @@ public class Superandes
 	
 	
 	/* ****************************************************************
-	 * 			Métodos para manejar los Clientes
+	 * 			Métodos para manejar los CLIENTES
 	 *****************************************************************/
 	
 	/**
@@ -257,7 +306,7 @@ public class Superandes
 	}
 	
 	/* ****************************************************************
-	 * 			Métodos para manejar las Sucursales
+	 * 			Métodos para manejar las SUCURSALES
 	 *****************************************************************/
 	
 	/**
@@ -276,7 +325,7 @@ public class Superandes
 	}
 	
 	/* ****************************************************************
-	 * 			Métodos para manejar las Bodegas
+	 * 			Métodos para manejar las BODEGAS
 	 *****************************************************************/
 	
 	/**
@@ -305,7 +354,7 @@ public class Superandes
 	}
 	
 	/* ****************************************************************
-	 * 			Métodos para manejar los Estantes
+	 * 			Métodos para manejar los ESTANTES
 	 *****************************************************************/
 	
 	/**

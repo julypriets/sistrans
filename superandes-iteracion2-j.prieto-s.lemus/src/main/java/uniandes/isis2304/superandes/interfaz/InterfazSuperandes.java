@@ -63,6 +63,7 @@ import uniandes.isis2304.superandes.negocio.VOEmpresa;
 import uniandes.isis2304.superandes.negocio.VOEstante;
 import uniandes.isis2304.superandes.negocio.VOOrden;
 import uniandes.isis2304.superandes.negocio.VOProducto;
+import uniandes.isis2304.superandes.negocio.VOPromocion;
 import uniandes.isis2304.superandes.negocio.VOProveedor;
 import uniandes.isis2304.superandes.negocio.VOSucursal;
 import uniandes.isis2304.superandes.tareasTemporales.VerificacionPromocion;
@@ -609,6 +610,65 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 	/* ****************************************************************
 	 * 			Operaciones Promoción
 	 *****************************************************************/
+    
+    /**
+     * (RF7) Registra una promoción
+     */
+    public void registrarPromocion(){
+    
+    	
+    	try 
+    	{
+    		JTextField tipo = new JTextField();
+    		JTextField precio = new JTextField();
+    		JTextField fechaInicio = new JTextField();
+    		JTextField fechaFin = new JTextField();
+    		JTextField idSucursal = new JTextField();
+    		JTextField idProducto = new JTextField();
+    		JTextField cantidad1 = new JTextField();
+    		JTextField cantidad2 = new JTextField();
+    		JTextField descuento = new JTextField();
+    		Object[] message = {
+    		    "tipo:", tipo,
+    		    "precio:", precio,
+    		    "fecha de Inicio:", fechaInicio,
+    		    "fecha de Finalización:", fechaFin,
+    		    "id de la Sucursal:", idSucursal,
+    		    "id del Producto:", idProducto,
+    		    "Cantidad del producto 1 (llenar solo si la promoción es tipo 'n<m' o 'x<y):", cantidad1,
+    		    "Cantidad del producto 2 (llenar solo si la promoción es tipo 'n<m' o 'x<y):", cantidad2,
+    		    "descuento:", descuento,
+    		};
+    		int option = JOptionPane.showConfirmDialog(this, message, "Adicionar una promoción ingresando todos sus valores", JOptionPane.OK_CANCEL_OPTION);
+    		if (option == JOptionPane.OK_OPTION)
+    		{
+        		int tipoResp = Integer.parseInt(tipo.getText());
+        		double precioResp = Double.parseDouble(precio.getText());
+        		String fechaInicioResp = fechaInicio.getText();
+        		String fechaFinResp = fechaFin.getText();
+        		Long idSucursalResp = Long.parseLong(idSucursal.getText());
+        		String idProductoResp = idProducto.getText();
+        		int cantidad1Resp = Integer.parseInt(cantidad1.getText());
+        		int cantidad2Resp = Integer.parseInt(cantidad2.getText());
+        		double descuentoResp = Double.parseDouble(descuento.getText());
+        		
+        		VOPromocion e = superandes.registrarPromocion(tipoResp, precioResp, fechaInicioResp, fechaFinResp, idSucursalResp, idProductoResp, cantidad1Resp, cantidad2Resp, descuentoResp);
+        		String resultado = "En adicionarPersonaNatural\n\n";
+        		resultado += "Persona adicionada exitosamente: " + e;
+    			resultado += "\n Operación terminada";
+        		panelDatos.actualizarInterfaz(resultado);
+    		}else {
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+    }
     
 	/**
 	 * (RF8) Método para finalizar promociones cuando los productos se acaben o cuando ya llegó la fecha de vencimiento

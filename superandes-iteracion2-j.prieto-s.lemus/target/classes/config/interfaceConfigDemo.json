@@ -22,6 +22,10 @@
 		  "options":
 			[
 				{
+					"label": "Registrar",
+					"event": "registrarPromocion"
+				},
+				{
 					"label": "20 más populares",
 					"event": "dar20PromocionesMasPopulares"
 				}
@@ -63,6 +67,10 @@
 				{
 					"label": "Registrar Bodega en una Sucursal",
 					"event": "registrarBodega"
+				},
+				{
+					"label": "Registrar Estante en una Sucursal",
+					"event": "registrarEstante"
 				}
 			]
 		}

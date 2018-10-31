@@ -61,7 +61,7 @@ public class SQLPromocion {
 	 * @return El número de tuplas insertadas
 	 */
 	public long registrarPromocion (PersistenceManager pm, long id, int tipo, double precio, Timestamp fechaInicio, 
-			Timestamp fechaFin, long idSucursal, String idProducto, int cantidad1, int cantidad2, int descuento ) {
+			Timestamp fechaFin, long idSucursal, String idProducto, int cantidad1, int cantidad2, double descuento ) {
 		Query q = pm.newQuery(SQL, "INSERT INTO " + ps.darTablaPromocion() + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		q.setParameters(id, tipo, precio, fechaInicio, fechaFin, idSucursal, idProducto, cantidad1, cantidad2, descuento);
 		return (long) q.executeUnique();

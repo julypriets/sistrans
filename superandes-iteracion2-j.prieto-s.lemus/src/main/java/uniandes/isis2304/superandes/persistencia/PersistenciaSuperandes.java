@@ -26,6 +26,7 @@ import uniandes.isis2304.superandes.negocio.Empresa;
 import uniandes.isis2304.superandes.negocio.Estante;
 import uniandes.isis2304.superandes.negocio.Persona;
 import uniandes.isis2304.superandes.negocio.Producto;
+import uniandes.isis2304.superandes.negocio.Promocion;
 import uniandes.isis2304.superandes.negocio.Proveedor;
 import uniandes.isis2304.superandes.negocio.Sucursal;
 
@@ -687,6 +688,49 @@ public class PersistenciaSuperandes {
 	/* ****************************************************************
 	 * 			Métodos para manejar las PROMOCIONES
 	 *****************************************************************/
+	/**
+	 * 
+	 * @param tipo
+	 * @param precio
+	 * @param fechaInicio
+	 * @param fechaFin
+	 * @param idSucursal
+	 * @param idProducto
+	 * @param cantidad1
+	 * @param cantidad2
+	 * @param descuento
+	 * @return La promoción registrada
+	 */
+	public Promocion registrarPromocion (int tipo, double precio, Timestamp fechaInicio, 
+			Timestamp fechaFin, long idSucursal, String idProducto, int cantidad1, int cantidad2, double descuento){
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            long idPromocion = nextval();
+            long tuplasInsertadas = sqlPromocion.registrarPromocion(pm, idPromocion, tipo, precio, fechaInicio, fechaFin, idSucursal, idProducto, cantidad1, cantidad2, descuento);
+            tx.commit();
+            
+            log.trace ("Inserción de promoción: " + tipo + ": " + tuplasInsertadas + " tuplas insertadas");
+            
+            return new Promocion(idPromocion, tipo, precio, fechaInicio, fechaFin, cantidad1, cantidad2, descuento, idSucursal, idProducto);
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return null;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+	}
 	
 	/**
 	 * Finaliza una promoción para todos los productos asociados

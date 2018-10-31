@@ -22,6 +22,10 @@
 		  "options":
 			[
 				{
+					"label": "Registrar",
+					"event": "registrarPromocion"
+				},
+				{
 					"label": "20 más populares",
 					"event": "dar20PromocionesMasPopulares"
 				}

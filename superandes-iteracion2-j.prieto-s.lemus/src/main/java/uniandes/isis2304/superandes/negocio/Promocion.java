@@ -42,7 +42,7 @@ public class Promocion implements VOPromocion{
 	/**
 	 * Cantidad de descuento resultante al aplicar algún tipo de promoción
 	 */
-	private int descuento;
+	private double descuento;
 	
 	/**
 	 * Sucursal a la que pertenece
@@ -98,7 +98,7 @@ public class Promocion implements VOPromocion{
 	 * @param idProducto
 	 */
 	public Promocion(long id, int tipo, double precio, Timestamp fechaInicio, Timestamp fechaFin, int cantidad1,
-			int cantidad2, int descuento, long idSucural, String idProducto) {
+			int cantidad2, double descuento, long idSucural, String idProducto) {
 		this.id = id;
 		this.tipo = tipo;
 		this.precio = precio;
@@ -183,7 +183,7 @@ public class Promocion implements VOPromocion{
 		this.cantidad2 = cantidad2;
 	}
 
-	public int getDescuento() {
+	public double getDescuento() {
 		return descuento;
 	}
 

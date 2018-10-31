@@ -18,7 +18,7 @@ public interface VOPromocion {
 
 	public int getCantidad2();
 
-	public int getDescuento();
+	public double getDescuento();
 
 	public long getIdSucural();
 
