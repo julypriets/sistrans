@@ -198,3 +198,5 @@ insert into PRODUCTO (nombre, marca, precio_unitario, presentacion, precio_unida
 insert into PRODUCTO (nombre, marca, precio_unitario, presentacion, precio_unidadmedida, unidad_medida, empacado, codigo_barras, id_categoria, nivel_reorden, existencias, fecha_vencimiento) values ('Jam - Raspberry', 'ADENOSINE', 20347, 'Envase', 3061, 'Envase', '181 gr', 'OJ6BU41J5X7WQ', 9, 1, 27, null);
 insert into PRODUCTO (nombre, marca, precio_unitario, presentacion, precio_unidadmedida, unidad_medida, empacado, codigo_barras, id_categoria, nivel_reorden, existencias, fecha_vencimiento) values ('Wakami Seaweed', 'Laxative', 23228, 'Caja', 2723, 'Envase', '304 cm3', 'A8DL4JM2UEL0D', 7, 6, 19, null);
 insert into PRODUCTO (nombre, marca, precio_unitario, presentacion, precio_unidadmedida, unidad_medida, empacado, codigo_barras, id_categoria, nivel_reorden, existencias, fecha_vencimiento) values ('Wine - Chablis J Moreau Et Fils', 'Tizanidine', 27961, 'Envoltura', 3211, 'Envoltura', '366 cm3', 'FQ05Y0JJ422R8', 9, 6, 24, null);
+
+COMMIT;

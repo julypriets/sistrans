@@ -1,0 +1,22 @@
+insert into BODEGA (id, id_categoria, capacidad_peso, capacidad_volumen, id_sucursal) values (superandes_sequence.NEXTVAL, 1, 39245, 172, 5);
+insert into BODEGA (id, id_categoria, capacidad_peso, capacidad_volumen, id_sucursal) values (superandes_sequence.NEXTVAL, 8, 49902, 242, 6);
+insert into BODEGA (id, id_categoria, capacidad_peso, capacidad_volumen, id_sucursal) values (superandes_sequence.NEXTVAL, 3, 32345, 221, 10);
+insert into BODEGA (id, id_categoria, capacidad_peso, capacidad_volumen, id_sucursal) values (superandes_sequence.NEXTVAL, 2, 48018, 175, 1);
+insert into BODEGA (id, id_categoria, capacidad_peso, capacidad_volumen, id_sucursal) values (superandes_sequence.NEXTVAL, 7, 36434, 136, 1);
+insert into BODEGA (id, id_categoria, capacidad_peso, capacidad_volumen, id_sucursal) values (superandes_sequence.NEXTVAL, 3, 45821, 141, 3);
+insert into BODEGA (id, id_categoria, capacidad_peso, capacidad_volumen, id_sucursal) values (superandes_sequence.NEXTVAL, 5, 34080, 135, 4);
+insert into BODEGA (id, id_categoria, capacidad_peso, capacidad_volumen, id_sucursal) values (superandes_sequence.NEXTVAL, 9, 40217, 228, 3);
+insert into BODEGA (id, id_categoria, capacidad_peso, capacidad_volumen, id_sucursal) values (superandes_sequence.NEXTVAL, 8, 48714, 190, 4);
+insert into BODEGA (id, id_categoria, capacidad_peso, capacidad_volumen, id_sucursal) values (superandes_sequence.NEXTVAL, 9, 30934, 193, 9);
+insert into BODEGA (id, id_categoria, capacidad_peso, capacidad_volumen, id_sucursal) values (superandes_sequence.NEXTVAL, 6, 48915, 152, 7);
+insert into BODEGA (id, id_categoria, capacidad_peso, capacidad_volumen, id_sucursal) values (superandes_sequence.NEXTVAL, 5, 40948, 237, 5);
+insert into BODEGA (id, id_categoria, capacidad_peso, capacidad_volumen, id_sucursal) values (superandes_sequence.NEXTVAL, 4, 41302, 162, 4);
+insert into BODEGA (id, id_categoria, capacidad_peso, capacidad_volumen, id_sucursal) values (superandes_sequence.NEXTVAL, 7, 35503, 134, 1);
+insert into BODEGA (id, id_categoria, capacidad_peso, capacidad_volumen, id_sucursal) values (superandes_sequence.NEXTVAL, 4, 49833, 182, 6);
+insert into BODEGA (id, id_categoria, capacidad_peso, capacidad_volumen, id_sucursal) values (superandes_sequence.NEXTVAL, 3, 34981, 130, 2);
+insert into BODEGA (id, id_categoria, capacidad_peso, capacidad_volumen, id_sucursal) values (superandes_sequence.NEXTVAL, 6, 46981, 241, 9);
+insert into BODEGA (id, id_categoria, capacidad_peso, capacidad_volumen, id_sucursal) values (superandes_sequence.NEXTVAL, 8, 44190, 127, 9);
+insert into BODEGA (id, id_categoria, capacidad_peso, capacidad_volumen, id_sucursal) values (superandes_sequence.NEXTVAL, 4, 31702, 201, 9);
+insert into BODEGA (id, id_categoria, capacidad_peso, capacidad_volumen, id_sucursal) values (superandes_sequence.NEXTVAL, 8, 34034, 163, 3);
+
+COMMIT;
