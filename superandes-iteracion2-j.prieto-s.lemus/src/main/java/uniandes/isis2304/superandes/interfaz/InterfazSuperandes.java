@@ -126,6 +126,11 @@ public class InterfazSuperandes extends JFrame implements ActionListener
      * Menú de la aplicación
      */
     private JMenuBar menuBar;
+    
+    /**
+     * El cliente que inició sesión en la aplicación
+     */
+    private VOCliente loggedClient;
 
 	/* ****************************************************************
 	 * 			Métodos
@@ -136,6 +141,8 @@ public class InterfazSuperandes extends JFrame implements ActionListener
      */
     public InterfazSuperandes( )
     {
+    	loggedClient = null;
+    	
         // Carga la configuración de la interfaz desde un archivo JSON
         guiConfig = openConfig ("Interfaz", CONFIG_INTERFAZ);
         
@@ -155,7 +162,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
         setLayout (new BorderLayout());
         add (new JLabel (new ImageIcon (path)), BorderLayout.NORTH );          
         add( panelDatos, BorderLayout.CENTER );
-        VerificacionPromocion.intervaloLimpiezaPromocion(this, 10000);
+        //VerificacionPromocion.intervaloLimpiezaPromocion(this, 10000);
     }
     
 	/* ****************************************************************
@@ -605,6 +612,107 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 		}
 		resultado += "Proceso terminado";
 		panelDatos.actualizarInterfaz(resultado);
+    }
+    
+    /**
+     * Verifica si la identificación del cliente está registrada e inicia sesión
+     */
+    public void iniciarSesionClientePersona(){
+    	if(loggedClient == null){
+        	try 
+        	{
+        		JTextField identificacion = new JTextField();
+        		Object[] message = {
+        		    "identificacion:", identificacion,
+        		};
+        		int option = JOptionPane.showConfirmDialog(this, message, "Ingresar con documento de identificación", JOptionPane.OK_CANCEL_OPTION);
+        		if (option == JOptionPane.OK_OPTION)
+        		{
+            		long identificacionResp = Long.parseLong(identificacion.getText());
+            		
+            		VOCliente e = superandes.darClientePersonaPorId(identificacionResp);
+            		if(e != null){
+            			loggedClient = e;
+            			JOptionPane.showMessageDialog(this, "Bienvenido(a)" + e.getNombre(), "Sesión iniciada exitosamente", JOptionPane.OK_OPTION);
+            			
+                		String resultado = "En iniciarSesionClientePersona\n\n";
+                		resultado += "Se inició sesión exitosamente: " + e;
+            			resultado += "\n Operación terminada";
+                		panelDatos.actualizarInterfaz(resultado);
+            		}else{
+            			JOptionPane.showMessageDialog(this, "El documento ingresado no es correcto", "Error", JOptionPane.ERROR_MESSAGE);
+            		}
+
+        		}else {
+        			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+        		}
+
+    		} 
+        	catch (Exception e) 
+        	{
+//    			e.printStackTrace();
+    			String resultado = generarMensajeError(e);
+    			panelDatos.actualizarInterfaz(resultado);
+    		}
+    	}else{
+    		JOptionPane.showMessageDialog(this, "Ya existe una sesión iniciada, por favor cerrar sesión", "Error", JOptionPane.ERROR_MESSAGE);
+    	}
+
+    }
+    
+    /**
+     * Verifica si el nit de la empresa está registrada e inicia sesión
+     */
+    public void iniciarSesionClienteEmpresa(){
+    	if(loggedClient == null){
+        	try 
+        	{
+        		JTextField nit = new JTextField();
+        		Object[] message = {
+        		    "nit:", nit,
+        		};
+        		int option = JOptionPane.showConfirmDialog(this, message, "Ingresar con NIT", JOptionPane.OK_CANCEL_OPTION);
+        		if (option == JOptionPane.OK_OPTION)
+        		{
+            		long nitResp = Long.parseLong(nit.getText());
+            		
+            		VOCliente e = superandes.darClienteEmpresaPorId(nitResp);
+            		if(e != null){
+            			loggedClient = e;
+            			
+                		String resultado = "En iniciarSesionClienteEmpresa\n\n";
+                		resultado += "Se inició sesión exitosamente: " + e;
+            			resultado += "\n Operación terminada";
+                		panelDatos.actualizarInterfaz(resultado);
+            		}else{
+            			JOptionPane.showMessageDialog(this, "El nit ingresado no es correcto", "Error", JOptionPane.ERROR_MESSAGE);
+            		}
+
+        		}else {
+        			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+        		}
+
+    		} 
+        	catch (Exception e) 
+        	{
+//    			e.printStackTrace();
+    			String resultado = generarMensajeError(e);
+    			panelDatos.actualizarInterfaz(resultado);
+    		}
+    	}else{
+    		JOptionPane.showMessageDialog(this, "Ya existe una sesión iniciada, por favor cerrar sesión", "Error", JOptionPane.ERROR_MESSAGE);
+    	}
+
+    }
+    
+    /**
+     * Cerrar sesión 
+     */
+    public void cerrarSesion(){
+    	int option = JOptionPane.showConfirmDialog(this, "Desea cerrar sesión");
+    	if (option == JOptionPane.OK_OPTION) {
+			loggedClient = null;
+		}
     }
     
 	/* ****************************************************************

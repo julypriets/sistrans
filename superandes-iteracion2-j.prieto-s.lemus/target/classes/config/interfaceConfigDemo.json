@@ -5,6 +5,23 @@
 	"bannerPath": "./src/main/resources/config/logo.png",
 	"menuBar":
 	[
+		{ "menuTitle": "Usuario",
+			"options":
+			[
+				{
+					"label": "Iniciar Sesión",
+					"event": "iniciarSesionClientePersona"
+				},
+				{
+					"label": "Iniciar Sesión como Empresa",
+					"event": "iniciarSesionClienteEmpresa"
+				},
+				{
+					"label": "Cerrar Sesión",
+					"event": "cerrarSesion"
+				}
+			]
+		},
 		{ "menuTitle": "Producto",
 		  "options":
 			[

@@ -342,10 +342,15 @@ public class Producto implements VOProducto{
 	 */
 	@Override
 	public String toString() {
+		String fechaVencimientoLocal = "";
+		if(fechaVencimiento != null){
+			fechaVencimientoLocal = fechaVencimiento.toString();
+		}
+		
 		return "Producto [codigoBarras=" + codigoBarras + ", nombre=" + nombre + ", marca=" + marca
 				+ ", precioUnitario=" + precioUnitario + ", presentacion=" + presentacion + ", precioUnidadMedida="
 				+ precioUnidadMedida + ", unidadMedida=" + unidadMedida + ", empacado=" + empacado + ", nivelReorden="
-				+ nivelReorden + ", existencias=" + existencias + ", fechaVencimiento=" + fechaVencimiento.toString() + "]";
+				+ nivelReorden + ", existencias=" + existencias + ", fechaVencimiento=" + fechaVencimientoLocal + "]";
 	}
 
 	

@@ -6,6 +6,9 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
 import uniandes.isis2304.superandes.negocio.Cliente;
+import uniandes.isis2304.superandes.negocio.Empresa;
+import uniandes.isis2304.superandes.negocio.Persona;
+import uniandes.isis2304.superandes.negocio.Producto;
 
 /**
  * Clase que encapsula los métodos que hacen acceso a la base de datos para el concepto CLIENTE de Superandes
@@ -100,10 +103,49 @@ public class SQLCliente {
         return (long) q2.executeUnique();
 	}
 	
+	/**
+	 * 
+	 * @param pm - PersistenceManager
+	 * @return Todos los clientes registrados
+	 */
 	public List<Cliente> darClientes(PersistenceManager pm) {
-		Query q = pm.newQuery(SQL, "SELECT * FROM " + ps.darTablaCliente());
+		Query q = pm.newQuery(SQL, "SELECT id, nombre, correo FROM " + ps.darTablaCliente());
 		q.setResultClass(Cliente.class);
 		return (List<Cliente>) q.executeList();
+	}
+	
+	/**
+	 * 
+	 * @param pm - PersistenceManager
+	 * @param identificacion
+	 * @return La persona natural correspondiente al documento de identificación
+	 */
+	public Cliente darClientePersonaPorId(PersistenceManager pm, long identificacion){
+		String select = "SELECT id, nombre, correo, identificacion " +
+						"FROM CLIENTE c, PERSONA p " +
+						"WHERE " +
+						    "c.id = p.id_cliente AND " +
+						    "p.identificacion = " + identificacion;
+		Query q = pm.newQuery(SQL, select);
+		q.setResultClass(Persona.class);
+		return (Persona) q.execute();
+	}
+	
+	/**
+	 * 
+	 * @param pm - PersistenceManager
+	 * @param nit
+	 * @return La empresa correspondiente al nit
+	 */
+	public Cliente darClienteEmpresaPorId(PersistenceManager pm, long nit){
+		String select = "SELECT id, nombre, correo, nit, direccion " +
+				"FROM CLIENTE c, EMPRESA e " +
+				"WHERE " +
+				    "c.id = e.id_cliente AND " +
+				    "e.nit = ? ";
+		Query q = pm.newQuery(SQL, select);
+		q.setResultClass(Empresa.class);
+		return (Empresa) q.execute(nit);
 	}
 
 }

@@ -3,6 +3,7 @@ package uniandes.isis2304.superandes.persistencia;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -78,7 +79,7 @@ public class PersistenciaSuperandes {
 	 * surtido, producto_abastecimiento, inventario, producto_orden, catalogo, orden_proveedor,
 	 * compra, producto_promocion, factura promocion.
 	 */
-	private List <String> tablas;
+	private ArrayList<String> tablas;
 
 	/**
 	 * Atributo para el acceso a las sentencias SQL propias a PersistenciaSuperandes
@@ -233,7 +234,7 @@ public class PersistenciaSuperandes {
 		crearClasesSQL();
 
 		//Define los nombres por defecto de las tablas de la base de datos
-		tablas = new LinkedList<String>();
+		tablas = new ArrayList<String>();
 		tablas.add("Superandes_sequence");
 		tablas.add("SUCURSAL");
 		tablas.add("CATEGORIA");
@@ -314,10 +315,10 @@ public class PersistenciaSuperandes {
 	 * @param tableConfig - El objeto Json con los nombres de las tablas
 	 * @return La lista con los nombres del secuenciador y de las tablas
 	 */
-	private List <String> leerNombresTablas (JsonObject tableConfig){
+	private ArrayList<String> leerNombresTablas (JsonObject tableConfig){
 		JsonArray nombres = tableConfig.getAsJsonArray("tablas") ;
 
-		List <String> resp = new LinkedList <String> ();
+		ArrayList<String> resp = new ArrayList <String> ();
 		for (JsonElement nom : nombres)
 		{
 			resp.add (nom.getAsString ());
@@ -1049,5 +1050,23 @@ public class PersistenciaSuperandes {
 	 */
 	public List<Cliente> darClientes(){
 		return sqlCliente.darClientes(pmf.getPersistenceManager());
+	}
+	
+	/**
+	 * 
+	 * @param identificacion
+	 * @return La persona natural correspondiente al documento de identificación
+	 */
+	public Cliente darClientePersonaPorId(long identificacion){
+		return sqlCliente.darClientePersonaPorId(pmf.getPersistenceManager(), identificacion);
+	}
+	
+	/**
+	 * 
+	 * @param nit
+	 * @return La empresa correspondiente al nit 
+	 */
+	public Cliente darClienteEmpresaPorId(long nit){
+		return sqlCliente.darClienteEmpresaPorId(pmf.getPersistenceManager(), nit);
 	}
 }

@@ -77,8 +77,8 @@ public class SQLProducto {
 	 */
 	public List<Producto> darProductos (PersistenceManager pm)
 	{
-		Query q = pm.newQuery(SQL, "SELECT nombre, marca, precio_unitario precioUnitario, presentacion, precio_unidadmedida precioUnidadMedida, empacado, codigo_barras codigobarras, id_categoria idCategoria, nivel_reorden nivelReorden, existencias FROM " + ps.darTablaProducto());
-		q.setResultClass(Producto.class);
+		Query q = pm.newQuery(SQL, "SELECT nombre, marca, precio_unitario precioUnitario, presentacion, precio_unidadmedida precioUnidadMedida, empacado, codigo_barras codigobarras, id_categoria idCategoria, nivel_reorden nivelReorden, existencias FROM PRODUCTO");
+		q.setResultClass(Producto.class); 
 		return (List<Producto>) q.executeList();
 	}
 	

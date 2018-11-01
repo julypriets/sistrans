@@ -305,6 +305,24 @@ public class Superandes
 		return ps.darClientes();
 	}
 	
+	/**
+	 * 
+	 * @param identificacion
+	 * @return La persona natural correspondiente al documento de identificación
+	 */
+	public Cliente darClientePersonaPorId(long identificacion){
+		return ps.darClientePersonaPorId(identificacion);
+	}
+	
+	/**
+	 * 
+	 * @param nit
+	 * @return La empresa correspondiente al nit 
+	 */
+	public Cliente darClienteEmpresaPorId(long nit){
+		return ps.darClienteEmpresaPorId(nit);
+	}
+	
 	/* ****************************************************************
 	 * 			Métodos para manejar las SUCURSALES
 	 *****************************************************************/

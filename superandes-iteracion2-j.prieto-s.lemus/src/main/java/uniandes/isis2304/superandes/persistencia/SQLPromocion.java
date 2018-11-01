@@ -104,7 +104,7 @@ public class SQLPromocion {
 				"        prom.id_producto = prodprom.id_promocion AND " + 
 				"        prod.codigo_barras = prodprom.id_producto AND " + 
 				"        prod.existencias = 0 OR " +
-				"        prom.fecha_fin < fechaActual " +
+				"        prom.fecha_fin < " + fechaActual  +
 				") ";
  
 		Query q = pm.newQuery(SQL, delete);
