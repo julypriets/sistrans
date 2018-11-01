@@ -685,6 +685,15 @@ public class PersistenciaSuperandes {
 		return sqlProducto.darProductos(pmf.getPersistenceManager());
 	}
 	
+	/**
+	 * 
+	 * @param idProducto
+	 * @return El producto asociado con su id
+	 */
+	public Producto darProductoPorId(String idProducto){
+		return sqlProducto.darProductoPorId(pmf.getPersistenceManager(), idProducto);
+	}
+	
 
 	/* ****************************************************************
 	 * 			Métodos para manejar las PROMOCIONES

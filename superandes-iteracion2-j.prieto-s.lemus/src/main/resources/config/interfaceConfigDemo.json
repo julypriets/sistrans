@@ -32,6 +32,10 @@
 				{
 					"label": "Obtener los productos",
 					"event": "darProductos"
+				},
+				{
+					"label": "Obtener producto por código de barras",
+					"event": "darProductoPorId"
 				}
 			]
 		},

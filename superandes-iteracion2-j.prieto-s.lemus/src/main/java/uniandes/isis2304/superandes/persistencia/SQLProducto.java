@@ -88,11 +88,13 @@ public class SQLProducto {
 	 * @param idProducto 
 	 * @return El producto correspondiente al id
 	 */
-	public Producto darProductoPorId(PersistenceManager pm, long idProducto) {
+	public Producto darProductoPorId(PersistenceManager pm, String idProducto) {
 		Query q = pm.newQuery(SQL, "SELECT nombre, marca, precio_unitario precioUnitario, presentacion, precio_unidadmedida precioUnidadMedida, empacado, codigo_barras codigobarras, id_categoria idCategoria, nivel_reorden nivelReorden, existencias"
 				+ " FROM " + ps.darTablaProducto() + " WHERE codigo_barras = ?");
 		q.setResultClass(Producto.class);
-		return (Producto) q.execute(idProducto);
+		q.setParameters(idProducto);
+		return (Producto) q.executeUnique();
+		// ((List<Producto>) q.executeList()).get(0)
 	}
 	
 }

@@ -3,11 +3,6 @@ package uniandes.isis2304.superandes.negocio;
 public class Persona extends Cliente implements VOPersona{
 	
 	/**
-	 * Identificador del cliente
-	 */
-	private long id;
-	
-	/**
 	 * Identificacion de la persona
 	 */
 	private String identificacion;
@@ -45,6 +40,20 @@ public class Persona extends Cliente implements VOPersona{
 	 */
 	public void setIdentificacion(String identificacion) {
 		this.identificacion = identificacion;
+	}
+	
+	// DataNucleus no detecta los métodos heredados, por eso se repiten los setters en esta clase
+	
+	public void setId(long id){
+		super.setId(id);	
+	}
+	
+	public void setNombre(String nombre){
+		super.setNombre(nombre);
+	}
+	
+	public void setCorreo(String correo){
+		super.setCorreo(correo);
 	}
 
 	@Override

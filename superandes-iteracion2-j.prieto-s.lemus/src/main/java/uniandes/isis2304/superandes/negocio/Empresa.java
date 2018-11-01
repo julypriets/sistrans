@@ -3,11 +3,6 @@ package uniandes.isis2304.superandes.negocio;
 public class Empresa extends Cliente implements VOEmpresa {
 	
 	/**
-	 * Identificador de la empresa
-	 */
-	private long id;
-	
-	/**
 	 * NIT único de la empresa
 	 */
 	private String nit;
@@ -61,6 +56,21 @@ public class Empresa extends Cliente implements VOEmpresa {
 	public String getDireccion() {
 		return direccion;
 	}
+	
+	// DataNucleus no detecta los métodos heredados, por eso se repiten los setters en esta clase
+	
+	public void setId(long id){
+		super.setId(id);	
+	}
+	
+	public void setNombre(String nombre){
+		super.setNombre(nombre);
+	}
+	
+	public void setCorreo(String correo){
+		super.setCorreo(correo);
+	}
+	
 
 	/**
 	 * Modifica la dirección de la empresa

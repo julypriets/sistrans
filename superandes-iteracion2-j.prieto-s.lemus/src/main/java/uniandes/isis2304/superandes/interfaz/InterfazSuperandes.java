@@ -357,6 +357,38 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     	
     }
     
+    public void darProductoPorId(){
+    	try 
+    	{
+    		JTextField codigoBarras = new JTextField();
+
+    		Object[] message = {
+    		    "Ingrese el código de barras:", codigoBarras,
+
+    		};
+    		int option = JOptionPane.showConfirmDialog(this, message, "Encuentre el producto por su código de barras", JOptionPane.OK_CANCEL_OPTION);
+    		if (option == JOptionPane.OK_OPTION)
+    		{
+        		String codigoBarrasResp = codigoBarras.getText();
+        		
+        		VOProducto p = superandes.darProductoPorId(codigoBarrasResp);
+        		String resultado = "En darProductoPorId\n\n";
+        		resultado += "Producto encontrado exitosamente: " + p;
+    			resultado += "\n Operación terminada";
+        		panelDatos.actualizarInterfaz(resultado);
+    		}else {
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+    }
+    
 	/**
 	 * (RFC4)Retorna los productos dado un rango de precios unitarios
 	 * @param p1 - límite inferior
@@ -636,7 +668,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
             			JOptionPane.showMessageDialog(this, "Bienvenido(a)" + e.getNombre(), "Sesión iniciada exitosamente", JOptionPane.OK_OPTION);
             			
                 		String resultado = "En iniciarSesionClientePersona\n\n";
-                		resultado += "Se inició sesión exitosamente: " + e;
+                		resultado += "Se inició sesión exitosamente: " + e.getNombre() + " Correo: " + e.getCorreo();
             			resultado += "\n Operación terminada";
                 		panelDatos.actualizarInterfaz(resultado);
             		}else{
@@ -681,7 +713,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
             			loggedClient = e;
             			
                 		String resultado = "En iniciarSesionClienteEmpresa\n\n";
-                		resultado += "Se inició sesión exitosamente: " + e;
+                		resultado += "Se inició sesión exitosamente: " + e.getNombre() + " Correo: " + e.getCorreo();
             			resultado += "\n Operación terminada";
                 		panelDatos.actualizarInterfaz(resultado);
             		}else{
@@ -712,6 +744,12 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     	int option = JOptionPane.showConfirmDialog(this, "Desea cerrar sesión");
     	if (option == JOptionPane.OK_OPTION) {
 			loggedClient = null;
+    		String resultado = "En cerrarSesion\n\n";
+    		resultado += "Se cerró sesión exitosamente ";
+			resultado += "\n Operación terminada";
+    		panelDatos.actualizarInterfaz(resultado);
+		}else{
+			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
 		}
     }
     

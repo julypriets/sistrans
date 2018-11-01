@@ -172,6 +172,14 @@ public class Superandes
 		return ps.darProductos();
 	}
 
+	/**
+	 * 
+	 * @param idProducto
+	 * @return El producto asociado con el id
+	 */
+	public Producto darProductoPorId(String idProducto){
+		return ps.darProductoPorId(idProducto);
+	}
 
 	/* ****************************************************************
 	 * 			Métodos para manejar las PROMOCIONES

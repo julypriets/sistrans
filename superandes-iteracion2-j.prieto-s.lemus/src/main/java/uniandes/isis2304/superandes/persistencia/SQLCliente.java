@@ -128,7 +128,8 @@ public class SQLCliente {
 						    "p.identificacion = " + identificacion;
 		Query q = pm.newQuery(SQL, select);
 		q.setResultClass(Persona.class);
-		return (Persona) q.execute();
+		return (Persona) q.executeUnique();
+		// ((List<Persona>) q.executeList()).get(0)
 	}
 	
 	/**
@@ -145,7 +146,8 @@ public class SQLCliente {
 				    "e.nit = ? ";
 		Query q = pm.newQuery(SQL, select);
 		q.setResultClass(Empresa.class);
-		return (Empresa) q.execute(nit);
+		q.setParameters(nit);
+		return (Empresa) q.executeUnique();
 	}
 
 }
