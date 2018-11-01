@@ -77,7 +77,7 @@ public class SQLProducto {
 	 */
 	public List<Producto> darProductos (PersistenceManager pm)
 	{
-		Query q = pm.newQuery(SQL, "SELECT nombre, marca, precio_unitario precioUnitario, presentacion, precio_unidadmedida precioUnidadMedida, empacado, codigo_barras codigobarras, id_categoria idCategoria, nivel_reorden nivelReorden, existencias FROM PRODUCTO");
+		Query q = pm.newQuery(SQL, "SELECT nombre, marca, precio_unitario precioUnitario, presentacion, precio_unidadmedida precioUnidadMedida, empacado, codigo_barras codigobarras, id_categoria idCategoria, nivel_reorden nivelReorden, existencias, fecha_vencimiento fechaVencimiento FROM PRODUCTO");
 		q.setResultClass(Producto.class); 
 		return (List<Producto>) q.executeList();
 	}
@@ -89,12 +89,26 @@ public class SQLProducto {
 	 * @return El producto correspondiente al id
 	 */
 	public Producto darProductoPorId(PersistenceManager pm, String idProducto) {
-		Query q = pm.newQuery(SQL, "SELECT nombre, marca, precio_unitario precioUnitario, presentacion, precio_unidadmedida precioUnidadMedida, empacado, codigo_barras codigobarras, id_categoria idCategoria, nivel_reorden nivelReorden, existencias"
+		Query q = pm.newQuery(SQL, "SELECT nombre, marca, precio_unitario precioUnitario, presentacion, precio_unidadmedida precioUnidadMedida, empacado, codigo_barras codigobarras, id_categoria idCategoria, nivel_reorden nivelReorden, existencias, fecha_vencimiento fechaVencimiento "
 				+ " FROM " + ps.darTablaProducto() + " WHERE codigo_barras = ?");
 		q.setResultClass(Producto.class);
 		q.setParameters(idProducto);
 		return (Producto) q.executeUnique();
 		// ((List<Producto>) q.executeList()).get(0)
+	}
+	
+	/**
+	 * 
+	 * @param pm - PersistenceManager
+	 * @param nombre
+	 * @return todos los productos asociados al nombre 
+	 */
+	public List<Producto> darProductosPorNombre (PersistenceManager pm, String nombre){
+		Query q = pm.newQuery(SQL, "SELECT nombre, marca, precio_unitario precioUnitario, presentacion, precio_unidadmedida precioUnidadMedida, empacado, codigo_barras codigobarras, id_categoria idCategoria, nivel_reorden nivelReorden, existencias, fecha_vencimiento fechaVencimiento FROM PRODUCTO "
+				+ "WHERE nombre = ?");
+		q.setResultClass(Producto.class);
+		q.setParameters(nombre);
+		return (List<Producto>) q.executeList();
 	}
 	
 }

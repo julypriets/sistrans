@@ -341,6 +341,9 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 		}
     }
     
+    /**
+     * Muestra todos los productos existentes
+     */
     public void darProductos() {
     	String resultado = "En darProductos\n\n";
     	List<Producto> ps = superandes.darProductos();
@@ -349,7 +352,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     		resultado += "No hay productos disponibles\n\n";
     	}else{
         	for(Producto p : ps) {
-        		resultado += "Producto: " + p.toString() + "\n";
+        		resultado += p.toString() + "\n";
         	}
     	}
     	resultado += "Terminó proceso";
@@ -357,6 +360,54 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     	
     }
     
+    /**
+     * Muestra todos los productos asociados al nombre entregado por el usuario
+     */
+    public void darProductosPorNombre() {
+    	
+    	try 
+    	{
+    		JTextField nombre = new JTextField();
+
+    		Object[] message = {
+    		    "Inserte el nombre del producto:", nombre,
+    		};
+    		int option = JOptionPane.showConfirmDialog(this, message, "Buscar productos por nombre", JOptionPane.OK_CANCEL_OPTION);
+    		if (option == JOptionPane.OK_OPTION)
+    		{
+        		String nombreResp = nombre.getText();
+        		
+        		List<Producto> ps = superandes.darProductosPorNombre(nombreResp);
+            	String resultado = "En darProductosPorNombre\n\n";
+            	
+            	if(ps.size() == 0){
+            		resultado += "No hay productos disponibles\n\n";
+            	}else{
+                	for(Producto p : ps) {
+                		resultado += "Producto: " + p.toString() + "\n";
+                	}
+            	}
+            	resultado += "Terminó proceso";
+            	panelDatos.actualizarInterfaz(resultado);
+    		}else {
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+    	
+
+    	
+    }
+    
+    /**
+     * Muestra el producto asociado al id entregado por el usuario
+     */
     public void darProductoPorId(){
     	try 
     	{
@@ -665,7 +716,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
             		VOCliente e = superandes.darClientePersonaPorId(identificacionResp);
             		if(e != null){
             			loggedClient = e;
-            			JOptionPane.showMessageDialog(this, "Bienvenido(a)" + e.getNombre(), "Sesión iniciada exitosamente", JOptionPane.OK_OPTION);
+            			JOptionPane.showMessageDialog(this, "Bienvenido(a) " + e.getNombre(), "Sesión iniciada exitosamente", JOptionPane.OK_OPTION);
             			
                 		String resultado = "En iniciarSesionClientePersona\n\n";
                 		resultado += "Se inició sesión exitosamente: " + e.getNombre() + " Correo: " + e.getCorreo();
@@ -711,7 +762,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
             		VOCliente e = superandes.darClienteEmpresaPorId(nitResp);
             		if(e != null){
             			loggedClient = e;
-            			
+            			JOptionPane.showMessageDialog(this, "Bienvenido(a) " + e.getNombre(), "Sesión iniciada exitosamente", JOptionPane.OK_OPTION);
                 		String resultado = "En iniciarSesionClienteEmpresa\n\n";
                 		resultado += "Se inició sesión exitosamente: " + e.getNombre() + " Correo: " + e.getCorreo();
             			resultado += "\n Operación terminada";

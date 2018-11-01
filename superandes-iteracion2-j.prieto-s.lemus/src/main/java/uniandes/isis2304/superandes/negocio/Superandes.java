@@ -180,6 +180,10 @@ public class Superandes
 	public Producto darProductoPorId(String idProducto){
 		return ps.darProductoPorId(idProducto);
 	}
+	
+	public List<Producto> darProductosPorNombre(String nombre){
+		return ps.darProductosPorNombre(nombre);
+	}
 
 	/* ****************************************************************
 	 * 			Métodos para manejar las PROMOCIONES
