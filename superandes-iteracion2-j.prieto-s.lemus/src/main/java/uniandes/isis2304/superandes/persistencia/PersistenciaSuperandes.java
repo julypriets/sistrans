@@ -1136,4 +1136,27 @@ public class PersistenciaSuperandes {
         }
 	}
 	
+	/**
+	 * 
+	 * @return Todos los carros de compra registradoss
+	 */
+	public List<Carrito> darCarros(){
+		return sqlCarrito.darCarros(pmf.getPersistenceManager());
+	}
+	
+	/**
+	 * 
+	 * @return Una colección de los carros desocupados
+	 */
+	public List<Carrito> darCarrosDesocupados(){
+		return sqlCarrito.darCarrosDesocupados(pmf.getPersistenceManager());
+	}
+	
+	/**
+	 * 
+	 * @return Una colección de los carros abandonados
+	 */
+	public List<Carrito> darCarrosAbandonados(){
+		return sqlCarrito.darCarrosAbandonados(pmf.getPersistenceManager());
+	}
 }

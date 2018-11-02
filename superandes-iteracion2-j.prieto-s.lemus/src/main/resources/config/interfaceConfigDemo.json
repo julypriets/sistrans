@@ -105,6 +105,10 @@
 				{
 					"label": "Solicitar Carro de Compras",
 					"event": "solicitarCarro"
+				},
+				{
+					"label": "Obtener todos los carros registrados",
+					"event": "darCarros"
 				}
 			]
 		}

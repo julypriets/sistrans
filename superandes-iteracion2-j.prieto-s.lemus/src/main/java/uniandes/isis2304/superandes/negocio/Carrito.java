@@ -51,7 +51,7 @@ public class Carrito implements VOCarrito {
 	 */
 	public Carrito() {
 		this.id = 0;
-		this.idCliente = 0;
+		this.idCliente = (long)0;
 		this.estado = "";
 	}
 	
@@ -81,8 +81,8 @@ public class Carrito implements VOCarrito {
 	 * Modifica el id del cliente que tiene el carrito
 	 * @param idCliente - nuevo id del cliente que tiene el carrito
 	 */
-	public void setIdCliente(long idCliente) {
-		this.idCliente = idCliente;
+	public void setIdCliente(Long idCliente) {
+		this.idCliente = idCliente == null ? 0 : (long) idCliente;
 	}
 
 	/**
@@ -99,5 +99,12 @@ public class Carrito implements VOCarrito {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
+
+	@Override
+	public String toString() {
+		return "Carrito [id=" + id + ", idCliente=" + idCliente + ", estado=" + estado + "]";
+	}
+	
+	
 		
 }

@@ -418,12 +418,36 @@ public class Superandes
 	 *****************************************************************/
 	
 	/**
-	 * Método que se encarga de asignar un carro de compras desocupado a un cliente.
+	 * (RF12) Método que se encarga de asignar un carro de compras desocupado a un cliente.
 	 * Retorna null si no hay algún carro desocupado
 	 * @param idCliente
 	 * @return
 	 */
 	public Carrito solicitarCarro(long idCliente){
 		return ps.solicitarCarro(idCliente);
+	}
+	
+	/**
+	 * 
+	 * @return Todos los carros registrados
+	 */
+	public List<Carrito> darCarros(){
+		return ps.darCarros();
+	}
+	
+	/**
+	 * 
+	 * @return Una colección de todos los carros desocupados
+	 */
+	public List<Carrito> darCarrosDesocupados(){
+		return ps.darCarrosDesocupados();
+	}
+	
+	/**
+	 * 
+	 * @return Una colección de todos los carros abandonados
+	 */
+	public List<Carrito> darCarrosAbandonados(){
+		return ps.darCarrosAbandonados();
 	}
 }

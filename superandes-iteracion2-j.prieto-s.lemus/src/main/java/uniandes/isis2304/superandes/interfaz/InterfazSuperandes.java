@@ -824,6 +824,23 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     	}
     }
     
+    /**
+     * Muestra todos los carros registrados en el supermercado
+     */
+    public void darCarros(){
+    	String resultado = " en darCarros\n\n";
+		List<Carrito> cs = superandes.darCarros();
+		
+		if(cs.size() == 0){
+			resultado += "no hay carros registrados\n\n";
+		}else{
+			for(Carrito c : cs) {
+				resultado += c.toString() + "\n";
+			}
+		}
+		resultado += "Proceso terminado";
+		panelDatos.actualizarInterfaz(resultado);
+    }
     
 	/* ****************************************************************
 	 * 			Operaciones Promoción
