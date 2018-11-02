@@ -820,7 +820,24 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     			JOptionPane.showMessageDialog(this, loggedClient.getNombre() + ", se le ha asignado el carro de compras con id: " + carroAsignado.getId(), "Carro Asignado", JOptionPane.INFORMATION_MESSAGE);
     		}
     	}else{
-    		JOptionPane.showMessageDialog(this, "Solo puede solicitar un carro de compras si ha iniciado sesión previamente", "Error", JOptionPane.ERROR_MESSAGE);
+    		JOptionPane.showMessageDialog(this, "Esta operación solo se puede realizar si ha iniciado sesión previamente", "Error", JOptionPane.ERROR_MESSAGE);
+    	}
+    }
+    
+    /**
+	 * (RF16) Método que se encarga de actualizar el estado de un carro de compras
+	 * si su dueño lo abandona.
+     */
+    public void abandonarCarro(){
+    	if(loggedClient != null){
+    		Carrito carroAbandonado = superandes.abandonarCarro(loggedClient.getId());
+    		if(carroAbandonado == null){
+    			JOptionPane.showMessageDialog(this, "No está en posesión de ningún carro", "Alerta", JOptionPane.INFORMATION_MESSAGE);
+    		}else{
+    			JOptionPane.showMessageDialog(this, loggedClient.getNombre() + ", ha abandonado el carro de compras con id: " + carroAbandonado.getId(), "Carro Asignado", JOptionPane.INFORMATION_MESSAGE);
+    		}
+    	}else{
+    		JOptionPane.showMessageDialog(this, "Esta operación solo se puede realizar si ha iniciado sesión previamente", "Error", JOptionPane.ERROR_MESSAGE);
     	}
     }
     

@@ -1137,6 +1137,49 @@ public class PersistenciaSuperandes {
 	}
 	
 	/**
+	 * Método que se encarga de actualizar el estado del carro de compras 
+	 * si su dueño lo abandona. Si el cliente no tenía carro, devuelve nil
+	 * @param idCliente
+	 * @return El carro abandonado
+	 */
+	public Carrito abandonarCarro(long idCliente){
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        tx.setSerializeRead(true);
+        Carrito carroAbandonado = null;
+        try
+        {
+            tx.begin();
+            
+            Carrito c = sqlCarrito.darCarroPorIdCliente(pm, idCliente);
+            
+            if(c != null){
+                long tuplasInsertadas = sqlCarrito.abandonarCarro(pm, c.getId());
+                carroAbandonado = sqlCarrito.darCarroPorId(pm, c.getId());
+            }
+
+     
+            tx.commit();
+            
+            return carroAbandonado;
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return null;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+	}
+	
+	/**
 	 * 
 	 * @return Todos los carros de compra registradoss
 	 */

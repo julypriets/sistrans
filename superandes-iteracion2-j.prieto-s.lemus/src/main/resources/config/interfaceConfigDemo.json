@@ -107,6 +107,10 @@
 					"event": "solicitarCarro"
 				},
 				{
+					"label": "Abandonar Carro de Compras",
+					"event": "abandonarCarro"
+				},
+				{
 					"label": "Obtener todos los carros registrados",
 					"event": "darCarros"
 				}

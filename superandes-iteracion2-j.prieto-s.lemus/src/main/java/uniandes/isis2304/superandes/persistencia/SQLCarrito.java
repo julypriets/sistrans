@@ -58,8 +58,26 @@ public class SQLCarrito {
 		return (long) q.executeUnique();
 	}
 	
+	/**
+	 * 
+	 * @param pm - Persistence Manager
+	 * @param id
+	 * @return El carro correspondiente a su id
+	 */
 	public Carrito darCarroPorId(PersistenceManager pm, long id){
 		Query q = pm.newQuery(SQL, "SELECT id, id_cliente idcliente, estado FROM CARRITO WHERE id = " + id);
+		q.setResultClass(Carrito.class);
+		return (Carrito) q.executeUnique();
+	}
+	
+	/**
+	 * 
+	 * @param pm - Persistence Manager
+	 * @param idCliente
+	 * @return El carro correspondiente al id del cliente dueño
+	 */
+	public Carrito darCarroPorIdCliente(PersistenceManager pm, long idCliente){
+		Query q = pm.newQuery(SQL, "SELECT id, id_cliente idcliente, estado FROM CARRITO WHERE id_cliente = " + idCliente);
 		q.setResultClass(Carrito.class);
 		return (Carrito) q.executeUnique();
 	}
@@ -108,6 +126,19 @@ public class SQLCarrito {
 	 */
 	public long solicitarCarro(PersistenceManager pm, long id, long idCliente){
 		Query q = pm.newQuery(SQL, "UPDATE CARRITO SET id_cliente = " + idCliente + " , estado = 'OCUPADO' WHERE id = ?");
+		q.setParameters(id);
+		return (long) q.executeUnique();
+	}
+	
+	/**
+	 * Método usado cuando un cliente abandona su carro de compras.
+	 * Actualiza el estado del carro a ABANDONADO
+	 * @param pm - Persistence Manager
+	 * @param id
+	 * @return El número de tuplas acualizadas
+	 */
+	public long abandonarCarro(PersistenceManager pm, long id){
+		Query q = pm.newQuery(SQL, "UPDATE CARRITO SET id_cliente = NULL , estado = 'ABANDONADO' WHERE id = ?");
 		q.setParameters(id);
 		return (long) q.executeUnique();
 	}
