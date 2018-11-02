@@ -412,4 +412,18 @@ public class Superandes
 		log.info("Adicionando la bodega: " + e.toString());
 		return e;
 	}
+	
+	/* ****************************************************************
+	 * 			Métodos para manejar los CARRITOS
+	 *****************************************************************/
+	
+	/**
+	 * Método que se encarga de asignar un carro de compras desocupado a un cliente.
+	 * Retorna null si no hay algún carro desocupado
+	 * @param idCliente
+	 * @return
+	 */
+	public Carrito solicitarCarro(long idCliente){
+		return ps.solicitarCarro(idCliente);
+	}
 }

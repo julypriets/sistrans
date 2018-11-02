@@ -52,6 +52,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
 import uniandes.isis2304.superandes.interfaz.PanelDatos;
+import uniandes.isis2304.superandes.negocio.Carrito;
 import uniandes.isis2304.superandes.negocio.Cliente;
 import uniandes.isis2304.superandes.negocio.ComprasPorPromocion;
 import uniandes.isis2304.superandes.negocio.Producto;
@@ -716,7 +717,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
             		VOCliente e = superandes.darClientePersonaPorId(identificacionResp);
             		if(e != null){
             			loggedClient = e;
-            			JOptionPane.showMessageDialog(this, "Bienvenido(a) " + e.getNombre(), "Sesión iniciada exitosamente", JOptionPane.OK_OPTION);
+            			JOptionPane.showMessageDialog(this, "Bienvenido(a) " + e.getNombre(), "Sesión iniciada exitosamente", JOptionPane.INFORMATION_MESSAGE);
             			
                 		String resultado = "En iniciarSesionClientePersona\n\n";
                 		resultado += "Se inició sesión exitosamente: " + e.getNombre() + " Correo: " + e.getCorreo();
@@ -762,7 +763,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
             		VOCliente e = superandes.darClienteEmpresaPorId(nitResp);
             		if(e != null){
             			loggedClient = e;
-            			JOptionPane.showMessageDialog(this, "Bienvenido(a) " + e.getNombre(), "Sesión iniciada exitosamente", JOptionPane.OK_OPTION);
+            			JOptionPane.showMessageDialog(this, "Bienvenido(a) " + e.getNombre(), "Sesión iniciada exitosamente", JOptionPane.INFORMATION_MESSAGE);
                 		String resultado = "En iniciarSesionClienteEmpresa\n\n";
                 		resultado += "Se inició sesión exitosamente: " + e.getNombre() + " Correo: " + e.getCorreo();
             			resultado += "\n Operación terminada";
@@ -803,6 +804,26 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
 		}
     }
+    
+	/* ****************************************************************
+	 * 			Operaciones Carros de Compra
+	 *****************************************************************/
+    /**
+     * (RF12) Método encargado de asignar un carro de compras desocupado a un cliente
+     */
+    public void solicitarCarro(){
+    	if(loggedClient != null){
+    		Carrito carroAsignado = superandes.solicitarCarro(loggedClient.getId());
+    		if(carroAsignado == null){
+    			JOptionPane.showMessageDialog(this, "No hay carros disponibles en este momento", "Alerta", JOptionPane.INFORMATION_MESSAGE);
+    		}else{
+    			JOptionPane.showMessageDialog(this, loggedClient.getNombre() + ", se le ha asignado el carro de compras con id: " + carroAsignado.getId(), "Carro Asignado", JOptionPane.INFORMATION_MESSAGE);
+    		}
+    	}else{
+    		JOptionPane.showMessageDialog(this, "Solo puede solicitar un carro de compras si ha iniciado sesión previamente", "Error", JOptionPane.ERROR_MESSAGE);
+    	}
+    }
+    
     
 	/* ****************************************************************
 	 * 			Operaciones Promoción

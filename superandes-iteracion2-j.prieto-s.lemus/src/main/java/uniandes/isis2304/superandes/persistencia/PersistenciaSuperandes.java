@@ -20,6 +20,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import uniandes.isis2304.superandes.negocio.Bodega;
+import uniandes.isis2304.superandes.negocio.Carrito;
 import uniandes.isis2304.superandes.negocio.Categoria;
 import uniandes.isis2304.superandes.negocio.Cliente;
 import uniandes.isis2304.superandes.negocio.ComprasPorPromocion;
@@ -1087,4 +1088,52 @@ public class PersistenciaSuperandes {
 	public Cliente darClienteEmpresaPorId(long nit){
 		return sqlCliente.darClienteEmpresaPorId(pmf.getPersistenceManager(), nit);
 	}
+	
+	
+	/* ****************************************************************
+	 * 			Métodos para manejar los CARROS DE COMPRA
+	 *****************************************************************/
+	
+	/**
+	 * Método que se encarga de asignar un carro desocupado a un cliente
+	 * Retorna null si no hay carros desocupados
+	 * @param idCliente
+	 * @return El carro asignado al cliente
+	 */
+	public Carrito solicitarCarro(long idCliente){
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        tx.setSerializeRead(true);
+        Carrito carroAsignado = null;
+        try
+        {
+            tx.begin();
+            List<Carrito> carrosDesocupados = sqlCarrito.darCarrosDesocupados(pm);
+            if(carrosDesocupados.size() != 0){
+            	Carrito carroDesocupado = carrosDesocupados.get(0);
+                long tuplasInsertadas = sqlCarrito.solicitarCarro(pm, carroDesocupado.getId(), idCliente);
+                carroAsignado = sqlCarrito.darCarroPorId(pm, carroDesocupado.getId());
+            }
+
+     
+            tx.commit();
+            
+            return carroAsignado;
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return null;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+	}
+	
 }

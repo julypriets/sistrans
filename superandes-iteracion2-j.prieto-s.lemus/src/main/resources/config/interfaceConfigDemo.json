@@ -98,6 +98,15 @@
 					"event": "registrarEstante"
 				}
 			]
+		},
+		{ "menuTitle": "Carro de Compras",
+			"options":
+			[
+				{
+					"label": "Solicitar Carro de Compras",
+					"event": "solicitarCarro"
+				}
+			]
 		}
 	]
 }

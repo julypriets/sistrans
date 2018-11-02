@@ -1,7 +1,12 @@
 package uniandes.isis2304.superandes.persistencia;
 
+import java.util.List;
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+
+import uniandes.isis2304.superandes.negocio.Carrito;
+import uniandes.isis2304.superandes.negocio.Producto;
 
 /**
  * Clase que encapsula los métodos que hacen acceso a la base de datos para el concepto CARRITO de Superandes
@@ -52,5 +57,58 @@ public class SQLCarrito {
 		q.setParameters(id, idCliente, estado);
 		return (long) q.executeUnique();
 	}
+	
+	public Carrito darCarroPorId(PersistenceManager pm, long id){
+		Query q = pm.newQuery(SQL, "SELECT id, id_cliente idcliente, estado FROM CARRITO WHERE id = " + id);
+		q.setResultClass(Carrito.class);
+		return (Carrito) q.executeUnique();
+	}
+	
+	/**
+	 * 
+	 * @param pm - Persistence Manager
+	 * @return Todos los carros disponibles en el supermercado
+	 */
+	public List<Carrito> darCarros(PersistenceManager pm){
+		Query q = pm.newQuery(SQL, "SELECT id, id_cliente idcliente, estado FROM CARRITO");
+		q.setResultClass(Carrito.class);
+		return (List<Carrito>) q.executeList();
+	}
+	
+	
+	/**
+	 * 
+	 * @param pm - Persistence Manager
+	 * @return Una colección con los carros de compra con estado DESOCUPADO
+	 */
+	public List<Carrito> darCarrosDesocupados(PersistenceManager pm){
+		Query q = pm.newQuery(SQL, "SELECT id, id_cliente idcliente, estado FROM CARRITO WHERE estado = 'DESOCUPADO'");
+		q.setResultClass(Carrito.class);
+		return (List<Carrito>) q.executeList();
+	}
+	
+	/**
+	 * 
+	 * @param pm - Persistence Manager
+	 * @return Una colección con los carros de compra con estado ABANDONADO
+	 */
+	public List<Carrito> darCarrosAbandonados(PersistenceManager pm){
+		Query q = pm.newQuery(SQL, "SELECT id, id_cliente idcliente, estado FROM CARRITO WHERE estado = 'ABANDONADO'");
+		q.setResultClass(Carrito.class);
+		return (List<Carrito>) q.executeList();
+	}
 
+	/**
+	 * Método usado cuando un cliente solicita un carro de compras disponible.
+	 * Se actualiza el id del cliente dueño, y el estado a OCUPADO
+	 * @param pm - Persistence Manager
+	 * @param id
+	 * @param idCliente
+	 * @return El número de tuplas actualizadas
+	 */
+	public long solicitarCarro(PersistenceManager pm, long id, long idCliente){
+		Query q = pm.newQuery(SQL, "UPDATE CARRITO SET id_cliente = " + idCliente + " , estado = 'OCUPADO' WHERE id = ?");
+		q.setParameters(id);
+		return (long) q.executeUnique();
+	}
 }

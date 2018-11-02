@@ -16,6 +16,23 @@ public class Carrito implements VOCarrito {
 	 * Estado actual del carrito
 	 */
 	private String estado;
+	
+	//Constantes
+	
+	/**
+	 * Constante que indica el estado ocupado del carro de compras
+	 */
+	private static final String OCUPADO = "OCUPADO";
+	
+	/**
+	 * Constante que indica el estado abandonado del carro de compras
+	 */
+	private static final String ABANDONADO = "ABANDONADO";
+	
+	/**
+	 * Constante que indica el estado desocupado del carro de compras
+	 */
+	private static final String DESOCUPADO = "DESOCUPADO";		
 
 	/**
 	 * Crea un nuevo carrito
