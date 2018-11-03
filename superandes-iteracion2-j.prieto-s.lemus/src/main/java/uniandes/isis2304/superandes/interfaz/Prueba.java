@@ -43,8 +43,8 @@ public class Prueba {
     }
 
 	public static void main(String[] args) {
-//		tableConfig = openConfig("Tablas BD", CONFIG_TABLAS);
-//		Superandes superandes = new Superandes (tableConfig);
+		tableConfig = openConfig("Tablas BD", CONFIG_TABLAS);
+		Superandes superandes = new Superandes (tableConfig);
 //		
 //		superandes.adicionarEmpresa("e4", "e4c", "1236", "cra4");
 //		
@@ -54,5 +54,7 @@ public class Prueba {
 //		for(Cliente c : cs) {
 //			System.out.println(c.toString());
 //		}
+		
+		System.out.println(superandes.darCarroPorCliente((long)834));
 	}
 }

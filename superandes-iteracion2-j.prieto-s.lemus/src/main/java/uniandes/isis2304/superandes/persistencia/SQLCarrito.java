@@ -126,8 +126,7 @@ public class SQLCarrito {
 	 * @return El número de tuplas actualizadas
 	 */
 	public long solicitarCarro(PersistenceManager pm, long id, long idCliente){
-		Query q = pm.newQuery(SQL, "UPDATE CARRITO SET id_cliente = " + idCliente + " , estado = 'OCUPADO' WHERE id = ?");
-		q.setParameters(id);
+		Query q = pm.newQuery(SQL, "UPDATE CARRITO SET id_cliente = " + idCliente + " , estado = 'OCUPADO' WHERE id = " + id);
 		return (long) q.executeUnique();
 	}
 	
@@ -151,8 +150,7 @@ public class SQLCarrito {
 	 * @return El número de tuplas actualizadas
 	 */
 	public long desocuparCarro(PersistenceManager pm, long id){
-		Query q = pm.newQuery(SQL, "UPDATE CARRITO SET id_cliente = NULL , estado = 'DESOCUPADO' WHERE id = ?");
-		q.setParameters(id);
+		Query q = pm.newQuery(SQL, "UPDATE CARRITO SET id_cliente = NULL , estado = 'DESOCUPADO' WHERE id = " + id);
 		return (long) q.executeUnique();
 	}
 	
@@ -230,9 +228,38 @@ public class SQLCarrito {
 		return (long) q.executeUnique();
 	}
 	
+	/**
+	 * Elimina todos los productos del carro
+	 * @param pm - Persistence Manager
+	 * @param idCarrito
+	 * @return Número de tuplas eliminadas
+	 */
+	public long eliminarProductosDelCarro(PersistenceManager pm, long idCarrito){
+		Query q = pm.newQuery(SQL, "DELETE FROM CARRITO_PRODUCTO WHERE id_carrito = " + idCarrito);
+		return (long) q.executeUnique();
+	}
+	
+	/**
+	 * 
+	 * @param pm - Persistence Manager
+	 * @return Una colección de todos los carros y los productos asociados
+	 */
 	public List<CarritoProducto> darProductosPorCadaCarro(PersistenceManager pm){
 		Query q = pm.newQuery(SQL, "SELECT id_carrito idCarrito, id_producto idProducto, cantidad FROM CARRITO_PRODUCTO");
 		q.setResultClass(CarritoProducto.class);
 		return (List<CarritoProducto>) q.executeList();
+	}
+	
+	/**
+	 * 
+	 * @param pm - Persistence Manager
+	 * @param idCliente
+	 * @return El id del carro correspondiente a su dueño
+	 */
+	public long darCarroPorCliente (PersistenceManager pm, long idCliente){
+		Query q = pm.newQuery(SQL, "SELECT id FROM CARRITO WHERE id_cliente = ?");
+		q.setParameters(idCliente);
+		q.setResultClass(Long.class);
+		return (long)q.executeUnique();
 	}
 }

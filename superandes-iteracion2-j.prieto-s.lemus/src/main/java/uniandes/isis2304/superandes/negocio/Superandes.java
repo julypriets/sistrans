@@ -535,6 +535,15 @@ public class Superandes
 		ps.recolectarProductosAbandonados();
 	}
 	
+	/**
+	 * 
+	 * @param idCliente
+	 * @return El id del carro correspondiente a su dueño
+	 */
+	public long darCarroPorCliente(long idCliente){
+		return ps.darCarroPorCliente(idCliente);
+	}
+	
 	/* ****************************************************************
 	 * 			Métodos para manejar las Facturas
 	 *****************************************************************/

@@ -1357,6 +1357,8 @@ public class PersistenciaSuperandes {
             double precioTotal = calcularCostoTotalCarro(productos, idCarrito);
             Timestamp fecha = (Timestamp) new Date();
             sqlFactura.registarFactura(pm, id, fecha, precioTotal, idCajero, idCliente);
+            sqlCarrito.eliminarProductosDelCarro(pm, idCarrito);
+            sqlCarrito.desocuparCarro(pm, id);
             
             tx.commit();
             
@@ -1456,5 +1458,14 @@ public class PersistenciaSuperandes {
 	 */
 	public Producto darProductoPorNombreYEstante(String nombre, long idEstante){
 		return sqlSurtido.darProductoPorNombreYEstante(pmf.getPersistenceManager(), nombre, idEstante);
+	}
+	
+	/**
+	 * 
+	 * @param idCliente
+	 * @return El id del carro correspondiente a su dueño
+	 */
+	public long darCarroPorCliente(long idCliente){
+		return sqlCarrito.darCarroPorCliente(pmf.getPersistenceManager(), idCliente);
 	}
 }

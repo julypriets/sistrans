@@ -825,6 +825,18 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     }
     
     /**
+     * (RF12) Método encargado de adicionar un producto a un carro de compras
+     */
+    public void insertarProductoAlCarro(){
+    	if(loggedClient != null){
+    		
+    		
+    	}else{
+    		JOptionPane.showMessageDialog(this, "Esta operación solo se puede realizar si ha iniciado sesión previamente", "Error", JOptionPane.ERROR_MESSAGE);
+    	}
+    }
+    
+    /**
 	 * (RF16) Método que se encarga de actualizar el estado de un carro de compras
 	 * si su dueño lo abandona.
      */
