@@ -12,12 +12,21 @@ public class CarritoProducto implements VOCarritoProducto {
 	 */
 	private String idProducto;
 	
+	/**
+	 * Cantidad del producto
+	 */
 	private int cantidad;
 
 	public CarritoProducto(){
 		
 	}
 	
+	/**
+	 * Crea un nuevo carrito
+	 * @param idCarrito - identificador del carrito
+	 * @param idProducto - identificador del producto
+	 * @param cantidad - cantidad del producto
+	 */
 	public CarritoProducto(long idCarrito, String idProducto, int cantidad) {
 		super();
 		this.idCarrito = idCarrito;
@@ -47,12 +56,18 @@ public class CarritoProducto implements VOCarritoProducto {
 		return idProducto;
 	}
 	
-	
-
+	/**
+	 * Retorna la cantidad del producto
+	 * @return - cantidad del producto
+	 */
 	public int getCantidad() {
 		return cantidad;
 	}
 
+	/**
+	 * Modifica la cantidad del producto
+	 * @param cantidad - cantidad del producto
+	 */
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
@@ -63,5 +78,11 @@ public class CarritoProducto implements VOCarritoProducto {
 	 */
 	public void setIdProducto(String estado) {
 		this.idProducto = estado;
+	}
+	
+
+	@Override
+	public String toString() {
+		return "Carrito_Producto [idCarrito=" + idCarrito + ", idProducto=" + idProducto + ", cantidad=" + cantidad + "]";
 	}
 }

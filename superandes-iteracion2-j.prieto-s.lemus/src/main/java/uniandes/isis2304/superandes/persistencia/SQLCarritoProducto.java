@@ -45,11 +45,12 @@ public class SQLCarritoProducto {
 	 * @param pm - El manejador de persistencia
 	 * @param idCarrito - El identificador del carrito
 	 * @param idProducto - El identificador del producto
+	 * @para cantidad - Cantidad del producto
 	 * @return El número de tuplas insertadas
 	 */
-	public long registrarSurtido(PersistenceManager pm, long idCarrito, String idProducto) {
-		Query q = pm.newQuery(SQL, "INSERT INTO " + ps.darTablaSurtido() + " VALUES (?, ?)");
-		q.setParameters(idCarrito, idProducto);
+	public long registrarSurtido(PersistenceManager pm, long idCarrito, String idProducto, int cantidad) {
+		Query q = pm.newQuery(SQL, "INSERT INTO " + ps.darTablaSurtido() + " VALUES (?, ?, ?)");
+		q.setParameters(idCarrito, idProducto, cantidad);
 		return (long) q.executeUnique();
 	}
 	

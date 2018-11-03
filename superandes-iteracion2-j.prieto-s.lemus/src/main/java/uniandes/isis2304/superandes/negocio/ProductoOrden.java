@@ -25,6 +25,10 @@ public class ProductoOrden implements VOProductoOrden{
 	 */
 	private long idOrden;
 	
+	/**
+	 * Cantidad del producto
+	 */
+	private int cantidad;
 	
 	/* ----------------- Métodos ----------------------------------- */
 	
@@ -34,16 +38,19 @@ public class ProductoOrden implements VOProductoOrden{
 	public ProductoOrden(){
 		this.idProducto = "";
 		this.idOrden = 0;
+		this.cantidad = 0;
 	}
 	
 	/**
 	 * Constructor con valores.
 	 * @param idProducto - El identificador del producto. Debe existir un producto con dicho identificador.
 	 * @param idOrden - El identificador de la orden. Debe existir una orden con dicho identificador.
+	 * @param cantidad - Cantidad del producto
 	 */
-	public ProductoOrden( String idProducto, long idOrden) {
+	public ProductoOrden( String idProducto, long idOrden, int cantidad) {
 		this.idProducto = idProducto;
 		this.idOrden = idOrden;
+		this.cantidad = cantidad;
 	}
 
 	/**
@@ -78,13 +85,29 @@ public class ProductoOrden implements VOProductoOrden{
 		this.idOrden = idOrden;
 	}
 	
+	/**
+	 * Retorna la cantidad del producto
+	 * @return - cantidad del producto
+	 */
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	/**
+	 * Modifica la cantidad del producto
+	 * @param cantidad - nueva cantidad del producto
+	 */
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
+
 	/** 
 	 * @return Una cadena con la información básica
 	 */
 	@Override
 	public String toString() 
 	{
-		return "ProductoOrden [idProducto=" + idProducto + ", idOrden=" + idOrden + "]";
+		return "ProductoOrden [idProducto=" + idProducto + ", idOrden=" + idOrden + ", cantidad=" + cantidad + "]";
 	}
 	
 }

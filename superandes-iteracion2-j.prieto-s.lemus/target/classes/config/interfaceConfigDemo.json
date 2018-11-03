@@ -115,6 +115,14 @@
 					"event": "insertarProductoAlCarro"
 				},
 				{
+					"label": "Devolver Producto",
+					"event": "devolverProductoDelCarro"
+				},
+				{
+					"label": "Obtener Productos Insertados",
+					"event": "darProductosEnCarro"
+				},
+				{
 					"label": "Obtener todos los carros registrados",
 					"event": "darCarros"
 				}

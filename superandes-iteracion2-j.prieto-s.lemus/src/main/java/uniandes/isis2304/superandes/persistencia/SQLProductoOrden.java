@@ -44,11 +44,12 @@ public class SQLProductoOrden {
 	 * @param pm - El manejador de persistencia
 	 * @param idProducto - El identificador del producto que hace parte de la orden
 	 * @param idOrden - El identificador de la orden que contiene el producto
+	 * @param cantidad - Cantidad del producto
 	 * @return El número de tuplas insertadas 
 	 */
-	public long registrarProductoOrden(PersistenceManager pm, String idProducto, long idOrden) {
-		Query q = pm.newQuery(SQL, "INSERT INTO " + ps.darTablaProductoOrden() + " VALUES (?, ?)");
-		q.setParameters(idProducto, idOrden);
+	public long registrarProductoOrden(PersistenceManager pm, String idProducto, long idOrden, int cantidad) {
+		Query q = pm.newQuery(SQL, "INSERT INTO " + ps.darTablaProductoOrden() + " VALUES (?, ?, ?)");
+		q.setParameters(idProducto, idOrden, cantidad);
 		return (long) q.executeUnique();
 	}
 

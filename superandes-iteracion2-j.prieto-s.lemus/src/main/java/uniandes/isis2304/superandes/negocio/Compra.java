@@ -1,25 +1,32 @@
 package uniandes.isis2304.superandes.negocio;
 
 public class Compra implements VOCompra{
-	
+
 	/**
 	 * El producto comprado
 	 */
 	private String idProducto;
-	
+
 	/**
 	 * La factura respectiva de la compra
 	 */
 	private long idFactura;
 
 	/**
-	 * Crea una compra con la información del producto y la factura
-	 * @param idProducto
-	 * @param idFactura
+	 * Cantidad del producto
 	 */
-	public Compra(String idProducto, long idFactura) {
+	private int cantidad;
+
+	/**
+	 * Crea una compra con la información del producto y la factura
+	 * @param idProducto - producto comprado
+	 * @param idFactura - factura que constata la compra
+	 * @param cantidad - Cantidad del producto
+	 */
+	public Compra(String idProducto, long idFactura, int cantidad) {
 		this.idProducto = idProducto;
 		this.idFactura = idFactura;
+		this.cantidad = cantidad;
 	}
 
 	/**
@@ -60,9 +67,25 @@ public class Compra implements VOCompra{
 		this.idFactura = idFactura;
 	}
 
+	/**
+	 * Retorna la cantidad del producto
+	 * @return - cantidad del producto
+	 */
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	/**
+	 * Modifica la cantidad del producto
+	 * @param cantidad - nueva cantidad del producto
+	 */
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
+
 	@Override
 	public String toString() {
-		return "Compra [idProducto=" + idProducto + ", idFactura=" + idFactura + "]";
+		return "Compra [idProducto=" + idProducto + ", idFactura=" + idFactura + ", cantidad=" + cantidad + "]";
 	}
-	
+
 }

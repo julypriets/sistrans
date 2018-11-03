@@ -25,6 +25,10 @@ public class Inventario implements VOInventario{
 	 */
 	private long idBodega;
 	
+	/**
+	 * Cantidad del producto
+	 */
+	private int cantidad;
 	/* ----------------- Métodos ----------------------------------- */
 	
 	/**
@@ -33,6 +37,7 @@ public class Inventario implements VOInventario{
 	public Inventario() {
 		this.idProducto = "";
 		this.idBodega = 0;
+		this.cantidad = 0; 
 	}
 	
 	/**
@@ -40,9 +45,10 @@ public class Inventario implements VOInventario{
 	 * @param idProducto - El identificador del producto. Debe existir un producto con dicho identificador
 	 * @param idBodega - El identificador de la bodega. Debe existir una bodega con dicho identificador
 	 */
-	public Inventario ( String idProducto, long idBodega ) {
+	public Inventario ( String idProducto, long idBodega, int cantidad ) {
 		this.idProducto = idProducto;
 		this.idBodega = idBodega;
+		this.cantidad = cantidad;
 	}
 
 	/**
@@ -77,13 +83,29 @@ public class Inventario implements VOInventario{
 		this.idBodega = idBodega;
 	}
 	
+	/**
+	 * Retorna la cantidad del producto 
+	 * @return - cantidad del producto
+	 */
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	/**
+	 * Modifica la cantidad del producto
+	 * @param cantidad - nueva cantidad del producto
+	 */
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
+
 	/** 
 	 * @return Una cadena con la información básica
 	 */
 	@Override
 	public String toString() 
 	{
-		return "Inventario [idProducto=" + idProducto + ", idBodega=" + idBodega + "]";
+		return "Inventario [idProducto=" + idProducto + ", idBodega=" + idBodega + ", cantidad=" + cantidad + "]";
 	}
 	
 }

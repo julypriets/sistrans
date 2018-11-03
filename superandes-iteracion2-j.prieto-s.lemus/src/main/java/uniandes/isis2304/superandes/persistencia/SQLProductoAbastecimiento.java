@@ -43,11 +43,12 @@ public class SQLProductoAbastecimiento {
 	 * Crea y ejecuta la sentencia SQL para registrar un PRODUCTO ABASTECIMIENTO
 	 * @param pm - El manejador de persistencia
 	 * @param idProducto - El identificador del producto que hace parte del pedido a bodega (abastecimiento)
+	 * @param cantidad - Cantidad del producto
 	 * @param idAbastecimiento - el identificador del pedido a bodega (abastecimiento)
 	 * @return El número de tuplas insertadas
 	 */
-	public long registrarProductoAbastecimiento( PersistenceManager pm, String idProducto, long idAbastecimiento ) {
-		Query q = pm.newQuery(SQL, "INSERT INTO " + ps.darTablaProductoAbastecimiento() + " VALUES (?, ?)");
+	public long registrarProductoAbastecimiento( PersistenceManager pm, String idProducto, long idAbastecimiento, int cantidad ) {
+		Query q = pm.newQuery(SQL, "INSERT INTO " + ps.darTablaProductoAbastecimiento() + " VALUES (?, ?, ?)");
 		q.setParameters(idProducto, idAbastecimiento);
 		return (long) q.executeUnique();
 	}
