@@ -544,6 +544,15 @@ public class Superandes
 		return ps.darCarroPorCliente(idCliente);
 	}
 	
+	/**
+	 * 
+	 * @param idCarrito
+	 * @return Una colección con los productos del carro determinado
+	 */
+	public List<Producto> darProductosEnCarro(long idCarrito){
+		return ps.darProductosEnCarro(idCarrito);
+	}
+	
 	/* ****************************************************************
 	 * 			Métodos para manejar las Facturas
 	 *****************************************************************/
@@ -566,4 +575,6 @@ public class Superandes
 		f.setSobrante(sobrante);
 		return f;
 	}
+	
+	
 }

@@ -111,6 +111,10 @@
 					"event": "abandonarCarro"
 				},
 				{
+					"label": "Insertar Producto",
+					"event": "insertarProductoAlCarro"
+				},
+				{
 					"label": "Obtener todos los carros registrados",
 					"event": "darCarros"
 				}

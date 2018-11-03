@@ -825,12 +825,101 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     }
     
     /**
-     * (RF12) Método encargado de adicionar un producto a un carro de compras
+     * (RF13) Método encargado de adicionar un producto a un carro de compras
      */
     public void insertarProductoAlCarro(){
     	if(loggedClient != null){
-    		
-    		
+    		long idCarrito = superandes.darCarroPorCliente(loggedClient.getId());
+    		if( idCarrito < 0){
+    			JOptionPane.showMessageDialog(this, "Esta operación solo se puede realizar si ha solicitado un carro previamente", "Error", JOptionPane.ERROR_MESSAGE);
+    		}else{
+            	try 
+            	{
+            		JTextField nombreProducto = new JTextField();
+            		JTextField cantidad = new JTextField();
+            		JTextField idEstante = new JTextField();
+            		Object[] message = {
+            		    "nombre del producto:", nombreProducto,
+            		    "cantidad:", cantidad,
+            		    "id del estante", idEstante,
+            		};
+            		int option = JOptionPane.showConfirmDialog(this, message, "Ingresar el producto en el carro de compras", JOptionPane.OK_CANCEL_OPTION);
+            		if (option == JOptionPane.OK_OPTION)
+            		{
+            			String nombreProductoResp = nombreProducto.getText();
+            			int cantidadResp = Integer.parseInt(cantidad.getText());
+                		long idEstanteResp = Long.parseLong(idEstante.getText());
+                		
+                		superandes.insertarProductoAlCarro(idCarrito, nombreProductoResp, cantidadResp, idEstanteResp);
+                		
+                		String resultado = "En insertarProductoAlCarro\n\n";
+                		resultado += "Se insertó exitosamente el producto: " + nombreProductoResp ;
+            			resultado += "\n Operación terminada";
+                		panelDatos.actualizarInterfaz(resultado);
+
+
+            		}else {
+            			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+            		}
+
+        		} 
+            	catch (Exception e) 
+            	{
+//        			e.printStackTrace();
+        			String resultado = generarMensajeError(e);
+        			panelDatos.actualizarInterfaz(resultado);
+        			JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        		}
+    		}
+    	}else{
+    		JOptionPane.showMessageDialog(this, "Esta operación solo se puede realizar si ha iniciado sesión previamente", "Error", JOptionPane.ERROR_MESSAGE);
+    	}
+    }
+    
+    /**
+     * (RF14) Método encargado de devolver un producto insertado en el carro a su estante respectivo
+     */
+    public void devolverProductoDelCarro(){
+    	if(loggedClient != null){
+    		long idCarrito = superandes.darCarroPorCliente(loggedClient.getId());
+    		if( idCarrito < 0){
+    			JOptionPane.showMessageDialog(this, "Esta operación solo se puede realizar si ha solicitado un carro previamente", "Error", JOptionPane.ERROR_MESSAGE);
+    		}else{
+            	try 
+            	{
+            		JTextField nombreProducto = new JTextField();
+            		JTextField cantidad = new JTextField();
+
+            		Object[] message = {
+            		    "nombre del producto:", nombreProducto,
+            		    "cantidad:", cantidad,
+            		};
+            		int option = JOptionPane.showConfirmDialog(this, message, "Sacar el producto del carro de compras", JOptionPane.OK_CANCEL_OPTION);
+            		if (option == JOptionPane.OK_OPTION)
+            		{
+            			String nombreProductoResp = nombreProducto.getText();
+            			int cantidadResp = Integer.parseInt(cantidad.getText());
+                		
+                		superandes.devolverProductoDelCarro(idCarrito, nombreProductoResp, cantidadResp);
+                		String resultado = "En devolverProductoDelCarro\n\n";
+                		resultado += "Se devolvió exitosamente el producto: " + nombreProductoResp ;
+            			resultado += "\n Operación terminada";
+                		panelDatos.actualizarInterfaz(resultado);
+
+
+            		}else {
+            			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+            		}
+
+        		} 
+            	catch (Exception e) 
+            	{
+//        			e.printStackTrace();
+        			String resultado = generarMensajeError(e);
+        			panelDatos.actualizarInterfaz(resultado);
+        			JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        		}
+    		}
     	}else{
     		JOptionPane.showMessageDialog(this, "Esta operación solo se puede realizar si ha iniciado sesión previamente", "Error", JOptionPane.ERROR_MESSAGE);
     	}
@@ -869,6 +958,29 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 		}
 		resultado += "Proceso terminado";
 		panelDatos.actualizarInterfaz(resultado);
+    }
+    
+    /**
+     * Muestra los productos insertados por el cliente
+     */
+    public void darProductosEnCarro(){
+    	if(loggedClient != null){
+        	String resultado = " en darProductosCarro\n\n";
+        	long idCarrito = superandes.darCarroPorCliente(loggedClient.getId());
+    		List<Producto> ps = superandes.darProductosEnCarro(idCarrito);
+    		
+    		if(ps.size() == 0){
+    			resultado += "no hay productos en su carro de compras\n\n";
+    		}else{
+    			for(Producto p : ps) {
+    				resultado += p.toString() + "\n";
+    			}
+    		}
+    		resultado += "Proceso terminado";
+    		panelDatos.actualizarInterfaz(resultado);
+    	}else{
+    		JOptionPane.showMessageDialog(this, "Esta operación solo se puede realizar si ha iniciado sesión previamente", "Error", JOptionPane.ERROR_MESSAGE);
+    	}
     }
     
 	/* ****************************************************************
