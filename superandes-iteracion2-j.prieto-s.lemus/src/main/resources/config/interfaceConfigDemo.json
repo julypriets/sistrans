@@ -119,6 +119,10 @@
 					"event": "devolverProductoDelCarro"
 				},
 				{
+					"label": "Pagar Productos",
+					"event": "pagarCompra"
+				},
+				{
 					"label": "Obtener Productos Insertados",
 					"event": "darProductosEnCarro"
 				},

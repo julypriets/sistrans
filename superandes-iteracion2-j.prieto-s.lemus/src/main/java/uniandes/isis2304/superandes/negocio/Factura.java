@@ -142,12 +142,6 @@ public class Factura implements VOFactura{
 		this.idCajero = idCajero;
 	}
 
-	@Override
-	public String toString() {
-		return "Factura [id=" + id + ", precioTotal=" + precioTotal + ", fecha=" + fecha + "]";
-	}
-
-
 	/**
 	 * Modifica el identificador del cajero que atendió la compra
 	 * @param idCajero - identificador del cajero que atendió la compra
@@ -182,6 +176,12 @@ public class Factura implements VOFactura{
 
 	public void setSobrante(double sobrante) {
 		this.sobrante = sobrante;
+	}
+
+	@Override
+	public String toString() {
+		return "Factura [id=" + id + ", precioTotal=" + precioTotal + ", fecha=" + fecha + ", idCajero=" + idCajero
+				+ ", idCliente=" + idCliente + ", productos=" + productos + ", sobrante=" + sobrante + "]";
 	}
 	
 	

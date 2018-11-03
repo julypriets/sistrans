@@ -27,6 +27,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
@@ -55,6 +56,7 @@ import uniandes.isis2304.superandes.interfaz.PanelDatos;
 import uniandes.isis2304.superandes.negocio.Carrito;
 import uniandes.isis2304.superandes.negocio.Cliente;
 import uniandes.isis2304.superandes.negocio.ComprasPorPromocion;
+import uniandes.isis2304.superandes.negocio.Factura;
 import uniandes.isis2304.superandes.negocio.Producto;
 import uniandes.isis2304.superandes.negocio.Superandes;
 import uniandes.isis2304.superandes.negocio.VOBebedor;
@@ -926,6 +928,79 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     }
     
     /**
+     * (RF15) Método encargado de realizar la compra de todos los elementos 
+     * en el carro de compras del cliente (si los hay) y, de generar la
+     * factura respectiva
+     */
+    public void pagarCompra(){
+    	if(loggedClient != null){
+    		long idCliente = loggedClient.getId();
+    		long idCarrito = superandes.darCarroPorCliente(idCliente);
+    		if(idCarrito < 0){
+    			JOptionPane.showMessageDialog(this, "Esta operación solo se puede realizar si ha solicitado un carro previamente", "Error", JOptionPane.ERROR_MESSAGE);
+    		}else{
+            	try 
+            	{
+            		JTextField dineroIngresado = new JTextField();
+            		JTextField idCajero = new JTextField();
+
+            		Object[] message = {
+            		    "dinero ingresado por cliente:", dineroIngresado,
+            		    "Id del cajero:", idCajero,
+            		};
+            		int option = JOptionPane.showConfirmDialog(this, message, "Pagar todos los productos del carro de compras", JOptionPane.OK_CANCEL_OPTION);
+            		if (option == JOptionPane.OK_OPTION)
+            		{
+            			double dineroIngresadoResp = Double.parseDouble(dineroIngresado.getText());
+            			long idCajeroResp = Long.parseLong(idCajero.getText());
+                		
+                		Factura f = superandes.pagarCompra(idCarrito, idCajeroResp, idCliente, dineroIngresadoResp);
+
+                		String resultado = "En pagarCompra\n\n";
+                		resultado += "Se pagó exitosamente los productos del carro con id: " + idCarrito + "\n\n";
+                		resultado += f.toString() + "\n";
+            			resultado += "\n Operación terminada";
+                		panelDatos.actualizarInterfaz(resultado);
+                		
+                		JTextField fIdCliente = new JTextField(f.getIdCliente() + "");
+                		JTextField fIdCajero = new JTextField(f.getIdCajero() + "");
+                		JTextField fFecha = new JTextField(f.getFecha().toString());
+                		JTextField fdineroIngresado = new JTextField(dineroIngresadoResp + "");
+                		JTextField fPrecioTotal = new JTextField(f.getPrecioTotal() + "");
+                		JTextField fSobrante = new JTextField(f.getSobrante() + "");
+                		
+                		
+                		Object[] mensajeFactura = {
+                				"id del cliente : ", fIdCliente,
+                				"id del cajero : ", fIdCajero,
+                				"fecha : ", fFecha,
+                				"dinero ingresado : ", fdineroIngresado,
+                				"precio total : ", fPrecioTotal,
+                				"dinero sobrante : ", fSobrante,
+                		};
+                		JOptionPane.showConfirmDialog(this, message, "Factura: ", JOptionPane.OK_CANCEL_OPTION);
+                		
+            		}else {
+            			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+            		}
+
+        		} 
+            	catch (Exception e) 
+            	{
+//        			e.printStackTrace();
+        			String resultado = generarMensajeError(e);
+        			panelDatos.actualizarInterfaz(resultado);
+        			JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        		}
+    		}
+    		
+    	}else{
+    		JOptionPane.showMessageDialog(this, "Esta operación solo se puede realizar si ha iniciado sesión previamente", "Error", JOptionPane.ERROR_MESSAGE);
+    	}
+    }
+    
+    
+    /**
 	 * (RF16) Método que se encarga de actualizar el estado de un carro de compras
 	 * si su dueño lo abandona.
      */
@@ -940,6 +1015,15 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     	}else{
     		JOptionPane.showMessageDialog(this, "Esta operación solo se puede realizar si ha iniciado sesión previamente", "Error", JOptionPane.ERROR_MESSAGE);
     	}
+    }
+    
+    /**
+     * (RF17) Método para recolectar los productos de todos
+     * los carros de compra abandonados. Se posicionan los 
+     * productos en los respectivos estantes
+     */
+    public void recolectarProductosAbandonados(){
+    	superandes.recolectarProductosAbandonados();
     }
     
     /**
