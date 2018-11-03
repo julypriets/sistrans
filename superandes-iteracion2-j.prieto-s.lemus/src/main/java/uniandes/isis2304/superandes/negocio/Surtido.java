@@ -24,6 +24,10 @@ public class Surtido implements VOSurtido {
 	 */
 	private String idProducto;
 	
+	/***
+	 * Cantidad del producto
+	 */
+	private int cantidad;
 	
 	/* ----------------- Métodos ----------------------------------- */
 
@@ -33,16 +37,19 @@ public class Surtido implements VOSurtido {
 	public Surtido() {
 		this.idEstante = 0;
 		this.idProducto = "";
+		this.cantidad = 0;
 	}
 	
 	/**
 	 * Constructor con valores
 	 * @param idEstante - identificador del estante. Debe existir un estante con dicho identificador.
 	 * @param idProducto - identificador del producto. Debe existir un producto con dicho identificador.
+	 * @param cantidad - cantidad del producto
 	 */
-	public Surtido( long idEstante, String idProducto) {
+	public Surtido( long idEstante, String idProducto, int cantidad) {
 		this.idEstante = idEstante;
 		this.idProducto = idProducto;
+		this.cantidad = 0;
 	}
 	
 	/**
@@ -77,12 +84,29 @@ public class Surtido implements VOSurtido {
 		this.idProducto = idProducto;
 	}
 	
+	
+	/**
+	 * Retorna la cantidad del producto
+	 * @return - cantidad del producto
+	 */
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	/**
+	 * Modifica la cantidad del producto
+	 * @param cantidad - nueva cantidad del producto
+	 */
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
+
 	/** 
 	 * @return Una cadena con la información básica
 	 */
 	@Override
 	public String toString() 
 	{
-		return "Surtido [idEstante=" + idEstante + ", idProducto=" + idProducto + "]";
+		return "Surtido [idEstante=" + idEstante + ", idProducto=" + idProducto + ", cantidad=" + cantidad + "]";
 	}
 }

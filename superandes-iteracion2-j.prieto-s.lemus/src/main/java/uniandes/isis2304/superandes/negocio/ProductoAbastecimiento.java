@@ -25,6 +25,11 @@ public class ProductoAbastecimiento implements VOProductoAbastecimiento {
 	 */
 	private String idProducto;
 	
+	/**
+	 * Cantidad del producto
+	 */
+	private int cantidad;
+	
 	
 	/* ----------------- Métodos ----------------------------------- */
 	
@@ -34,16 +39,19 @@ public class ProductoAbastecimiento implements VOProductoAbastecimiento {
 	public ProductoAbastecimiento() {
 		this.idAbastecimiento = 0;
 		this.idProducto = "";
+		this.cantidad = 0;
 	}
 	
 	/**
 	 * Constructor con valores.
 	 * @param idAbastecimiento - identificador del abastecimiento. Debe existir un abastecimiento con dicho identificador. 
 	 * @param idProducto identificador del producto. Debe existir un abastecimiento con dicho identificador.
+	 * @param cantidad - cantidad del producto
 	 */
-	public ProductoAbastecimiento ( long idAbastecimiento, String idProducto) {
+	public ProductoAbastecimiento ( long idAbastecimiento, String idProducto, int cantidad) {
 		this.idAbastecimiento = idAbastecimiento;
 		this.idProducto = idProducto;
+		this.cantidad = cantidad;
 	}
 
 	
@@ -79,13 +87,29 @@ public class ProductoAbastecimiento implements VOProductoAbastecimiento {
 		this.idProducto = idProducto;
 	}
 
+	/**
+	 * Retorna la cantidad del producto
+	 * @return - cantidad del producto
+	 */
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	/**
+	 * Modifica la cantidad del producto
+	 * @param cantidad - nueva cantidad del producto
+	 */
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
+
 	/** 
 	 * @return Una cadena con la información básica
 	 */
 	@Override
 	public String toString() 
 	{
-		return "ProductoAbastecimiento [idAbastecimiento=" + idAbastecimiento + ", idProducto=" + idProducto + "]";
+		return "ProductoAbastecimiento [idAbastecimiento=" + idAbastecimiento + ", idProducto=" + idProducto + ", cantidad=" + cantidad + "]";
 	}
 	
 }

@@ -44,11 +44,12 @@ public class SQLProductoPromocion {
 	 * @param pm - El manejador de persistencia
 	 * @param idProducto - El identificador del producto que hace parte de la promoción
 	 * @param idPromocion - El identificador de la promoción que contiene el producto
+	 * @param cantidad - Cantidad del producto
 	 * @return El número de tuplas insertadas
 	 */
-	public long registrarProductoPromocion(PersistenceManager pm, String idProducto, long idPromocion) {
-		Query q = pm.newQuery(SQL, "INSERT INTO " + ps.darTablaProductoPromocion() + " VALUES (?, ?)");
-		q.setParameters(idProducto, idPromocion);
+	public long registrarProductoPromocion(PersistenceManager pm, String idProducto, long idPromocion, int cantidad) {
+		Query q = pm.newQuery(SQL, "INSERT INTO " + ps.darTablaProductoPromocion() + " VALUES (?, ?, ?)");
+		q.setParameters(idProducto, idPromocion, cantidad);
 		return (long) q.executeUnique();
 	}
 	

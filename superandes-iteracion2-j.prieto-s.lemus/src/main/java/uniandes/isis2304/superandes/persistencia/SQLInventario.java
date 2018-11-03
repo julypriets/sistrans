@@ -44,11 +44,12 @@ public class SQLInventario {
 	 * @param pm - El manejador de persistencia
 	 * @param idProducto - El identificador del producto almacenado en una bodega
 	 * @param idBodega - El identificador de la bodega que almacena el producto
+	 * @param cantidad - Cantidad del producto
 	 * @return El número de tuplas insertadas
 	 */
-	public long registrarInventario(PersistenceManager pm, String idProducto, long idBodega) {
-		Query q = pm.newQuery(SQL, "INSERT INTO " + ps.darTablaInventario() + " VALUES (?, ?)");
-		q.setParameters(idProducto, idBodega);
+	public long registrarInventario(PersistenceManager pm, String idProducto, long idBodega, int cantidad) {
+		Query q = pm.newQuery(SQL, "INSERT INTO " + ps.darTablaInventario() + " VALUES (?, ?, ?)");
+		q.setParameters(idProducto, idBodega, cantidad);
 		return (long) q.executeUnique();
 	}
 	

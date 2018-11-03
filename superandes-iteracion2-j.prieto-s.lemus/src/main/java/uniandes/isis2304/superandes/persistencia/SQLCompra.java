@@ -44,11 +44,12 @@ public class SQLCompra {
 	 * @param pm - El manejador de persistencia
 	 * @param idProducto - El identificador del producto comprado
 	 * @param idFactura - El identificador de la factura que contiene el producto
+	 * @param cantidad - Cantidad del producto
 	 * @return El número de tuplas insertadas
 	 */
-	public long registrarCompra(PersistenceManager pm, String idProducto, long idFactura) {
-		Query q = pm.newQuery(SQL, "INSERT INTO " + ps.darTablaCompra() + " VALUES (?, ?)");
-		q.setParameters(idProducto, idFactura);
+	public long registrarCompra(PersistenceManager pm, String idProducto, long idFactura, int cantidad) {
+		Query q = pm.newQuery(SQL, "INSERT INTO " + ps.darTablaCompra() + " VALUES (?, ?, ?)");
+		q.setParameters(idProducto, idFactura, cantidad);
 		return (long) q.executeUnique();
 	}
 	
