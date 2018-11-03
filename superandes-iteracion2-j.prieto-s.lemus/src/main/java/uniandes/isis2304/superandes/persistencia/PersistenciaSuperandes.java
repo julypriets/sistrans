@@ -1180,6 +1180,106 @@ public class PersistenciaSuperandes {
 	}
 	
 	/**
+	 * Método que se encarga de actualizar los estados del carro y el estante
+	 * cuando un cliente adiciona un producto a su carro del estante respectivo
+	 * @param idCarrito
+	 * @param idProducto
+	 * @param cantidad
+	 * @param idEstante
+	 * @return Número de tuplas actualizadas
+	 */
+	public long insertarProductoAlCarro (long idCarrito, String idProducto, long cantidad, long idEstante){
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        tx.setSerializeRead(true);
+
+        try
+        {
+            tx.begin();
+            
+            sqlSurtido.removerProductoDeEstante(pm, idEstante, idProducto, cantidad);
+            long tuplasInsertadas = sqlCarrito.insertarProductoAlCarro(pm, idCarrito, idProducto, cantidad);
+            
+            tx.commit();
+            
+            return tuplasInsertadas;
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return 0;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+	}
+	
+	/**
+	 * Método que se encarga de actualizar los estados del carro y el estante
+	 * cuando un cliente devuelve un producto de su carro al estante respectivo
+	 * @param idCarrito
+	 * @param idProducto
+	 * @param cantidad
+	 * @param idEstante
+	 * @return Número de tuplas actualizadas
+	 */
+	public long devolverProductoDelCarro (long idCarrito, String idProducto, long cantidad, long idEstante){
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        tx.setSerializeRead(true);
+
+        try
+        {
+            tx.begin();
+           
+            long tuplasInsertadas = sqlCarrito.removerProductoDelCarro(pm, idCarrito, idProducto, cantidad);
+            sqlSurtido.insertarProductoEnEstante(pm, idEstante, idProducto, cantidad);
+            
+            tx.commit();
+            
+            return tuplasInsertadas;
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return 0;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+	}
+	
+	/**
+	 * 
+	 * @param idCarrito
+	 * @param idProducto
+	 * @return La cantidad de un producto en un carro de compras determinado
+	 */
+	public int darCantidadDeProducto (long idCarrito, String idProducto){
+		return sqlCarrito.darCantidadDeProducto(pmf.getPersistenceManager(), idCarrito, idProducto);
+	}
+	
+	public int darCantidadProductoPorEstante (String idProducto, long idEstante){
+		return sqlSurtido.darCantidadProductoPorEstante(pmf.getPersistenceManager(), idProducto, idEstante);
+	}
+	
+	public List<Producto> darProductosEnCarro(long idCarrito){
+		return sqlCarrito.darProductosEnCarro(pmf.getPersistenceManager(), idCarrito);
+	}
+	
+	/**
 	 * 
 	 * @return Todos los carros de compra registradoss
 	 */
@@ -1201,5 +1301,15 @@ public class PersistenciaSuperandes {
 	 */
 	public List<Carrito> darCarrosAbandonados(){
 		return sqlCarrito.darCarrosAbandonados(pmf.getPersistenceManager());
+	}
+	
+	/**
+	 * 
+	 * @param nombre
+	 * @param idEstante
+	 * @return El producto correspondiente al nombre y el estante
+	 */
+	public Producto darProductoPorNombreYEstante(String nombre, long idEstante){
+		return sqlSurtido.darProductoPorNombreYEstante(pmf.getPersistenceManager(), nombre, idEstante);
 	}
 }

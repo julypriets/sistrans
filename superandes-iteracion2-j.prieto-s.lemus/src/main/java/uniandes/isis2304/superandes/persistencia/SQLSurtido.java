@@ -3,6 +3,8 @@ package uniandes.isis2304.superandes.persistencia;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import uniandes.isis2304.superandes.negocio.Producto;
+
 /**
  * Clase que encapsula los métodos que hacen acceso a la base de datos para el concepto SURTIDO de Superandes
  * Nótese que es una clase que es sólo conocida en el paquete de persistencia
@@ -59,9 +61,55 @@ public class SQLSurtido {
 	 * @param idProducto
 	 * @return El número de tuplas actualizadas
 	 */
-	public long removerUnProductoDeEstante(PersistenceManager pm, long idEstante, long idProducto, long cantidadARemover){
+	public long removerProductoDeEstante(PersistenceManager pm, long idEstante, String idProducto, long cantidadARemover){
 		Query q = pm.newQuery(SQL, "UPDATE SURTIDO SET cantidad = cantidad - " + cantidadARemover + " WHERE id_estante = "+ idEstante +" AND id_producto = " + "'"+ idProducto+"'");
 		return (long) q.executeUnique();
 	}
 	
+	/**
+	 * Adiciona una cantidad determinada de un producto al estante
+	 * correspondiente
+	 * @param pm - Persistence Manager 
+	 * @param idEstante
+	 * @param idProducto
+	 * @param cantidadAAdicionar
+	 * @return
+	 */
+	public long insertarProductoEnEstante(PersistenceManager pm, long idEstante, String idProducto, long cantidadAAdicionar){
+		Query q = pm.newQuery(SQL, "UPDATE SURTIDO SET cantidad = cantidad + " + cantidadAAdicionar + " WHERE id_estante = "+ idEstante +" AND id_producto = " + "'"+ idProducto+"'");
+		return (long) q.executeUnique();
+	}
+	
+	/**
+	 * 
+	 * @param pm - Persistence Manager
+	 * @param nombre
+	 * @param idEstante
+	 * @return El producto correspondiente al nombre y el estante
+	 */
+	public Producto darProductoPorNombreYEstante(PersistenceManager pm, String nombre, long idEstante){
+		String select = "SELECT nombre, marca, precio_unitario precioUnitario, presentacion, precio_unidadmedida precioUnidadMedida, empacado, codigo_barras codigobarras, id_categoria idCategoria, nivel_reorden nivelReorden, existencias, fecha_vencimiento fechaVencimiento " +
+						"FROM SURTIDO s, Producto p " +
+						"WHERE " +
+						    "s.id_producto = p.codigo_barras AND " +
+						    "s.id_Estante = " + idEstante +" AND " +
+						    "p.nombre = ?";
+		Query q = pm.newQuery(SQL, select);
+		q.setResultClass(Producto.class);
+		q.setParameters(nombre);
+		return (Producto) q.executeUnique();
+	}
+	
+	public int darCantidadProductoPorEstante(PersistenceManager pm, String idProducto, long idEstante){
+		String select = "SELECT cantidad " +
+				"FROM SURTIDO s, Producto p " +
+				"WHERE " +
+				    "s.id_producto = p.codigo_barras AND " +
+				    "s.id_Estante = " + idEstante +" AND " +
+				    "p.codigo_barras = ?";
+		Query q = pm.newQuery(SQL, select);
+		q.setResultClass(Integer.class);
+		q.setParameters(idProducto);
+		return (int) q.executeUnique();
+	}
 }

@@ -3,6 +3,7 @@ package uniandes.isis2304.superandes.negocio;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,6 +35,14 @@ public class Superandes
 	 */
 	private PersistenciaSuperandes ps;
 	
+	/**
+	 * Estructura de datos donde se guarda la información
+	 * del estante del cuál el cliente recogió un producto para
+	 * adicionarlo al carro de compras. La llave es el id del producto  
+	 * y el valor es el id del estante
+	 */
+	private HashMap<String, Long> productosRecogidos;
+	
 	/* ****************************************************************
 	 * 			Métodos
 	 *****************************************************************/
@@ -42,6 +51,7 @@ public class Superandes
 	 */
 	public Superandes ()
 	{
+		productosRecogidos = new HashMap<>();
 		ps = PersistenciaSuperandes.getInstance ();
 	}
 	
@@ -51,6 +61,7 @@ public class Superandes
 	 */
 	public Superandes (JsonObject tableConfig)
 	{
+		productosRecogidos = new HashMap<>();
 		ps = PersistenciaSuperandes.getInstance (tableConfig);
 	}
 	
@@ -460,4 +471,60 @@ public class Superandes
 	public List<Carrito> darCarrosAbandonados(){
 		return ps.darCarrosAbandonados();
 	}
+	
+	/**
+	 * (RF13) Método que se encarga de insertar un producto al carro
+	 * y actualizar el estado del estante respectivo
+	 * @param idCarrito
+	 * @param idProducto
+	 * @param cantidad
+	 * @param idEstante
+	 * @return Número de tuplas actualizadas
+	 */
+	public long insertarProductoAlCarro(long idCarrito, String nombreProducto, long cantidad, long idEstante) throws Exception{
+		Producto p = ps.darProductoPorNombreYEstante(nombreProducto, idEstante);
+		if(p == null){
+			throw new Exception("El producto ingresado o el estante no son correctos");
+		}
+		if(ps.darCantidadProductoPorEstante(p.getCodigoBarras(), idEstante) == 0){
+			throw new Exception("No hay existencias del producto en el estante: " + idEstante);
+		}
+		
+		productosRecogidos.put(p.getCodigoBarras(), idEstante);
+		return ps.insertarProductoAlCarro(idCarrito, p.getCodigoBarras(), cantidad, idEstante);
+		
+	}
+	
+	/**
+	 * (RF14) Método que se encarga de devolver un producto del carro
+	 * y actualizar el estado del estante respectivo
+	 * @param idCarrito
+	 * @param nombreProducto
+	 * @param cantidad
+	 * @return Número de tuplas actualizadas
+	 */
+	public long devolverProductoDelCarro(long idCarrito, String nombreProducto, long cantidad) throws Exception{
+		List<Producto> productos = ps.darProductosEnCarro(idCarrito);
+		Producto producto = null;
+		for(Producto p : productos){
+			if(p.getNombre().equals(nombreProducto)){
+				producto = p;
+			}
+		}
+		if(producto == null || ps.darCantidadDeProducto(idCarrito, producto.getCodigoBarras()) == 0){
+			throw new Exception("El producto que se está tratando de remover no se encuentra en el carro de compras");
+		}
+		String idProducto = producto.getCodigoBarras();
+		long idEstante = productosRecogidos.get(idProducto);
+		int cantidadEnCarro = ps.darCantidadDeProducto(idCarrito, idProducto);
+		
+		if(ps.darCantidadDeProducto(idCarrito, idProducto) - cantidad == 0){
+			productosRecogidos.remove(idProducto);
+		}else if (cantidadEnCarro - cantidad < 0){
+			throw new Exception("Está tratando de remover una cantidad superior a la que posee del producto");
+		}
+		return ps.devolverProductoDelCarro(idCarrito, idProducto, cantidadEnCarro, idEstante);
+	}
+	
+
 }

@@ -151,8 +151,8 @@ public class SQLCarrito {
 	 * @param cantidadAnadida
 	 * @return El número de tuplas actualizadas
 	 */
-	public long insertarProductoAlCarro(PersistenceManager pm, long idCarrito, long idProducto, long cantidadAnadida){
-		Query q = pm.newQuery(SQL, "UPDATE SURTIDO SET cantidad = cantidad + " + cantidadAnadida + " WHERE id_carrito = "+ idCarrito +" AND id_producto = " + "'"+ idProducto+"'");
+	public long insertarProductoAlCarro(PersistenceManager pm, long idCarrito, String idProducto, long cantidadAnadida){
+		Query q = pm.newQuery(SQL, "UPDATE CARRITO_PRODUCTO SET cantidad = cantidad + " + cantidadAnadida + " WHERE id_carrito = "+ idCarrito +" AND id_producto = " + "'"+ idProducto+"'");
 		return (long) q.executeUnique();
 	}
 	
@@ -164,8 +164,8 @@ public class SQLCarrito {
 	 * @param cantidadRemovida
 	 * @return El número de tuplas actualizadas
 	 */
-	public long removerProductoDelCarro(PersistenceManager pm, long idCarrito, long idProducto, long cantidadRemovida){
-		Query q = pm.newQuery(SQL, "UPDATE SURTIDO SET cantidad = cantidad - " + cantidadRemovida + " WHERE id_carrito = "+ idCarrito +" AND id_producto = " + "'"+ idProducto+"'");
+	public long removerProductoDelCarro(PersistenceManager pm, long idCarrito, String idProducto, long cantidadRemovida){
+		Query q = pm.newQuery(SQL, "UPDATE CARRITO_PRODUCTO SET cantidad = cantidad - " + cantidadRemovida + " WHERE id_carrito = "+ idCarrito +" AND id_producto = " + "'"+ idProducto+"'");
 		return (long) q.executeUnique();
 	}
 	
@@ -182,5 +182,11 @@ public class SQLCarrito {
 		Query q = pm.newQuery(SQL, select);
 		q.setResultClass(Producto.class);
 		return (List<Producto>) q.executeList();
+	}
+	
+	public int darCantidadDeProducto (PersistenceManager pm, long idCarrito, String idProducto){
+		Query q = pm.newQuery(SQL, "SELECT cantidad FROM CARRITO_PRODUCTO WHERE id_carrito = " + idCarrito + " AND id_producto = " + "'"+ idProducto+"'");
+		q.setResultClass(Integer.class);
+		return (int) q.executeUnique();
 	}
 }
