@@ -26,6 +26,7 @@ import uniandes.isis2304.superandes.negocio.Cliente;
 import uniandes.isis2304.superandes.negocio.ComprasPorPromocion;
 import uniandes.isis2304.superandes.negocio.Empresa;
 import uniandes.isis2304.superandes.negocio.Estante;
+import uniandes.isis2304.superandes.negocio.Factura;
 import uniandes.isis2304.superandes.negocio.Persona;
 import uniandes.isis2304.superandes.negocio.Producto;
 import uniandes.isis2304.superandes.negocio.Promocion;
@@ -1332,6 +1333,66 @@ public class PersistenciaSuperandes {
 		}
 		
 		return idEstante;
+	}
+	
+
+	/**
+	 * Método que se encarga de generar la factura cuando un cliente paga todos
+	 * los productos en su carro de compras
+	 * @param idCarrito
+	 * @param idCajero
+	 * @param idCliente
+	 * @return La representación de la factura
+	 */
+	public Factura pagarCompra(long idCarrito, long idCajero, long idCliente){
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        tx.setSerializeRead(true);
+        Factura factura = null;
+        try
+        {
+            tx.begin();
+            long id = nextval();
+            List<Producto> productos = sqlCarrito.darProductosEnCarro(pm, idCarrito);
+            double precioTotal = calcularCostoTotalCarro(productos, idCarrito);
+            Timestamp fecha = (Timestamp) new Date();
+            sqlFactura.registarFactura(pm, id, fecha, precioTotal, idCajero, idCliente);
+            
+            tx.commit();
+            
+            factura = new Factura(id, precioTotal, fecha, idCajero, idCliente);
+            factura.setProductos(productos);
+            return factura;
+
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return null;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+	}
+	
+	/**
+	 * Método para calcular el costo total de los productos contenidos en un carro
+	 * @return
+	 */
+	public double calcularCostoTotalCarro(List<Producto> productos, long idCarrito){
+		PersistenceManager pm = pmf.getPersistenceManager();
+		double total = 0.0;
+		for(Producto p : productos){
+			int cantidad = sqlCarrito.darCantidadDeProducto(pm, idCarrito, p.getCodigoBarras());
+			total += p.getPrecioUnitario() * cantidad;
+		}
+		return total;
 	}
 	
 	/**

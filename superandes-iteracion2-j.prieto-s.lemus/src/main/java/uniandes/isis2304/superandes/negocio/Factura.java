@@ -1,6 +1,9 @@
 package uniandes.isis2304.superandes.negocio;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Clase que se encarga de modelar el concepto de FACTURA en Superandes.
@@ -34,6 +37,16 @@ public class Factura implements VOFactura{
 	 */
 	private long idCliente;
 	
+	/**
+	 * Una colección de los productos comprados por el cliente
+	 */
+	private List<Producto> productos;
+	
+	/**
+	 * El dinero que hay que devolver al cliente luego de su compra (si hay exedente)
+	 */
+	private double sobrante;
+	
 	
 	/**
 	 * Crea una nueva factura
@@ -52,7 +65,8 @@ public class Factura implements VOFactura{
 		this.fecha = fecha;
 		this.idCajero = idCajero;
 		this.idCliente = idCliente;
-
+		this.productos = new LinkedList<>();
+		this.sobrante = 0.0;
 	}
 	
 	/**
@@ -64,6 +78,8 @@ public class Factura implements VOFactura{
 		this.fecha = new Timestamp(0);
 		this.idCajero = 0;
 		this.idCliente = 0;
+		this.productos = new LinkedList<>();
+		this.sobrante = 0.0;
 	}
 
 	/**
@@ -150,6 +166,22 @@ public class Factura implements VOFactura{
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public List<Producto> getProductos() {
+		return productos;
+	}
+
+	public void setProductos(List<Producto> productos) {
+		this.productos = productos;
+	}
+
+	public double getSobrante() {
+		return sobrante;
+	}
+
+	public void setSobrante(double sobrante) {
+		this.sobrante = sobrante;
 	}
 	
 	

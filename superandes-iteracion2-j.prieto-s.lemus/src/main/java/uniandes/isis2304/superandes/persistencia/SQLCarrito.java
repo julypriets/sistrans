@@ -145,6 +145,18 @@ public class SQLCarrito {
 	}
 	
 	/**
+	 * Método utilizado para actualizar el estado del carro a DESOCUPADO
+	 * @param pm - Persistence Manager
+	 * @param id
+	 * @return El número de tuplas actualizadas
+	 */
+	public long desocuparCarro(PersistenceManager pm, long id){
+		Query q = pm.newQuery(SQL, "UPDATE CARRITO SET id_cliente = NULL , estado = 'DESOCUPADO' WHERE id = ?");
+		q.setParameters(id);
+		return (long) q.executeUnique();
+	}
+	
+	/**
 	 * Inserta un producto y su cantidad respectiva en el carro de compras
 	 * @param pm - Persistence Manager
 	 * @param idCarrito

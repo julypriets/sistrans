@@ -539,4 +539,22 @@ public class Superandes
 	 * 			Métodos para manejar las Facturas
 	 *****************************************************************/
 
+	/**
+	 * (RF15) Método que se encarga de generar la factura cuando un cliente paga todos
+	 * los productos en su carro de compras
+	 * @param idCarrito
+	 * @param idCajero
+	 * @param idCliente
+	 * @return
+	 */
+	public Factura pagarCompra(long idCarrito, long idCajero, long idCliente, double dineroIngresado) throws Exception{
+		List<Producto> productos = ps.darProductosEnCarro(idCarrito);
+		double sobrante = dineroIngresado - ps.calcularCostoTotalCarro(productos, idCarrito) ;
+		if(sobrante < 0){
+			throw new Exception("El dinero ingresado es insuficiente");
+		}
+		Factura f = ps.pagarCompra(idCarrito, idCajero, idCliente);
+		f.setSobrante(sobrante);
+		return f;
+	}
 }

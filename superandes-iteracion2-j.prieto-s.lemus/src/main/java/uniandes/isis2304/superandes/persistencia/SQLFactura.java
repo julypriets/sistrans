@@ -54,7 +54,7 @@ public class SQLFactura {
 	 * @return El número de tuplas insertadas
 	 */
 	public long registarFactura(PersistenceManager pm, long id, Timestamp fecha, double precioTotal, long idCajero, 
-			long idCliente, int comprada) {
+			long idCliente) {
 		Query q = pm.newQuery(SQL, "INSERT INTO " + ps.darTablaFactura() + " VALUES (?, ?, ?, ?, ?)");
 		q.setParameters(id, fecha, precioTotal, idCajero, idCliente);
 		return (long) q.executeUnique();
