@@ -11,15 +11,18 @@ public class CarritoProducto implements VOCarritoProducto {
 	 * Identificador del producto
 	 */
 	private String idProducto;
+	
+	private int cantidad;
 
 	public CarritoProducto(){
 		
 	}
 	
-	public CarritoProducto(long idCarrito, String idProducto) {
+	public CarritoProducto(long idCarrito, String idProducto, int cantidad) {
 		super();
 		this.idCarrito = idCarrito;
 		this.idProducto = idProducto;
+		this.cantidad = cantidad;
 	}
 
 	/**
@@ -42,6 +45,16 @@ public class CarritoProducto implements VOCarritoProducto {
 	 */
 	public String getIdProducto() {
 		return idProducto;
+	}
+	
+	
+
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
 	}
 
 	/**

@@ -74,7 +74,8 @@ public class Producto implements VOProducto{
 	 */
 	private Timestamp fechaVencimiento;
 	
-
+	private double volumen;
+	
 	/**
 	 * Constructor del Producto con valores
 	 * @param nombre - nombre del producto
@@ -106,6 +107,7 @@ public class Producto implements VOProducto{
 		this.idCategoria = idCategoria;
 		this.idSucursal = idSucursal;
 		this.fechaVencimiento = fechaVencimiento;
+		this.volumen = calcularVolumen();
 	}
 	
 	/**
@@ -117,6 +119,7 @@ public class Producto implements VOProducto{
 		this.precioUnitario = 0.0;
 		this.presentacion = "";
 		this.precioUnidadMedida = 0.0;
+		this.volumen = 0.0;
 		this.unidadMedida = "";
 		this.empacado = "";
 		this.codigoBarras = "";
@@ -126,12 +129,23 @@ public class Producto implements VOProducto{
 		this.idSucursal = 0;
 		this.fechaVencimiento = null;
 	}
+	
+	private double calcularVolumen(){
+		int to = 0;
+		for (int i = 0; i < empacado.length(); i++) {
+			if (Character.isDigit(empacado.charAt(i))) {
+				to ++;
+			}
+		}
+		return (double) Double.parseDouble(empacado.substring(0, to));
+	}
 
 	/**
 	 * 
 	 * @return el código de barras del producto
 	 */
 	public String getCodigoBarras() {
+		
 		return codigoBarras;
 	}
 
@@ -302,6 +316,15 @@ public class Producto implements VOProducto{
 
 	public void setIdSucursal(long idSucursal) {
 		this.idSucursal = idSucursal;
+	}
+	
+	
+	public double getVolumen() {
+		return volumen;
+	}
+
+	public void setVolumen(double volumen) {
+		this.volumen = volumen;
 	}
 
 	/**

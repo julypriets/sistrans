@@ -6,6 +6,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
 import uniandes.isis2304.superandes.negocio.Carrito;
+import uniandes.isis2304.superandes.negocio.CarritoProducto;
 import uniandes.isis2304.superandes.negocio.Producto;
 
 /**
@@ -184,9 +185,42 @@ public class SQLCarrito {
 		return (List<Producto>) q.executeList();
 	}
 	
+	/**
+	 * 
+	 * @param pm - Persistence Manager
+	 * @param idCarrito
+	 * @param idProducto
+	 * @return La cantidad del producto del carro respectivo
+	 */
 	public int darCantidadDeProducto (PersistenceManager pm, long idCarrito, String idProducto){
 		Query q = pm.newQuery(SQL, "SELECT cantidad FROM CARRITO_PRODUCTO WHERE id_carrito = " + idCarrito + " AND id_producto = " + "'"+ idProducto+"'");
 		q.setResultClass(Integer.class);
 		return (int) q.executeUnique();
+	}
+	
+	/**
+	 * Actualiza el estado de todos los carros a 'DESOCUPADO' que hayan sido abandonados
+	 * @param pm - Persistence Manager
+	 * @return El número de tuplas actualizadas
+	 */
+	public long desocuparCarros(PersistenceManager pm){
+		Query q = pm.newQuery(SQL, "UPDATE CARRITO SET estado = 'DESOCUPADO' WHERE estado = 'ABANDONADO'");
+		return (long) q.executeUnique();
+	}
+	
+	/**
+	 * Elimina un producto del carro
+	 * @return El número de tuplas eliminadas
+	 */
+	public long eliminarProductoDelCarro(PersistenceManager pm, long idCarrito, String idProducto){
+		Query q = pm.newQuery(SQL, "DELETE FROM CARRITO_PRODUCTO WHERE id_carrito = " + idCarrito + " AND id_producto = ?");
+		q.setParameters(idProducto);
+		return (long) q.executeUnique();
+	}
+	
+	public List<CarritoProducto> darProductosPorCadaCarro(PersistenceManager pm){
+		Query q = pm.newQuery(SQL, "SELECT id_carrito idCarrito, id_producto idProducto, cantidad FROM CARRITO_PRODUCTO");
+		q.setResultClass(CarritoProducto.class);
+		return (List<CarritoProducto>) q.executeList();
 	}
 }

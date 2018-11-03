@@ -1239,6 +1239,10 @@ public class PersistenciaSuperandes {
             tx.begin();
            
             long tuplasInsertadas = sqlCarrito.removerProductoDelCarro(pm, idCarrito, idProducto, cantidad);
+            int c = sqlCarrito.darCantidadDeProducto(pm, idCarrito, idProducto);
+            if (c == 0){
+            	sqlCarrito.eliminarProductoDelCarro(pm, idCarrito, idProducto);
+            }
             sqlSurtido.insertarProductoEnEstante(pm, idEstante, idProducto, cantidad);
             
             tx.commit();
@@ -1262,6 +1266,74 @@ public class PersistenciaSuperandes {
 	}
 	
 	/**
+	 * Método que se encarga de devolver los productos de los carros abandonados
+	 * a los respectivos estantes
+	 * @return
+	 */
+	public void recolectarProductosAbandonados(){
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        tx.setSerializeRead(true);
+
+        try
+        {
+            tx.begin();
+            
+            List<Carrito> abandonados = sqlCarrito.darCarrosAbandonados(pm);
+            for(Carrito c : abandonados){
+            	long idCarrito = c.getId();
+            	List<Producto> productos = sqlCarrito.darProductosEnCarro(pm, idCarrito);
+            	for(Producto p : productos){
+            		String idProducto = p.getCodigoBarras();
+            		int cantidad = sqlCarrito.darCantidadDeProducto(pm, idCarrito, idProducto);
+            		devolverProductoDelCarro(c.getId(), p.getCodigoBarras(), cantidad, elegirEstante(pm, p, cantidad));
+            	}
+            }
+            
+            tx.commit();
+            
+
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+	}
+	
+	/**
+	 * Método que se encarga de elegir un estante donde se pueda insertar
+	 * el producto dado por parámetro
+	 * @param p - producto a insertar
+	 * @return El identificador del estante. Si no hay estante disponible retorna -1
+	 */
+	public long elegirEstante(PersistenceManager pm, Producto p, int cantidad){
+		long idEstante = -1;
+		long idCategoria = p.getIdCategoria();
+		List<Estante> es = sqlEstante.darEstantesPorCategoria(pm, idCategoria);
+		if(es.size() > 0){
+			for(Estante e : es){
+				double capacidadVolumen = sqlEstante.darCapacidadVolumenEstante(pm, e.getId());
+				double volumenActual = p.getVolumen() * sqlSurtido.darCantidadProductoPorEstante(pm, p.getCodigoBarras(), e.getId());
+				double volumenAInsertar = p.getVolumen() * cantidad;
+				if(capacidadVolumen >= (volumenActual + volumenAInsertar)){
+					return e.getId();
+				}
+			}
+		}
+		
+		return idEstante;
+	}
+	
+	/**
 	 * 
 	 * @param idCarrito
 	 * @param idProducto
@@ -1271,10 +1343,21 @@ public class PersistenciaSuperandes {
 		return sqlCarrito.darCantidadDeProducto(pmf.getPersistenceManager(), idCarrito, idProducto);
 	}
 	
+	/**
+	 * 
+	 * @param idProducto
+	 * @param idEstante
+	 * @return La cantidad de un producto en un estante determinado
+	 */
 	public int darCantidadProductoPorEstante (String idProducto, long idEstante){
 		return sqlSurtido.darCantidadProductoPorEstante(pmf.getPersistenceManager(), idProducto, idEstante);
 	}
 	
+	/**
+	 * 
+	 * @param idCarrito
+	 * @return Todos los productos en un carro específico
+	 */
 	public List<Producto> darProductosEnCarro(long idCarrito){
 		return sqlCarrito.darProductosEnCarro(pmf.getPersistenceManager(), idCarrito);
 	}

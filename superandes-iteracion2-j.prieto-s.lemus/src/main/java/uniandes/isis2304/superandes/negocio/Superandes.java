@@ -526,5 +526,14 @@ public class Superandes
 		return ps.devolverProductoDelCarro(idCarrito, idProducto, cantidadEnCarro, idEstante);
 	}
 	
+	/**
+	 * (RF17) Método utilizado para identificar los carros de compra abandonados,
+	 * desocupar sus productos en los estantes respectivos, y volverlos disponibles 
+	 * de nuevo para el cliente
+	 */
+	public void  recolectarProductosAbandonados(){
+		ps.recolectarProductosAbandonados();
+	}
+	
 
 }

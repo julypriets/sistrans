@@ -1,7 +1,11 @@
 package uniandes.isis2304.superandes.persistencia;
 
+import java.util.List;
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+
+import uniandes.isis2304.superandes.negocio.Estante;
 
 /**
  * Clase que encapsula los métodos que hacen acceso a la base de datos para el concepto ESTANTE de Superandes
@@ -54,4 +58,39 @@ public class SQLEstante {
 		return (long) q.executeUnique();
 	}
 	
+	/**
+	 * 
+	 * @param pm - Persistence Manager
+	 * @param idEstante
+	 * @return La capacidad de peso del estante respectivo
+	 */
+	public double darCapacidadPesoEstante(PersistenceManager pm, long idEstante){
+		Query q = pm.newQuery(SQL, "SELECT capacidad_peso FROM ESTANTE WHERE id = " + idEstante);
+		q.setResultClass(Double.class);
+		return (double) q.executeUnique();
+	}
+	
+	/**
+	 * 
+	 * @param pm - Persistence Manager
+	 * @param idEstante
+	 * @return La capacidad de volumen del estante respectivo
+	 */
+	public double darCapacidadVolumenEstante(PersistenceManager pm, long idEstante){
+		Query q = pm.newQuery(SQL, "SELECT capacidad_volumen FROM ESTANTE WHERE id = " + idEstante);
+		q.setResultClass(Double.class);
+		return (double) q.executeUnique();
+	}
+	
+	/**
+	 * 
+	 * @param pm - Persistence Manager
+	 * @param idCategoria
+	 * @return Una colección con todos los estantes de determinada categoría
+	 */
+	public List<Estante> darEstantesPorCategoria(PersistenceManager pm, long idCategoria){
+		Query q = pm.newQuery(SQL, "SELECT * FROM ESTANTE WHERE id_categoria = " + idCategoria);
+		q.setResultClass(Estante.class);
+		return (List<Estante>) q.executeList();
+	}
 }
