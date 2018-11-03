@@ -12,6 +12,16 @@ public class CarritoProducto implements VOCarritoProducto {
 	 */
 	private String idProducto;
 
+	public CarritoProducto(){
+		
+	}
+	
+	public CarritoProducto(long idCarrito, String idProducto) {
+		super();
+		this.idCarrito = idCarrito;
+		this.idProducto = idProducto;
+	}
+
 	/**
 	 * Obtiene el id del carrito
 	 */

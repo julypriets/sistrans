@@ -52,4 +52,16 @@ public class SQLSurtido {
 		return (long) q.executeUnique();
 	}
 	
+	/**
+	 * Remueve una cantidad determinada de un producto en un estante
+	 * @param pm - Persistence Manager 
+	 * @param idEstante
+	 * @param idProducto
+	 * @return El número de tuplas actualizadas
+	 */
+	public long removerUnProductoDeEstante(PersistenceManager pm, long idEstante, long idProducto, long cantidadARemover){
+		Query q = pm.newQuery(SQL, "UPDATE SURTIDO SET cantidad = cantidad - " + cantidadARemover + " WHERE id_estante = "+ idEstante +" AND id_producto = " + "'"+ idProducto+"'");
+		return (long) q.executeUnique();
+	}
+	
 }

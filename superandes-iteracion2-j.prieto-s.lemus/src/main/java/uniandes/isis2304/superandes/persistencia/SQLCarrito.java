@@ -142,4 +142,45 @@ public class SQLCarrito {
 		q.setParameters(id);
 		return (long) q.executeUnique();
 	}
+	
+	/**
+	 * Inserta un producto y su cantidad respectiva en el carro de compras
+	 * @param pm - Persistence Manager
+	 * @param idCarrito
+	 * @param idProducto
+	 * @param cantidadAnadida
+	 * @return El número de tuplas actualizadas
+	 */
+	public long insertarProductoAlCarro(PersistenceManager pm, long idCarrito, long idProducto, long cantidadAnadida){
+		Query q = pm.newQuery(SQL, "UPDATE SURTIDO SET cantidad = cantidad + " + cantidadAnadida + " WHERE id_carrito = "+ idCarrito +" AND id_producto = " + "'"+ idProducto+"'");
+		return (long) q.executeUnique();
+	}
+	
+	/**
+	 * Remueve el producto y su cantidad respectiva en el carro de compras
+	 * @param pm - Persistence Manager
+	 * @param idCarrito
+	 * @param idProducto
+	 * @param cantidadRemovida
+	 * @return El número de tuplas actualizadas
+	 */
+	public long removerProductoDelCarro(PersistenceManager pm, long idCarrito, long idProducto, long cantidadRemovida){
+		Query q = pm.newQuery(SQL, "UPDATE SURTIDO SET cantidad = cantidad - " + cantidadRemovida + " WHERE id_carrito = "+ idCarrito +" AND id_producto = " + "'"+ idProducto+"'");
+		return (long) q.executeUnique();
+	}
+	
+	/**
+	 * 
+	 * @param pm - Persistence Manager
+	 * @param idCarrito
+	 * @return Una colección de todos los productos insertados en el carro de compras
+	 */
+	public List<Producto> darProductosEnCarro(PersistenceManager pm, long idCarrito){
+		String select = "SELECT nombre, marca, precio_unitario precioUnitario, presentacion, precio_unidadmedida precioUnidadMedida, empacado, codigo_barras codigobarras, id_categoria idCategoria, nivel_reorden nivelReorden, existencias, fecha_vencimiento fechaVencimiento " + 
+							"FROM CARRITO_PRODUCTO c, PRODUCTO p " +
+							"WHERE c.id_producto = p.codigo_barras AND c.id_carrito = " + idCarrito;
+		Query q = pm.newQuery(SQL, select);
+		q.setResultClass(Producto.class);
+		return (List<Producto>) q.executeList();
+	}
 }
