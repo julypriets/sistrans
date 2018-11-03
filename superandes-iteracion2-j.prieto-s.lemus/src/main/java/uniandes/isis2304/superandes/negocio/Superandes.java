@@ -535,5 +535,8 @@ public class Superandes
 		ps.recolectarProductosAbandonados();
 	}
 	
+	/* ****************************************************************
+	 * 			Métodos para manejar las Facturas
+	 *****************************************************************/
 
 }

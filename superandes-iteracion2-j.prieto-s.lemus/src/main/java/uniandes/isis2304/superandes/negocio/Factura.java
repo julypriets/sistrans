@@ -30,24 +30,9 @@ public class Factura implements VOFactura{
 	private long idCajero;
 	
 	/**
-	 * Identificador de la persona que hizo la compra
+	 * El identificador del cliente que realizó la compra
 	 */
-	private long idPersona;
-	
-	/**
-	 * Identificador de la empresa que hizo la compra
-	 */
-	private long idEmpresa;
-	
-	/**
-	 * Tipo de cliente de la compra
-	 */
-	private String cliente;
-	
-	/**
-	 * Indica si la factura fue comprada o no
-	 */
-	private int comprada;
+	private long idCliente;
 	
 	
 	/**
@@ -61,15 +46,13 @@ public class Factura implements VOFactura{
 	 * @param cliente - tipo de cliente que hizo la compra
 	 * @param comprada - indica si la compra se realizó o no
 	 */
-	public Factura(long id, Double precioTotal, Timestamp fecha, long idCajero, long idPersona, long idEmpresa, String cliente, int comprada ) {
+	public Factura(long id, Double precioTotal, Timestamp fecha, long idCajero, long idCliente) {
 		this.id = id;
 		this.precioTotal = precioTotal;
 		this.fecha = fecha;
 		this.idCajero = idCajero;
-		this.idPersona = idPersona;
-		this.idEmpresa = idEmpresa;
-		this.cliente = cliente;
-		this.comprada = comprada;
+		this.idCliente = idCliente;
+
 	}
 	
 	/**
@@ -80,10 +63,7 @@ public class Factura implements VOFactura{
 		this.precioTotal = 0.0;
 		this.fecha = new Timestamp(0);
 		this.idCajero = 0;
-		this.idPersona = 0;
-		this.idEmpresa = 0;
-		this.cliente = "";
-		this.comprada = 0;
+		this.idCliente = 0;
 	}
 
 	/**
@@ -151,70 +131,6 @@ public class Factura implements VOFactura{
 		return "Factura [id=" + id + ", precioTotal=" + precioTotal + ", fecha=" + fecha + "]";
 	}
 
-	/**
-	 * Obtiene el identificador de la persona que hizo la compra
-	 * @return el identificador de la persona que hizo la compra
-	 */
-	public long getIdPersona() {
-		return idPersona;
-	}
-
-	/**
-	 * Modifica el identificador de la persona que hizo la compra
-	 * @param idPersona - nuevo identificador de la persona que hizo la compra
-	 */
-	public void setIdPersona(long idPersona) {
-		this.idPersona = idPersona;
-	}
-
-	/**
-	 *Obtiene el identificador de la empresa que hizo la compra
-	 *@return  el identificador de la empresa que hizo la compra
-	 */
-	public long getIdEmpresa() {
-		return idEmpresa;
-	}
-
-	/**
-	 * Modifica el identificador de la empresa que hizo la compra
-	 * @param idEmpresa - el identificador de la empresa que hizo la compra
-	 */
-	public void setIdEmpresa(long idEmpresa) {
-		this.idEmpresa = idEmpresa;
-	}
-
-	/**
-	 * Obtiene el tipo de cliente que hizo la compra
-	 * @return - tipo de cliente que hizo la compra
-	 */
-	public String getCliente() {
-		return cliente;
-	}
-
-	/**
-	 * Modifica el tipo de cliente que hizo la compra
-	 * @param cliente - tipo de cliente que hizo la compra
-	 */
-	public void setCliente(String cliente) {
-		this.cliente = cliente;
-	}
-
-	/**
-	 * Indica si la compra se hizo o no
-	 * @return - si la compra se hizo o no
-	 */
-	public int getComprada() {
-		return comprada;
-	}
-
-	/**
-	 * Modifica si la compra se hizo o no
-	 * @param comprada - si la compra se hizo o no
-	 */
-	public void setComprada(int comprada) {
-		this.comprada = comprada;
-	}
-
 
 	/**
 	 * Modifica el identificador del cajero que atendió la compra
@@ -223,5 +139,19 @@ public class Factura implements VOFactura{
 	public void setIdCajero(long idCajero) {
 		this.idCajero = idCajero;
 	}
+
+	public long getIdCliente() {
+		return idCliente;
+	}
+
+	public void setIdCliente(long idCliente) {
+		this.idCliente = idCliente;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+	
+	
 	
 }

@@ -18,11 +18,7 @@ public interface VOFactura {
 
 	public long getIdCajero();
 	
-	public long getIdPersona();
-	
-	public long getIdEmpresa();
-	
-	public int getComprada();
+	public long getIdCliente();
 	
 	@Override
 	public String toString();

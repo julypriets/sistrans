@@ -1289,6 +1289,7 @@ public class PersistenciaSuperandes {
             		devolverProductoDelCarro(c.getId(), p.getCodigoBarras(), cantidad, elegirEstante(pm, p, cantidad));
             	}
             }
+            sqlCarrito.desocuparCarros(pm);
             
             tx.commit();
             
