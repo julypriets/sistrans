@@ -257,9 +257,15 @@ public class SQLCarrito {
 	 * @return El id del carro correspondiente a su dueño
 	 */
 	public long darCarroPorCliente (PersistenceManager pm, long idCliente){
-		Query q = pm.newQuery(SQL, "SELECT id FROM CARRITO WHERE id_cliente = ?");
-		q.setParameters(idCliente);
-		q.setResultClass(Long.class);
-		return (long)q.executeUnique();
+		try{
+			Query q = pm.newQuery(SQL, "SELECT id FROM CARRITO WHERE id_cliente = ?");
+			q.setParameters(idCliente);
+			q.setResultClass(Long.class);
+			return (long)q.executeUnique();
+			
+		}catch (Exception e){
+			return -1;
+		}
+
 	}
 }
