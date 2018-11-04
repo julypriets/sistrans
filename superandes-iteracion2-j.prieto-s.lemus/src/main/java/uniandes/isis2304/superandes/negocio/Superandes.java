@@ -532,12 +532,12 @@ public class Superandes
 		int cantidadEnCarro = ps.darCantidadDeProducto(idCarrito, idProducto);
 		
 		if(idEstante >= 0){
-			if(ps.darCantidadDeProducto(idCarrito, idProducto) - cantidad == 0){
+			if(cantidadEnCarro - cantidad == 0){
 				ps.productoDevuelto(idProducto, idEstante);
 			}else if (cantidadEnCarro - cantidad < 0){
 				throw new Exception("Está tratando de remover una cantidad superior a la que posee del producto");
 			}
-			return ps.devolverProductoDelCarro(idCarrito, idProducto, cantidadEnCarro, idEstante);
+			return ps.devolverProductoDelCarro(idCarrito, idProducto, cantidad, idEstante);
 		}else{
 			throw new Exception("El producto nunca fue tomado de ningún estante por el cliente");
 		}
