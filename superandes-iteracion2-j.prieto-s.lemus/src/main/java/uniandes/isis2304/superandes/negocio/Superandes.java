@@ -502,7 +502,7 @@ public class Superandes
 			throw new Exception("No hay existencias del producto en el estante: " + idEstante);
 		}
 
-		productosRecogidos.put(p.getCodigoBarras(), idEstante);
+		ps.productoTomado(p.getCodigoBarras(), idEstante);
 		return ps.insertarProductoAlCarro(idCarrito, p.getCodigoBarras(), cantidad, idEstante);
 
 	}
@@ -527,15 +527,20 @@ public class Superandes
 			throw new Exception("El producto que se está tratando de remover no se encuentra en el carro de compras");
 		}
 		String idProducto = producto.getCodigoBarras();
-		long idEstante = productosRecogidos.get(idProducto);
+		
+		long idEstante = ps.productoFueTomadoDe(idProducto);
 		int cantidadEnCarro = ps.darCantidadDeProducto(idCarrito, idProducto);
-
-		if(ps.darCantidadDeProducto(idCarrito, idProducto) - cantidad == 0){
-			productosRecogidos.remove(idProducto);
-		}else if (cantidadEnCarro - cantidad < 0){
-			throw new Exception("Está tratando de remover una cantidad superior a la que posee del producto");
+		
+		if(idEstante >= 0){
+			if(ps.darCantidadDeProducto(idCarrito, idProducto) - cantidad == 0){
+				ps.productoDevuelto(idProducto, idEstante);
+			}else if (cantidadEnCarro - cantidad < 0){
+				throw new Exception("Está tratando de remover una cantidad superior a la que posee del producto");
+			}
+			return ps.devolverProductoDelCarro(idCarrito, idProducto, cantidadEnCarro, idEstante);
+		}else{
+			throw new Exception("El producto nunca fue tomado de ningún estante por el cliente");
 		}
-		return ps.devolverProductoDelCarro(idCarrito, idProducto, cantidadEnCarro, idEstante);
 	}
 
 	/**
@@ -565,6 +570,11 @@ public class Superandes
 		return ps.darProductosEnCarro(idCarrito);
 	}
 
+	
+	public int darCantidadDeProducto(long idCarrito, String idProducto){
+		return ps.darCantidadDeProducto(idCarrito, idProducto);
+	}
+	
 	/* ****************************************************************
 	 * 			Métodos para manejar las Facturas
 	 *****************************************************************/

@@ -1057,7 +1057,8 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     			resultado += "no hay productos en su carro de compras\n\n";
     		}else{
     			for(Producto p : ps) {
-    				resultado += p.toString() + "\n";
+    				int cantidad = superandes.darCantidadDeProducto(idCarrito, p.getCodigoBarras());
+    				resultado += "cantidad: " + cantidad + ", de : " + p.toString() + "\n";
     			}
     		}
     		resultado += "Proceso terminado";

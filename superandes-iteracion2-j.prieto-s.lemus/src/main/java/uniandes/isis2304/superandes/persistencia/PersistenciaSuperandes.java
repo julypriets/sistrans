@@ -13,6 +13,7 @@ import javax.jdo.JDODataStoreException;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
+import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import org.apache.log4j.Logger;
@@ -1491,5 +1492,41 @@ public class PersistenciaSuperandes {
 	 */
 	public long darCarroPorCliente(long idCliente){
 		return sqlCarrito.darCarroPorCliente(pmf.getPersistenceManager(), idCliente);
+	}
+	
+	public long productoTomado (String idProducto, long idEstante){
+		return sqlCarrito.productoTomado(pmf.getPersistenceManager(), idProducto, idEstante);
+	}
+	
+	public long productoDevuelto (String idProducto, long idEstante){
+		
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        tx.setSerializeRead(true);
+        try
+        {
+            tx.begin();
+            long tuplasEliminadas = sqlCarrito.productoDevuelto(pmf.getPersistenceManager(), idProducto, idEstante);
+            tx.commit();
+            return tuplasEliminadas;
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return -1;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+	}
+	
+	public long productoFueTomadoDe(String idProducto){
+		return sqlCarrito.productoFueTomadoDe(pmf.getPersistenceManager(), idProducto);
 	}
 }
