@@ -600,5 +600,12 @@ public class Superandes
 
 	public PersistenciaSuperandes getPersistenciaSuperandes(){
 		return ps;
-	}
+	} 
+	
+	/* ****************************************************************
+	 * 			Métodos para manejar las Ventas
+	 *****************************************************************/
+	
+
+	
 }
