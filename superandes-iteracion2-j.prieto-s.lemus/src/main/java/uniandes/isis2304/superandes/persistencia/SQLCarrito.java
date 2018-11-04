@@ -287,19 +287,24 @@ public class SQLCarrito {
 
 	}
 	
-	public long productoTomado (PersistenceManager pm, String idProducto, long idEstante){
-		Query q = pm.newQuery(SQL, "INSERT INTO TOMADO_DE (id_producto, id_estante) VALUES ( '" + idProducto+ "' , " + idEstante +" )");
+	public long productoTomado (PersistenceManager pm, long idCliente, String idProducto, long idEstante){
+		Query q = pm.newQuery(SQL, "INSERT INTO TOMADO_DE (id_cliente, id_producto, id_estante) VALUES ( " + idCliente +", '" + idProducto+ "' , " + idEstante +" )");
 		return (long) q.executeUnique();
 	}
 	
-	public long productoDevuelto (PersistenceManager pm, String idProducto, long idEstante){
-		Query q = pm.newQuery(SQL, "DELETE FROM TOMADO_DE WHERE id_estante = " + idEstante + " AND id_producto = " + "'" + idProducto + "'");
+	public long productoDevuelto (PersistenceManager pm, String idProducto, long idEstante, long idCliente){
+		Query q = pm.newQuery(SQL, "DELETE FROM TOMADO_DE WHERE id_estante = " + idEstante + " AND id_producto = " + "'" + idProducto + "' AND id_cliente = " +idCliente);
 		return (long) q.executeUnique();
 	}
 	
-	public long productoFueTomadoDe(PersistenceManager pm, String idProducto){
+	public long todosLosProductosDevueltos (PersistenceManager pm, long idCliente){
+		Query q = pm.newQuery(SQL, "DELETE FROM TOMADO_DE WHERE id_cliente = " + idCliente);
+		return (long) q.executeUnique();
+	}
+	
+	public long productoFueTomadoDe(PersistenceManager pm, String idProducto, long idCliente){
 		try{
-			Query q = pm.newQuery(SQL, "SELECT id_estante FROM TOMADO_DE WHERE id_producto = " + "'" + idProducto + "'");
+			Query q = pm.newQuery(SQL, "SELECT id_estante FROM TOMADO_DE WHERE id_producto = " + "'" + idProducto + "' AND id_cliente = " + idCliente);
 			q.setResultClass(Long.class);
 			return (long) q.executeUnique();
 		}catch(Exception e){

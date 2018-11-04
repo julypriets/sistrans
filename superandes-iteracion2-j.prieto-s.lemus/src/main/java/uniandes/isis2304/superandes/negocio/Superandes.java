@@ -493,7 +493,7 @@ public class Superandes
 	 * @param idEstante
 	 * @return Número de tuplas actualizadas
 	 */
-	public long insertarProductoAlCarro(long idCarrito, String nombreProducto, long cantidad, long idEstante) throws Exception{
+	public long insertarProductoAlCarro(long idCarrito, String nombreProducto, long cantidad, long idEstante, long idCliente) throws Exception{
 		Producto p = ps.darProductoPorNombreYEstante(nombreProducto, idEstante);
 		if(p == null){
 			throw new Exception("El producto ingresado o el estante no son correctos");
@@ -501,8 +501,10 @@ public class Superandes
 		if(ps.darCantidadProductoPorEstante(p.getCodigoBarras(), idEstante) == 0){
 			throw new Exception("No hay existencias del producto en el estante: " + idEstante);
 		}
-
-		ps.productoTomado(p.getCodigoBarras(), idEstante);
+		
+		if(ps.productoFueTomadoDe(p.getCodigoBarras(), idCliente) < 0){
+			ps.productoTomado(idCliente, p.getCodigoBarras(), idEstante);
+		}
 		return ps.insertarProductoAlCarro(idCarrito, p.getCodigoBarras(), cantidad, idEstante);
 
 	}
@@ -515,7 +517,7 @@ public class Superandes
 	 * @param cantidad
 	 * @return Número de tuplas actualizadas
 	 */
-	public long devolverProductoDelCarro(long idCarrito, String nombreProducto, long cantidad) throws Exception{
+	public long devolverProductoDelCarro(long idCarrito, String nombreProducto, long cantidad, long idCliente) throws Exception{
 		List<Producto> productos = ps.darProductosEnCarro(idCarrito);
 		Producto producto = null;
 		for(Producto p : productos){
@@ -528,15 +530,16 @@ public class Superandes
 		}
 		String idProducto = producto.getCodigoBarras();
 		
-		long idEstante = ps.productoFueTomadoDe(idProducto);
+		long idEstante = ps.productoFueTomadoDe(idProducto, idCliente);
 		int cantidadEnCarro = ps.darCantidadDeProducto(idCarrito, idProducto);
 		
 		if(idEstante >= 0){
 			if(cantidadEnCarro - cantidad == 0){
-				ps.productoDevuelto(idProducto, idEstante);
+				ps.productoDevuelto(idProducto, idEstante, idCliente);
 			}else if (cantidadEnCarro - cantidad < 0){
 				throw new Exception("Está tratando de remover una cantidad superior a la que posee del producto");
 			}
+			
 			return ps.devolverProductoDelCarro(idCarrito, idProducto, cantidad, idEstante);
 		}else{
 			throw new Exception("El producto nunca fue tomado de ningún estante por el cliente");

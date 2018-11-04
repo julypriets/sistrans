@@ -815,12 +815,17 @@ public class InterfazSuperandes extends JFrame implements ActionListener
      */
     public void solicitarCarro(){
     	if(loggedClient != null){
-    		Carrito carroAsignado = superandes.solicitarCarro(loggedClient.getId());
-    		if(carroAsignado == null){
-    			JOptionPane.showMessageDialog(this, "No hay carros disponibles en este momento", "Alerta", JOptionPane.INFORMATION_MESSAGE);
+    		if(superandes.darCarroPorCliente(loggedClient.getId()) < 0){
+        		Carrito carroAsignado = superandes.solicitarCarro(loggedClient.getId());
+        		if(carroAsignado == null){
+        			JOptionPane.showMessageDialog(this, "No hay carros disponibles en este momento", "Alerta", JOptionPane.INFORMATION_MESSAGE);
+        		}else{
+        			JOptionPane.showMessageDialog(this, loggedClient.getNombre() + ", se le ha asignado el carro de compras con id: " + carroAsignado.getId(), "Carro Asignado", JOptionPane.INFORMATION_MESSAGE);
+        		}
     		}else{
-    			JOptionPane.showMessageDialog(this, loggedClient.getNombre() + ", se le ha asignado el carro de compras con id: " + carroAsignado.getId(), "Carro Asignado", JOptionPane.INFORMATION_MESSAGE);
+    			JOptionPane.showMessageDialog(this, "Ya tiene un carro de compras actualmente. Solo puede solicitar uno a la vez", "Error", JOptionPane.ERROR_MESSAGE);
     		}
+
     	}else{
     		JOptionPane.showMessageDialog(this, "Esta operación solo se puede realizar si ha iniciado sesión previamente", "Error", JOptionPane.ERROR_MESSAGE);
     	}
@@ -852,7 +857,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
             			int cantidadResp = Integer.parseInt(cantidad.getText());
                 		long idEstanteResp = Long.parseLong(idEstante.getText());
                 		
-                		superandes.insertarProductoAlCarro(idCarrito, nombreProductoResp, cantidadResp, idEstanteResp);
+                		superandes.insertarProductoAlCarro(idCarrito, nombreProductoResp, cantidadResp, idEstanteResp, loggedClient.getId());
                 		
                 		String resultado = "En insertarProductoAlCarro\n\n";
                 		resultado += "Se insertó exitosamente el producto: " + nombreProductoResp ;
@@ -902,7 +907,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
             			String nombreProductoResp = nombreProducto.getText();
             			int cantidadResp = Integer.parseInt(cantidad.getText());
                 		
-                		superandes.devolverProductoDelCarro(idCarrito, nombreProductoResp, cantidadResp);
+                		superandes.devolverProductoDelCarro(idCarrito, nombreProductoResp, cantidadResp, loggedClient.getId());
                 		String resultado = "En devolverProductoDelCarro\n\n";
                 		resultado += "Se devolvió exitosamente el producto: " + nombreProductoResp ;
             			resultado += "\n Operación terminada";
@@ -978,7 +983,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
                 				"precio total : ", fPrecioTotal,
                 				"dinero sobrante : ", fSobrante,
                 		};
-                		JOptionPane.showConfirmDialog(this, message, "Factura: ", JOptionPane.OK_CANCEL_OPTION);
+                		JOptionPane.showConfirmDialog(this, mensajeFactura, "Factura: ", JOptionPane.OK_CANCEL_OPTION);
                 		
             		}else {
             			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
@@ -1040,7 +1045,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 				resultado += c.toString() + "\n";
 			}
 		}
-		resultado += "Proceso terminado";
+		resultado += "\n\nProceso terminado";
 		panelDatos.actualizarInterfaz(resultado);
     }
     
@@ -1061,7 +1066,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     				resultado += "cantidad: " + cantidad + ", de : " + p.toString() + "\n";
     			}
     		}
-    		resultado += "Proceso terminado";
+    		resultado += "\n\nProceso terminado";
     		panelDatos.actualizarInterfaz(resultado);
     	}else{
     		JOptionPane.showMessageDialog(this, "Esta operación solo se puede realizar si ha iniciado sesión previamente", "Error", JOptionPane.ERROR_MESSAGE);

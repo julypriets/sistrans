@@ -1203,6 +1203,49 @@ public class PersistenciaSuperandes {
 	}
 	
 	/**
+	 * Método para manualmente desocupar un carro (solo se puede utilizar
+	 * si el carro no tiene producto)
+	 * @param idCliente
+	 * @return El carro desocupado
+	 */
+	public Carrito desocuparCarro(long idCliente){
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        tx.setSerializeRead(true);
+        Carrito carroDesocupado = null;
+        try
+        {
+            tx.begin();
+            
+            Carrito c = sqlCarrito.darCarroPorIdCliente(pm, idCliente);
+            
+            if(c != null){
+                long tuplasInsertadas = sqlCarrito.desocuparCarro(pm, c.getId());
+                carroDesocupado = sqlCarrito.darCarroPorId(pm, c.getId());
+            }
+
+     
+            tx.commit();
+            
+            return carroDesocupado;
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return null;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+	}
+	
+	/**
 	 * Método que se encarga de actualizar los estados del carro y el estante
 	 * cuando un cliente adiciona un producto a su carro del estante respectivo
 	 * @param idCarrito
@@ -1380,10 +1423,12 @@ public class PersistenciaSuperandes {
             long id = nextval();
             List<Producto> productos = sqlCarrito.darProductosEnCarro(pm, idCarrito);
             double precioTotal = calcularCostoTotalCarro(productos, idCarrito);
-            Timestamp fecha = (Timestamp) new Date();
+            Date curr = new Date();
+            Timestamp fecha = new Timestamp(curr.getTime());
             sqlFactura.registarFactura(pm, id, fecha, precioTotal, idCajero, idCliente);
             sqlCarrito.eliminarProductosDelCarro(pm, idCarrito);
-            sqlCarrito.desocuparCarro(pm, id);
+            sqlCarrito.todosLosProductosDevueltos(pm, idCliente);
+            sqlCarrito.desocuparCarro(pm, idCarrito);
             
             tx.commit();
             
@@ -1494,11 +1539,11 @@ public class PersistenciaSuperandes {
 		return sqlCarrito.darCarroPorCliente(pmf.getPersistenceManager(), idCliente);
 	}
 	
-	public long productoTomado (String idProducto, long idEstante){
-		return sqlCarrito.productoTomado(pmf.getPersistenceManager(), idProducto, idEstante);
+	public long productoTomado (long idCliente, String idProducto, long idEstante){
+		return sqlCarrito.productoTomado(pmf.getPersistenceManager(), idCliente, idProducto, idEstante);
 	}
 	
-	public long productoDevuelto (String idProducto, long idEstante){
+	public long productoDevuelto (String idProducto, long idEstante, long idCliente){
 		
 		PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx=pm.currentTransaction();
@@ -1506,7 +1551,7 @@ public class PersistenciaSuperandes {
         try
         {
             tx.begin();
-            long tuplasEliminadas = sqlCarrito.productoDevuelto(pmf.getPersistenceManager(), idProducto, idEstante);
+            long tuplasEliminadas = sqlCarrito.productoDevuelto(pm, idProducto, idEstante, idCliente);
             tx.commit();
             return tuplasEliminadas;
         }
@@ -1526,7 +1571,34 @@ public class PersistenciaSuperandes {
         }
 	}
 	
-	public long productoFueTomadoDe(String idProducto){
-		return sqlCarrito.productoFueTomadoDe(pmf.getPersistenceManager(), idProducto);
+	public long todosLosProductosDevueltos (long idCliente){
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        tx.setSerializeRead(true);
+        try
+        {
+            tx.begin();
+            long tuplasEliminadas = sqlCarrito.todosLosProductosDevueltos(pm, idCliente);
+            tx.commit();
+            return tuplasEliminadas;
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return -1;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+	}
+	
+	public long productoFueTomadoDe(String idProducto, long idCliente){
+		return sqlCarrito.productoFueTomadoDe(pmf.getPersistenceManager(), idProducto, idCliente);
 	}
 }

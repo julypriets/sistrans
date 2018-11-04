@@ -57,5 +57,6 @@ public class Prueba {
 		
 		System.out.println(superandes.darCarroPorCliente((long)835));
 		System.out.println(superandes.getPersistenciaSuperandes().darCantidadDeProducto(1584, "RO094VSGI981U"));
+		superandes.getPersistenciaSuperandes().desocuparCarro(834);
 	}
 }
