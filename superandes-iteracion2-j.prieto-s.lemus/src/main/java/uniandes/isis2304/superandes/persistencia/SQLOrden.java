@@ -5,7 +5,10 @@ import uniandes.isis2304.superandes.negocio.Orden;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
@@ -72,16 +75,35 @@ public class SQLOrden {
 	 * @return - El número de tuplas modificadas
 	 */
 	public long[] registrarLlegadaOrden( PersistenceManager pm, long idOrden, Timestamp fechaLlegada, String estado, String idProveedor, double calificacion){
+		//Registro la orden
 		Query q1 = pm.newQuery(SQL,"UPDATE " + ps.darTablaOrden() + " SET fecha_llegada = ?, estado = ? WHERE id = ?");
 		q1.setParameters(fechaLlegada, estado, idOrden);
 		
+		//Califico al proveedor
 		Query q2 = pm.newQuery(SQL, "UPDATE " + ps.darTablaOrdenProveedor() + " SET calificacion = ? WHERE id_orden = ? AND id_proveedor = ?"); 
 		q2.setParameters(calificacion, idOrden, idProveedor);
 		
+		//Selecciono los ids y la cantidad de productos 
+		String sql = "SELECT producto_orden.id_producto, cantidad FROM " + ps.darTablaProductoOrden() + " WHERE orden_id = ?";
+		Query q3 = pm.newQuery(SQL, sql);
+		q3.setParameters(idOrden);
+		
+		//Lista con codigos de producto y cantidad
+		List<Object> list = q3.executeList();
+		
+		for(Object tupla : list){
+			Object[] datos = (Object[]) tupla;
+			long idP = ((BigDecimal)datos[0]).longValue();
+			int cant = ((BigDecimal)datos[1]).intValue();
+			Query q4 = pm.newQuery(SQL, "UPDATE " + ps.darTablaInventario() + " SET cantidad = ? WHERE id_producto = ?" );
+			q4.setParameters(cant, idP);
+		}
+		
 		long lq1 = (long) q1.executeUnique();
 		long lq2 = (long) q2.executeUnique();
+		long lq3 = (long) q3.executeUnique();
 		
-		return new long[] {lq1, lq2};
+		return new long[] {lq1, lq2, lq3};
 	}
 	
 }
