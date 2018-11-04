@@ -155,15 +155,28 @@ public class SQLCarrito {
 	}
 	
 	/**
-	 * Inserta un producto y su cantidad respectiva en el carro de compras
+	 * Adiciona un producto y su cantidad respectiva en el carro de compras
 	 * @param pm - Persistence Manager
 	 * @param idCarrito
 	 * @param idProducto
 	 * @param cantidadAnadida
 	 * @return El número de tuplas actualizadas
 	 */
-	public long insertarProductoAlCarro(PersistenceManager pm, long idCarrito, String idProducto, long cantidadAnadida){
+	public long adicionarCantidadDeProductoAlCarro(PersistenceManager pm, long idCarrito, String idProducto, long cantidadAnadida){
 		Query q = pm.newQuery(SQL, "UPDATE CARRITO_PRODUCTO SET cantidad = cantidad + " + cantidadAnadida + " WHERE id_carrito = "+ idCarrito +" AND id_producto = " + "'"+ idProducto+"'");
+		return (long) q.executeUnique();
+	}
+	
+	/**
+	 * Inserta un nuevo producto al carro de compras y su cantidad respectiva
+	 * @param pm - Persistence Manager
+	 * @param idCarrito
+	 * @param idProducto
+	 * @return El número de tuplas insertadas
+	 */
+	public long insertarProductoAlCarro(PersistenceManager pm, long idCarrito, String idProducto, long cantidad){
+		Query q = pm.newQuery(SQL, "INSERT INTO CARRITO_PRODUCTO (id_carrito, id_producto, cantidad) VALUES (" + idCarrito +", " + "?" + " , " + cantidad + " ) ");
+		q.setParameters(idProducto);
 		return (long) q.executeUnique();
 	}
 	
@@ -203,9 +216,14 @@ public class SQLCarrito {
 	 * @return La cantidad del producto del carro respectivo
 	 */
 	public int darCantidadDeProducto (PersistenceManager pm, long idCarrito, String idProducto){
-		Query q = pm.newQuery(SQL, "SELECT cantidad FROM CARRITO_PRODUCTO WHERE id_carrito = " + idCarrito + " AND id_producto = " + "'"+ idProducto+"'");
-		q.setResultClass(Integer.class);
-		return (int) q.executeUnique();
+		try{
+			Query q = pm.newQuery(SQL, "SELECT cantidad FROM CARRITO_PRODUCTO WHERE id_carrito = " + idCarrito + " AND id_producto = " + "'"+ idProducto+"'");
+			q.setResultClass(Integer.class);
+			return (int) q.executeUnique();
+		}catch(Exception e){
+			return -1;
+		}
+
 	}
 	
 	/**

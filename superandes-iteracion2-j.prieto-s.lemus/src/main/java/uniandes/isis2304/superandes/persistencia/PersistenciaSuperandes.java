@@ -1218,10 +1218,13 @@ public class PersistenciaSuperandes {
         try
         {
             tx.begin();
-            
-            sqlSurtido.removerProductoDeEstante(pm, idEstante, idProducto, cantidad);
-            long tuplasInsertadas = sqlCarrito.insertarProductoAlCarro(pm, idCarrito, idProducto, cantidad);
-            
+            long tuplasInsertadas = 0;
+            long tuplasRemovidas = sqlSurtido.removerProductoDeEstante(pm, idEstante, idProducto, cantidad);
+            if(sqlCarrito.darCantidadDeProducto(pm, idCarrito, idProducto) < 0){
+            	tuplasInsertadas = sqlCarrito.insertarProductoAlCarro(pm, idCarrito, idProducto, cantidad);
+            }else{
+            	tuplasInsertadas = sqlCarrito.adicionarCantidadDeProductoAlCarro(pm, idCarrito, idProducto, cantidad);
+            }
             tx.commit();
             
             return tuplasInsertadas;

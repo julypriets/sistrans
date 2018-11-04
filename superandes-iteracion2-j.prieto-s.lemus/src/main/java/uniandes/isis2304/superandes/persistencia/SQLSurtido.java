@@ -64,7 +64,7 @@ public class SQLSurtido {
 	 */
 	public long removerProductoDeEstante(PersistenceManager pm, long idEstante, String idProducto, long cantidadARemover){
 		Query q = pm.newQuery(SQL, "UPDATE SURTIDO SET cantidad = cantidad - " + cantidadARemover + " WHERE id_estante = "+ idEstante +" AND id_producto = " + "'"+ idProducto+"'");
-		return (long) q.executeUnique();
+		return (long) q.execute();
 	}
 	
 	/**
@@ -102,15 +102,20 @@ public class SQLSurtido {
 	}
 	
 	public int darCantidadProductoPorEstante(PersistenceManager pm, String idProducto, long idEstante){
-		String select = "SELECT cantidad " +
-				"FROM SURTIDO s, Producto p " +
-				"WHERE " +
-				    "s.id_producto = p.codigo_barras AND " +
-				    "s.id_Estante = " + idEstante +" AND " +
-				    "p.codigo_barras = ?";
-		Query q = pm.newQuery(SQL, select);
-		q.setResultClass(Integer.class);
-		q.setParameters(idProducto);
-		return (int) q.executeUnique();
+		try{
+			String select = "SELECT cantidad " +
+					"FROM SURTIDO s, Producto p " +
+					"WHERE " +
+					    "s.id_producto = p.codigo_barras AND " +
+					    "s.id_Estante = " + idEstante +" AND " +
+					    "p.codigo_barras = ?";
+			Query q = pm.newQuery(SQL, select);
+			q.setResultClass(Integer.class);
+			q.setParameters(idProducto);
+			return (int) q.executeUnique();
+		}catch(Exception e){
+			return -1;
+		}
+
 	}
 }

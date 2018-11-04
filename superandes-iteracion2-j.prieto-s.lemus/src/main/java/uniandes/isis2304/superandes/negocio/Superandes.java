@@ -588,5 +588,7 @@ public class Superandes
 		return f;
 	}
 
-
+	public PersistenciaSuperandes getPersistenciaSuperandes(){
+		return ps;
+	}
 }
