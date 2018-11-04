@@ -69,6 +69,7 @@ import uniandes.isis2304.superandes.negocio.VOProducto;
 import uniandes.isis2304.superandes.negocio.VOPromocion;
 import uniandes.isis2304.superandes.negocio.VOProveedor;
 import uniandes.isis2304.superandes.negocio.VOSucursal;
+import uniandes.isis2304.superandes.tareasTemporales.RecoleccionProductosAbandonados;
 import uniandes.isis2304.superandes.tareasTemporales.VerificacionPromocion;
 
 
@@ -166,6 +167,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
         add (new JLabel (new ImageIcon (path)), BorderLayout.NORTH );          
         add( panelDatos, BorderLayout.CENTER );
         //VerificacionPromocion.intervaloLimpiezaPromocion(this, 10000);
+        RecoleccionProductosAbandonados.intervaloRecoleccionProductosAbandonados(this, 10000);
     }
     
 	/* ****************************************************************
