@@ -46,7 +46,7 @@ public class SQLOrdenProveedor {
 	 * @param calificacion
 	 * @return
 	 */
-	public long registrarOrdenProveedor(PersistenceManager pm, long idOrden, long idProveedor, double calificacion) {
+	public long registrarOrdenProveedor(PersistenceManager pm, long idOrden, String idProveedor, double calificacion) {
 		Query q = pm.newQuery(SQL, "INSERT INTO " + ps.darTablaOrdenProveedor() + " VALUES (?, ?, ?)");
 		q.setParameters(idOrden, idProveedor, calificacion);
 		return (long) q.executeUnique();

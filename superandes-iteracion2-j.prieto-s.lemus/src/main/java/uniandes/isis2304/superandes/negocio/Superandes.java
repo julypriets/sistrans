@@ -26,7 +26,7 @@ public class Superandes
 	 * Logger para escribir la traza de la ejecución
 	 */
 	private static Logger log = Logger.getLogger(Superandes.class.getName());
-	
+
 	/* ****************************************************************
 	 * 			Atributos
 	 *****************************************************************/
@@ -34,7 +34,7 @@ public class Superandes
 	 * El manejador de persistencia
 	 */
 	private PersistenciaSuperandes ps;
-	
+
 	/**
 	 * Estructura de datos donde se guarda la información
 	 * del estante del cuál el cliente recogió un producto para
@@ -42,7 +42,7 @@ public class Superandes
 	 * y el valor es el id del estante
 	 */
 	private HashMap<String, Long> productosRecogidos;
-	
+
 	/* ****************************************************************
 	 * 			Métodos
 	 *****************************************************************/
@@ -54,7 +54,7 @@ public class Superandes
 		productosRecogidos = new HashMap<>();
 		ps = PersistenciaSuperandes.getInstance ();
 	}
-	
+
 	/**
 	 * El constructor qye recibe los nombres de las tablas en tableConfig
 	 * @param tableConfig - Objeto Json con los nombres de las tablas y de la unidad de persistencia
@@ -64,7 +64,7 @@ public class Superandes
 		productosRecogidos = new HashMap<>();
 		ps = PersistenciaSuperandes.getInstance (tableConfig);
 	}
-	
+
 	/**
 	 * Cierra la conexión con la base de datos (Unidad de persistencia)
 	 */
@@ -72,8 +72,8 @@ public class Superandes
 	{
 		ps.cerrarUnidadPersistencia ();
 	}
-	
-	
+
+
 	/*
 	 * REQUERIMIENTOS FUNCIONALES
 	 * 
@@ -115,16 +115,16 @@ public class Superandes
 	 */
 	public long [] limpiarParranderos ()
 	{
-        log.info ("Limpiando la BD de Superandes");
-        long [] borrrados = ps.limpiarSuperandes();	
-        log.info ("Limpiando la BD de Superanes: Listo!");
-        return borrrados;
+		log.info ("Limpiando la BD de Superandes");
+		long [] borrrados = ps.limpiarSuperandes();	
+		log.info ("Limpiando la BD de Superanes: Listo!");
+		return borrrados;
 	}
-	
+
 	/* ****************************************************************
 	 * 			Métodos para manejar las PRODUCTOS
 	 *****************************************************************/
-	
+
 	/**
 	 * (RF1)
 	 * @param nombre
@@ -146,22 +146,22 @@ public class Superandes
 	public Producto registrarProducto(String nombre, String marca, Double precioUnitario, String presentacion,
 			Double precioUnidadMedida, String unidadMedida, String empacado, String codigoBarras, Integer nivelReorden,
 			Integer existencias, Long idCategoria, Long idSucursal, String fechaVencimiento) 
-			throws Exception
+					throws Exception
 	{
 		if(precioUnitario < 0 || precioUnidadMedida < 0 || nivelReorden < 0 || existencias < 0){
 			throw new Exception("Los valores del precio, existencias o nivel de reorden son inválidos");
 		}
-		
+
 		if(ps.darSucursalPorId(idSucursal) == null){
 			throw new Exception("El id de la sucursal ingresado no es válido");
 		}
-		
+
 		if(ps.darCategoriaPorId(idCategoria) == null){
 			throw new Exception("El id de la categoría ingresado no es válido");
 		}
-		
+
 		Timestamp fechaVencimientoFormateada = (Timestamp) new Date();
-		
+
 		try{
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 			Date parsedDate = dateFormat.parse(fechaVencimiento);
@@ -169,7 +169,7 @@ public class Superandes
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		log.info("Adicionando el producto: " + nombre + "con código de barras: " + codigoBarras);
 		Producto p = ps.registrarProducto(nombre, marca, precioUnitario, presentacion, precioUnidadMedida, unidadMedida, empacado, codigoBarras, nivelReorden, existencias, idCategoria, idSucursal, fechaVencimientoFormateada);
 		log.info("Adicionando el producto: " + p.toString());
@@ -191,7 +191,7 @@ public class Superandes
 	public Producto darProductoPorId(String idProducto){
 		return ps.darProductoPorId(idProducto);
 	}
-	
+
 	public List<Producto> darProductosPorNombre(String nombre){
 		return ps.darProductosPorNombre(nombre);
 	}
@@ -199,7 +199,7 @@ public class Superandes
 	/* ****************************************************************
 	 * 			Métodos para manejar las PROMOCIONES
 	 *****************************************************************/
-	
+
 	/**
 	 * (RF7) Se encarga de adicionar una promoción según los valores dados
 	 * y de retornar la representación en Objeto respectiva
@@ -225,30 +225,30 @@ public class Superandes
 		if(cantidad1 < 0 || cantidad2 < 0){
 			throw new Exception("Los valores ingresados para las cantidades son inválidas");
 		}
-		
+
 		Timestamp fechaInicioFormateada = (Timestamp) new Date();
 		Timestamp fechaFinFormateada = (Timestamp) new Date();
-		
+
 		try{
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 			Date parsedDateIni = dateFormat.parse(fechaInicio);
 			fechaInicioFormateada = new Timestamp(parsedDateIni.getTime());
-			
+
 			Date parsedDateFin = dateFormat.parse(fechaFin);
 			fechaFinFormateada = new Timestamp(parsedDateFin.getTime());
-			
+
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		// falta verificar los tipos
-		
+
 		log.info("Adicionando la promoción: " + tipo + "con descuento: " + descuento);
 		Promocion p = ps.registrarPromocion(tipo, precio, fechaInicioFormateada, fechaFinFormateada, idSucursal, idProducto, cantidad1, cantidad2, descuento);
 		log.info("Adicionando el producto: " + p.toString());
 		return p;
 	}
-	
+
 	/**
 	 * (RF8) Finaliza las promociones que ya se vencieron o cuyos productos
 	 * asociados hayan agotado sus existencias
@@ -258,7 +258,7 @@ public class Superandes
 	public long finalizarPromocion(Date fechaActual) {
 		return ps.finalizarPromocion(fechaActual);
 	}
-	
+
 	/**
 	 * (RFC2)
 	 * @return las 20 promociones con más compras
@@ -266,27 +266,27 @@ public class Superandes
 	public List<ComprasPorPromocion> dar20PromocionesMasPopulares(){
 		return ps.dar20PromocionesMasPopulares();
 	}
-	
+
 	/* ****************************************************************
 	 * 			Métodos para manejar los PROVEEDORES
 	 *****************************************************************/
-	
+
 	public Proveedor registrarProveedor(String nit, String nombre, double calificacion) throws Exception{
 		if (calificacion < 0 || calificacion > 5) {
 			throw new Exception("La calificación ingresada no es válida");
 		}
-		
+
 		log.info("Adicionando el proveedor: " + nombre + "con nit: " + nit);
 		Proveedor p = ps.registrarProveedor(nit, nombre, calificacion);
 		log.info("Adicionando el proveedor: " + p.toString());
 		return p;
 	}
-	
-	
+
+
 	/* ****************************************************************
 	 * 			Métodos para manejar los CLIENTES
 	 *****************************************************************/
-	
+
 	/**
 	 * (RF3) Se encarga de adicionar una empresa según los valores dados
 	 * y de retornar la representación en Objeto respectiva
@@ -303,7 +303,7 @@ public class Superandes
 		log.info("Adicionando la empresa: " + e.toString());
 		return e;
 	} 
-	
+
 	/**
 	 * (RF3) Se encarga de adicionar una persona natural según los valores dados
 	 * y de retornar la representación en Objeto respectiva
@@ -319,7 +319,7 @@ public class Superandes
 		log.info("Adicionando la persona: " + p.toString());
 		return p;
 	} 
-	
+
 	/**
 	 * Retorna todos los clientes existentes
 	 * @return
@@ -327,7 +327,7 @@ public class Superandes
 	public List<Cliente> darClientes(){
 		return ps.darClientes();
 	}
-	
+
 	/**
 	 * 
 	 * @param identificacion
@@ -336,7 +336,7 @@ public class Superandes
 	public Cliente darClientePersonaPorId(long identificacion){
 		return ps.darClientePersonaPorId(identificacion);
 	}
-	
+
 	/**
 	 * 
 	 * @param nit
@@ -345,11 +345,11 @@ public class Superandes
 	public Cliente darClienteEmpresaPorId(long nit){
 		return ps.darClienteEmpresaPorId(nit);
 	}
-	
+
 	/* ****************************************************************
 	 * 			Métodos para manejar las SUCURSALES
 	 *****************************************************************/
-	
+
 	/**
 	 * (RF4) Se encarga de adicionar una sucursal según los valores dados
 	 * y de retornar la representación en Objeto respectiva
@@ -364,11 +364,11 @@ public class Superandes
 		log.info("Adicionando la sucursal: " + s.toString());
 		return s;
 	}
-	
+
 	/* ****************************************************************
 	 * 			Métodos para manejar las BODEGAS
 	 *****************************************************************/
-	
+
 	/**
 	 * (RF5) Se encarga de adicionar una bodega a una sucursal según los valores dados
 	 * y de retornar la representación en Objeto respectiva
@@ -379,25 +379,25 @@ public class Superandes
 	 * @return
 	 */
 	public Bodega registrarBodega(long idCategoria, double capacidadPeso, double capacidadVolumen, long idSucursal) throws Exception{
-		
+
 		if(ps.darSucursalPorId(idSucursal) == null){
 			throw new Exception("El id de la sucursal ingresado no es válido");
 		}
-		
+
 		if(ps.darCategoriaPorId(idCategoria) == null){
 			throw new Exception("El id de la categoría ingresado no es válido");
 		}
-		
+
 		log.info("Adicionando una bodega de categoría: " + idCategoria + "en la sucursal: " + idSucursal);
 		Bodega b = ps.registrarBodega(idCategoria, capacidadPeso, capacidadVolumen, idSucursal);
 		log.info("Adicionando la bodega: " + b.toString());
 		return b;
 	}
-	
+
 	/* ****************************************************************
 	 * 			Métodos para manejar los ESTANTES
 	 *****************************************************************/
-	
+
 	/**
 	 * (RF6) Se encarga de adicionar una bodega a una sucursal según los valores dados
 	 * y de retornar la representación en Objeto respectiva
@@ -409,25 +409,37 @@ public class Superandes
 	 * @throws Exception
 	 */
 	public Estante registrarEstante(long idCategoria, double capacidadPeso, double capacidadVolumen, long idSucursal) throws Exception{
-		
+
 		if(ps.darSucursalPorId(idSucursal) == null){
 			throw new Exception("El id de la sucursal ingresado no es válido");
 		}
-		
+
 		if(ps.darCategoriaPorId(idCategoria) == null){
 			throw new Exception("El id de la categoría ingresado no es válido");
 		}
-		
+
 		log.info("Adicionando un estante de categoría: " + idCategoria + "en la sucursal: " + idSucursal);
 		Estante e = ps.registrarEstante(idCategoria, capacidadPeso, capacidadVolumen, idSucursal);
 		log.info("Adicionando la bodega: " + e.toString());
 		return e;
 	}
 	
+
+	/* ****************************************************************
+	 * 			Métodos para manejar las Ordenes
+	 *****************************************************************/
+	
+	public long[] registrarLlegadaOrden(long idOrden, Timestamp fechaLlegada, String estado, String idProveedor, double calificacion){
+		log.info("Registrando la llegada de la orden: " + idOrden);
+		long[] cambios = ps.registrarLlegadaOrden(idOrden, fechaLlegada, estado, idProveedor, calificacion);
+		return cambios;
+		
+	}
+
 	/* ****************************************************************
 	 * 			Métodos para manejar los CARRITOS
 	 *****************************************************************/
-	
+
 	/**
 	 * (RF12) Método que se encarga de asignar un carro de compras desocupado a un cliente.
 	 * Retorna null si no hay algún carro desocupado
@@ -437,7 +449,7 @@ public class Superandes
 	public Carrito solicitarCarro(long idCliente){
 		return ps.solicitarCarro(idCliente);
 	}
-	
+
 	/**
 	 * (RF16) Método que se encarga de actualizar el estado de un carro de compras
 	 * si su dueño lo abandona. Retorna null si el cliente no tenía un carro previamente
@@ -447,7 +459,7 @@ public class Superandes
 	public Carrito abandonarCarro(long idCliente){
 		return ps.abandonarCarro(idCliente);
 	}
-	
+
 	/**
 	 * 
 	 * @return Todos los carros registrados
@@ -455,7 +467,7 @@ public class Superandes
 	public List<Carrito> darCarros(){
 		return ps.darCarros();
 	}
-	
+
 	/**
 	 * 
 	 * @return Una colección de todos los carros desocupados
@@ -463,7 +475,7 @@ public class Superandes
 	public List<Carrito> darCarrosDesocupados(){
 		return ps.darCarrosDesocupados();
 	}
-	
+
 	/**
 	 * 
 	 * @return Una colección de todos los carros abandonados
@@ -471,7 +483,7 @@ public class Superandes
 	public List<Carrito> darCarrosAbandonados(){
 		return ps.darCarrosAbandonados();
 	}
-	
+
 	/**
 	 * (RF13) Método que se encarga de insertar un producto al carro
 	 * y actualizar el estado del estante respectivo
@@ -489,12 +501,12 @@ public class Superandes
 		if(ps.darCantidadProductoPorEstante(p.getCodigoBarras(), idEstante) == 0){
 			throw new Exception("No hay existencias del producto en el estante: " + idEstante);
 		}
-		
+
 		productosRecogidos.put(p.getCodigoBarras(), idEstante);
 		return ps.insertarProductoAlCarro(idCarrito, p.getCodigoBarras(), cantidad, idEstante);
-		
+
 	}
-	
+
 	/**
 	 * (RF14) Método que se encarga de devolver un producto del carro
 	 * y actualizar el estado del estante respectivo
@@ -517,7 +529,7 @@ public class Superandes
 		String idProducto = producto.getCodigoBarras();
 		long idEstante = productosRecogidos.get(idProducto);
 		int cantidadEnCarro = ps.darCantidadDeProducto(idCarrito, idProducto);
-		
+
 		if(ps.darCantidadDeProducto(idCarrito, idProducto) - cantidad == 0){
 			productosRecogidos.remove(idProducto);
 		}else if (cantidadEnCarro - cantidad < 0){
@@ -525,7 +537,7 @@ public class Superandes
 		}
 		return ps.devolverProductoDelCarro(idCarrito, idProducto, cantidadEnCarro, idEstante);
 	}
-	
+
 	/**
 	 * (RF17) Método utilizado para identificar los carros de compra abandonados,
 	 * desocupar sus productos en los estantes respectivos, y volverlos disponibles 
@@ -534,7 +546,7 @@ public class Superandes
 	public void  recolectarProductosAbandonados(){
 		ps.recolectarProductosAbandonados();
 	}
-	
+
 	/**
 	 * 
 	 * @param idCliente
@@ -543,7 +555,7 @@ public class Superandes
 	public long darCarroPorCliente(long idCliente){
 		return ps.darCarroPorCliente(idCliente);
 	}
-	
+
 	/**
 	 * 
 	 * @param idCarrito
@@ -552,7 +564,7 @@ public class Superandes
 	public List<Producto> darProductosEnCarro(long idCarrito){
 		return ps.darProductosEnCarro(idCarrito);
 	}
-	
+
 	/* ****************************************************************
 	 * 			Métodos para manejar las Facturas
 	 *****************************************************************/
@@ -575,6 +587,6 @@ public class Superandes
 		f.setSobrante(sobrante);
 		return f;
 	}
-	
-	
+
+
 }

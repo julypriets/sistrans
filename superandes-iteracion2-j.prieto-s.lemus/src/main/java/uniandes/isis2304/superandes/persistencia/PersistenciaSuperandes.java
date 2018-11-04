@@ -2,6 +2,7 @@ package uniandes.isis2304.superandes.persistencia;
 
 
 import java.math.BigDecimal;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,19 +20,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import uniandes.isis2304.superandes.negocio.Bodega;
-import uniandes.isis2304.superandes.negocio.Carrito;
-import uniandes.isis2304.superandes.negocio.Categoria;
-import uniandes.isis2304.superandes.negocio.Cliente;
-import uniandes.isis2304.superandes.negocio.ComprasPorPromocion;
-import uniandes.isis2304.superandes.negocio.Empresa;
-import uniandes.isis2304.superandes.negocio.Estante;
-import uniandes.isis2304.superandes.negocio.Factura;
-import uniandes.isis2304.superandes.negocio.Persona;
-import uniandes.isis2304.superandes.negocio.Producto;
-import uniandes.isis2304.superandes.negocio.Promocion;
-import uniandes.isis2304.superandes.negocio.Proveedor;
-import uniandes.isis2304.superandes.negocio.Sucursal;
+import uniandes.isis2304.superandes.negocio.*;
 
 /**
  * Clase para el manejador de persistencia del proyecto Superandes
@@ -938,6 +927,7 @@ public class PersistenciaSuperandes {
 	}
 	
 	
+	
 	/* ****************************************************************
 	 * 			Métodos para manejar los PROVEEDORES
 	 *****************************************************************/
@@ -1090,6 +1080,37 @@ public class PersistenciaSuperandes {
 		return sqlCliente.darClienteEmpresaPorId(pmf.getPersistenceManager(), nit);
 	}
 	
+	/* ****************************************************************
+	 * 			Métodos para manejar las ORDENES
+	 *****************************************************************/
+
+
+	public long[] registrarLlegadaOrden(long idOrden, Timestamp fechaLlegada, String estado, String idProveedor, double calificacion){
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            long [] resp = sqlOrden.registrarLlegadaOrden(pm, idOrden, fechaLlegada, estado, idProveedor, calificacion);
+            tx.commit();
+            return resp;
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return null;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+		 
+	}
 	
 	/* ****************************************************************
 	 * 			Métodos para manejar los CARROS DE COMPRA

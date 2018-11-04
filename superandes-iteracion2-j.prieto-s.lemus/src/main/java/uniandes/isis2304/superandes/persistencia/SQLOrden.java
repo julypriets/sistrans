@@ -61,4 +61,27 @@ public class SQLOrden {
 		return (long) q.executeUnique();
 	}
 	
+	/**
+	 * Registra la llegada de una orden
+	 * @param pm - El manejador de persistencia
+	 * @param idOrden - identificador de la orden
+	 * @param fechaLlegada - fecha de llegada de la orden
+	 * @param estado - estado de la orden
+	 * @param idProveedor - identificador del proveedor que realizó la orden
+	 * @param calificacion - calificación del servicio
+	 * @return - El número de tuplas modificadas
+	 */
+	public long[] registrarLlegadaOrden( PersistenceManager pm, long idOrden, Timestamp fechaLlegada, String estado, String idProveedor, double calificacion){
+		Query q1 = pm.newQuery(SQL,"UPDATE " + ps.darTablaOrden() + " SET fecha_llegada = ?, estado = ? WHERE id = ?");
+		q1.setParameters(fechaLlegada, estado, idOrden);
+		
+		Query q2 = pm.newQuery(SQL, "UPDATE " + ps.darTablaOrdenProveedor() + " SET calificacion = ? WHERE id_orden = ? AND id_proveedor = ?"); 
+		q2.setParameters(calificacion, idOrden, idProveedor);
+		
+		long lq1 = (long) q1.executeUnique();
+		long lq2 = (long) q2.executeUnique();
+		
+		return new long[] {lq1, lq2};
+	}
+	
 }
