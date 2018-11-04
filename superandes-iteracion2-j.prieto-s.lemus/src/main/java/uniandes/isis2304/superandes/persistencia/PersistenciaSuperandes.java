@@ -608,7 +608,7 @@ public class PersistenciaSuperandes {
 	 * Adiciona entradas al log de la aplicación
 	 * @return El siguiente número del secuenciador de Superandes
 	 */
-	private long nextval ()
+	public long nextval ()
 	{
         long resp = sqlUtil.nextval (pmf.getPersistenceManager());
         log.trace ("Generando secuencia: " + resp);
@@ -1086,13 +1086,23 @@ public class PersistenciaSuperandes {
 	 *****************************************************************/
 
 
-	public long[] registrarLlegadaOrden(long idOrden, Timestamp fechaLlegada, String estado, String idProveedor, double calificacion){
+	/**
+	 * Registra la llegada de una orden
+	 * @param idOrden - identificador de la orden que lelga
+	 * @param idSucursal - identificador de la sucursal que recibe la orden
+	 * @param fechaLlegada - fecha de llegada de la orden
+	 * @param idProveedor - identificador del proveedor
+	 * @param calificacion - calificacion de la orden
+	 * @return
+	 */
+	public long[] registrarLlegadaOrden(long idOrden, long idSucursal, Timestamp fechaLlegada, String idProveedor, double calificacion){
 		PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx=pm.currentTransaction();
         try
         {
             tx.begin();
-            long [] resp = sqlOrden.registrarLlegadaOrden(pm, idOrden, fechaLlegada, estado, idProveedor, calificacion);
+            
+            long [] resp = sqlOrden.registrarLlegadaOrden(pm, idOrden, idSucursal, fechaLlegada, idProveedor, calificacion);
             tx.commit();
             return resp;
         }
@@ -1606,5 +1616,37 @@ public class PersistenciaSuperandes {
 	
 	public List<Estante> darEstantesPorCategoria(long idCategoria){
 		return sqlEstante.darEstantesPorCategoria(pmf.getPersistenceManager(), idCategoria);
+	}
+	
+	/* ****************************************************************
+	 * 			Métodos para manejar las VENTAS
+	 *****************************************************************/
+	
+	/**
+	 * Registra la venta de un producto
+	 * @param idFactura - identificador de una factura
+	 * @param idCajero - identificador del cajero que atiende la venta
+	 * @return - tuplas modificadas
+	 */
+	public long[] registrarVenta(long idFactura, long idCajero) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
+			long[] insertadas = sqlFactura.registrarVenta(pm, idFactura, idCajero);
+			tx.commit();
+			for(long insertada : insertadas) {
+				log.trace("Modificación de tuplas por ventas: ");
+			}
+			return insertadas;
+		} catch( Exception e) {
+			log.error("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		} finally {
+			if( tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
 }
