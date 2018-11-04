@@ -1351,12 +1351,14 @@ public class PersistenciaSuperandes {
             List<Carrito> abandonados = sqlCarrito.darCarrosAbandonados(pm);
             for(Carrito c : abandonados){
             	long idCarrito = c.getId();
+            	long idCliente = c.getIdCliente();
             	List<Producto> productos = sqlCarrito.darProductosEnCarro(pm, idCarrito);
             	for(Producto p : productos){
             		String idProducto = p.getCodigoBarras();
             		int cantidad = sqlCarrito.darCantidadDeProducto(pm, idCarrito, idProducto);
             		devolverProductoDelCarro(c.getId(), p.getCodigoBarras(), cantidad, elegirEstante(pm, p, cantidad));
             	}
+            	sqlCarrito.todosLosProductosDevueltos(pmf.getPersistenceManager(), idCliente);
             }
             sqlCarrito.desocuparCarros(pm);
             
@@ -1600,5 +1602,9 @@ public class PersistenciaSuperandes {
 	
 	public long productoFueTomadoDe(String idProducto, long idCliente){
 		return sqlCarrito.productoFueTomadoDe(pmf.getPersistenceManager(), idProducto, idCliente);
+	}
+	
+	public List<Estante> darEstantesPorCategoria(long idCategoria){
+		return sqlEstante.darEstantesPorCategoria(pmf.getPersistenceManager(), idCategoria);
 	}
 }

@@ -89,7 +89,7 @@ public class SQLEstante {
 	 * @return Una colección con todos los estantes de determinada categoría
 	 */
 	public List<Estante> darEstantesPorCategoria(PersistenceManager pm, long idCategoria){
-		Query q = pm.newQuery(SQL, "SELECT * FROM ESTANTE WHERE id_categoria = " + idCategoria);
+		Query q = pm.newQuery(SQL, "SELECT id, id_categoria idCategoria, capacidad_peso capacidadPeso, capacidad_volumen capacidadVolumen, id_sucursal idSucursal  FROM ESTANTE WHERE id_categoria = " + idCategoria);
 		q.setResultClass(Estante.class);
 		return (List<Estante>) q.executeList();
 	}

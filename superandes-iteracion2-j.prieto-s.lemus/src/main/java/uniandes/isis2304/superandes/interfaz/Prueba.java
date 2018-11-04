@@ -12,6 +12,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
 import uniandes.isis2304.superandes.negocio.Cliente;
+import uniandes.isis2304.superandes.negocio.Estante;
 import uniandes.isis2304.superandes.negocio.Superandes;
 
 public class Prueba {
@@ -57,6 +58,10 @@ public class Prueba {
 		
 		System.out.println(superandes.darCarroPorCliente((long)835));
 		System.out.println(superandes.getPersistenciaSuperandes().darCantidadDeProducto(1584, "RO094VSGI981U"));
-		superandes.getPersistenciaSuperandes().desocuparCarro(834);
+		//superandes.getPersistenciaSuperandes().desocuparCarro(834);
+		List<Estante> estantes = superandes.getPersistenciaSuperandes().darEstantesPorCategoria(6);
+		for(Estante e : estantes){
+			System.out.println(e.toString());
+		}
 	}
 }

@@ -28,12 +28,6 @@ public interface VOEstante {
 
 	/**
 	 * 
-	 * @return el nivel de abastecimiento del estante
-	 */
-	public Integer getNivelAbastecimiento();
-	
-	/**
-	 * 
 	 * @return el id de la sucursal
 	 */
 	public long getIdSucursal();

@@ -167,7 +167,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
         add (new JLabel (new ImageIcon (path)), BorderLayout.NORTH );          
         add( panelDatos, BorderLayout.CENTER );
         //VerificacionPromocion.intervaloLimpiezaPromocion(this, 10000);
-        RecoleccionProductosAbandonados.intervaloRecoleccionProductosAbandonados(this, 10000);
+        RecoleccionProductosAbandonados.intervaloRecoleccionProductosAbandonados(this, 40000);
     }
     
 	/* ****************************************************************
@@ -1031,6 +1031,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
      */
     public void recolectarProductosAbandonados(){
     	superandes.recolectarProductosAbandonados();
+    	panelDatos.actualizarInterfaz("Todos los carros abandonados han sido desocupados");
     }
     
     /**

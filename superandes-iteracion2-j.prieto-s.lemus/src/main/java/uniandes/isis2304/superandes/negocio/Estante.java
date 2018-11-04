@@ -23,11 +23,6 @@ public class Estante implements VOEstante{
 	private Double capacidadVolumen;
 	
 	/**
-	 * Nivel de abastecimiento del estante
-	 */
-	private Integer nivelAbastecimiento;
-	
-	/**
 	 * El id de la categoría de los productos del estante
 	 */
 	private long idCategoria;
@@ -36,23 +31,6 @@ public class Estante implements VOEstante{
 	 * El id de la sucursal al que pertenece
 	 */
 	private long idSucursal;
-
-	/**
-	 * Constructor del Estante con valores
-	 * @param id
-	 * @param capacidadPeso
-	 * @param capacidadVolumen
-	 * @param nivelAbastecimiento
-	 */
-	public Estante(long id, Double capacidadPeso, Double capacidadVolumen, Integer nivelAbastecimiento
-			, long idCategoria, long idSucursal) {
-		this.id = id;
-		this.capacidadPeso = capacidadPeso;
-		this.capacidadVolumen = capacidadVolumen;
-		this.nivelAbastecimiento = nivelAbastecimiento;
-		this.idCategoria = idCategoria;
-		this.idSucursal = idSucursal;
-	}
 	
 	/**
 	 * Constructor por defecto
@@ -61,7 +39,6 @@ public class Estante implements VOEstante{
 		this.id = 0;
 		this.capacidadPeso = 0.0;
 		this.capacidadVolumen = 0.0;
-		this.nivelAbastecimiento = 0;
 		this.idCategoria = 0;
 		this.idSucursal = 0;
 	}
@@ -130,22 +107,6 @@ public class Estante implements VOEstante{
 	public void setCapacidadVolumen(Double capacidadVolumen) {
 		this.capacidadVolumen = capacidadVolumen;
 	}
-
-	/**
-	 * 
-	 * @return el nivel de abastecimiento del estante
-	 */
-	public Integer getNivelAbastecimiento() {
-		return nivelAbastecimiento;
-	}
-
-	/**
-	 * 
-	 * @param nivelAbastecimiento - el nuevo nivel de abastecimiento del estante
-	 */
-	public void setNivelAbastecimiento(Integer nivelAbastecimiento) {
-		this.nivelAbastecimiento = nivelAbastecimiento;
-	}
 	
 	
 	/**
@@ -187,7 +148,7 @@ public class Estante implements VOEstante{
 	@Override
 	public String toString() {
 		return "Estante [id=" + id + ", capacidadPeso=" + capacidadPeso + ", capacidadVolumen=" + capacidadVolumen
-				+ ", nivelAbastecimiento=" + nivelAbastecimiento + "]";
+				+ "]";
 	}
 	
 	

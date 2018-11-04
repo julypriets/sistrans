@@ -112,7 +112,7 @@ public class SQLCarrito {
 	 * @return Una colección con los carros de compra con estado ABANDONADO
 	 */
 	public List<Carrito> darCarrosAbandonados(PersistenceManager pm){
-		Query q = pm.newQuery(SQL, "SELECT id, id_cliente idcliente, estado FROM CARRITO WHERE estado = 'ABANDONADO'");
+		Query q = pm.newQuery(SQL, "SELECT id, id_Cliente idcliente, estado FROM CARRITO WHERE estado = 'ABANDONADO'");
 		q.setResultClass(Carrito.class);
 		return (List<Carrito>) q.executeList();
 	}
@@ -138,7 +138,7 @@ public class SQLCarrito {
 	 * @return El número de tuplas acualizadas
 	 */
 	public long abandonarCarro(PersistenceManager pm, long id){
-		Query q = pm.newQuery(SQL, "UPDATE CARRITO SET id_cliente = NULL , estado = 'ABANDONADO' WHERE id = ?");
+		Query q = pm.newQuery(SQL, "UPDATE CARRITO SET estado = 'ABANDONADO' WHERE id = ?");
 		q.setParameters(id);
 		return (long) q.executeUnique();
 	}
@@ -232,7 +232,7 @@ public class SQLCarrito {
 	 * @return El número de tuplas actualizadas
 	 */
 	public long desocuparCarros(PersistenceManager pm){
-		Query q = pm.newQuery(SQL, "UPDATE CARRITO SET estado = 'DESOCUPADO' WHERE estado = 'ABANDONADO'");
+		Query q = pm.newQuery(SQL, "UPDATE CARRITO SET id_cliente = NULL, estado = 'DESOCUPADO' WHERE estado = 'ABANDONADO'");
 		return (long) q.executeUnique();
 	}
 	
