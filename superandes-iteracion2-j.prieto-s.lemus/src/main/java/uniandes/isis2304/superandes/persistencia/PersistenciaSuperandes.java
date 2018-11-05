@@ -1649,4 +1649,41 @@ public class PersistenciaSuperandes {
 			pm.close();
 		}
 	}
+	
+	
+	/* ****************************************************************
+	 * 			Métodos para CONSULTAS
+	 *****************************************************************/
+	
+	public void fechasMayorDemanda( int tipo, long idSucursal, String option) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
+			sqlFactura.fechaMayorDemanda(pm, tipo, idSucursal, option);
+			tx.commit();
+		} catch(Exception e) {
+			log.error("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		} finally {
+			if (tx.isActive()) {
+				tx.rollback();
+			} pm.close();
+		}
+	}
+	
+	public List<Timestamp> getFechasMayorD(){
+		return sqlFactura.getFechasMayorD();
+	}
+	
+	public List<Timestamp> getFechasMenorD(){
+		return sqlFactura.getFechasMenorD();
+	}
+	
+	public List<Integer> getCantidadMayorD(){
+		return sqlFactura.getCantidadMayorD();
+	}
+	
+	public List<Integer> getCantidadMenorD(){
+		return sqlFactura.getCantidadMenorD();
+	}
 }

@@ -131,6 +131,23 @@
 					"event": "darCarros"
 				}
 			]
+		},
+		{ "menuTitle": "Operación",
+			"options":
+			[
+				{
+					"label": "Fechas de mayor demanda",
+					"event": "fechasMayorDemanda"
+				},
+				{
+					"label": "Fechas de mayores ingresos",
+					"event": "fechasMayoresIngresos"
+				},
+				{
+					"label": "Fechas de menor demanda",
+					"event": "fechasMenorDemanda"
+				}
+			]
 		}
 	]
 }

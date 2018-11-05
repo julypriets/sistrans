@@ -633,4 +633,25 @@ public class Superandes
 	public long[] registrarVenta(long idFactura, long idCajero) {
 		return ps.registrarVenta(idFactura, idCajero);
 	}
+	
+	
+	public void fechasMayorDemanda(int tipo, long idSucursal, String option) {
+		ps.fechasMayorDemanda(tipo, idSucursal, option);
+	}
+	
+	public List<Timestamp> darFechasMayorD(){
+		return ps.getFechasMayorD();
+	}
+	
+	public List<Timestamp> getFechasMenorD(){
+		return ps.getFechasMenorD();
+	}
+	
+	public List<Integer> getCantidadMayorD(){
+		return ps.getCantidadMayorD();
+	}
+	
+	public List<Integer> getCantidadMenorD(){
+		return ps.getCantidadMenorD();
+	}
 }

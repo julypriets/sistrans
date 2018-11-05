@@ -1301,6 +1301,18 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 		}
 	}
 	
+	/* ****************************************************************
+	 * 			Operaciones CONSULTAS
+	 *****************************************************************/
+	
+	public void fechasMayorDemanda() {
+		try {
+			
+		}catch(Exception e) {
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
 	
 	/* ****************************************************************
 	 * 			Operaciones ORDENES

@@ -7,7 +7,10 @@ import javax.jdo.Query;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random; 
@@ -37,6 +40,7 @@ public class SQLFactura {
 	 */
 	private PersistenciaSuperandes ps;
 
+	private ComparatorFechas cf;
 
 	/* ----------------- Métodos ----------------------------------- */
 
@@ -256,4 +260,152 @@ public class SQLFactura {
 		}
 		return resp;
 	}
+	
+	//Atributos extra
+	private List<Timestamp> fechasMayorD = new ArrayList<>();
+	private List<Timestamp> fechasMenorD = new ArrayList<>();
+	private List<Integer> cantidadMayorD = new ArrayList<>();
+	private List<Integer> cantidadMenorD = new ArrayList<>();
+	private Timestamp fechaMayor;
+	private Timestamp fechaMenor;
+	
+	
+	public Timestamp fechaMayorDemanda(PersistenceManager pm, int tipo, long idSucursal, String option){
+		
+		//Cajeros con el id de la sucursal
+		Query q = pm.newQuery(SQL, "SELECT id FROM " + ps.darTablaCajero() + " WHERE id_sucursal = ?");
+		q.setParameters(idSucursal);
+		List<Object> list = q.executeList();
+		
+		//Los productos de esa categoría
+		Query q2= pm.newQuery(SQL, "SELECT producto.codigo_barras FROM " + ps.darTablaProducto() + " WHERE producto.id_categoria = ?");
+		q2.setParameters(tipo);
+		List<Object> list2 = q2.executeList();
+		
+		for(Object idsCajero : list) {
+			Object[] idCajero = (Object[]) idsCajero;
+			long id = ((BigDecimal)idCajero[0]).longValue();
+			//Por cajero seleccionamos las facturas
+			Query q1 = pm.newQuery(SQL, "SELECT id_factura FROM " + ps.darTablaFactura() + " WHERE factura.id_cajero = ?");
+			q1.setParameters(id);
+			List<Object> list1 = q1.executeList();
+			
+			for(Object facturas : list1) {
+				Object[] factura = (Object[]) facturas;
+				long idFactura = ((BigDecimal)factura[0]).longValue();
+				
+				//Por cada producto encontrado
+				for(Object productos : list2) {
+					Object[] producto = (Object[]) productos;
+					String idProducto = String.valueOf(producto[0]);
+					
+					Query q3 = pm.newQuery(SQL, "SELECT factura.fecha, SUM(compra.cantidad) FROM (( producto INNER JOIN compra "
+							+ "ON producto.codigo_barras = compra.id_producto) INNER JOIN factura ON factura.id = compra.id_factura) "
+							+ "WHERE producto.codigo_barras = ? AND id_factura = ? GROUP BY factura.fecha");
+					q3.setParameters(idProducto, idFactura);
+					List<Object> list3 = q3.executeList();
+					
+					int maxVenta = 0;
+					for(Object ventas : list3) {
+						Object[] venta = (Object[]) ventas;
+						Timestamp fech = (Timestamp)venta[0];
+						int cant = ((BigDecimal)venta[1]).intValue();
+						
+						if(cant > maxVenta) {
+							//Agrego las fechas
+							fechaMayor = fech;
+							//cantidadMayorD.add(cant);							
+						}
+					}
+				}
+			}
+		}
+		return fechaMayor;
+	}
+	
+	public Timestamp fechaMenorDemanda(PersistenceManager pm, int tipo, long idSucursal, String option){
+		
+		//Cajeros con el id de la sucursal
+		Query q = pm.newQuery(SQL, "SELECT id FROM " + ps.darTablaCajero() + " WHERE id_sucursal = ?");
+		q.setParameters(idSucursal);
+		List<Object> list = q.executeList();
+		
+		//Los productos de esa categoría
+		Query q2= pm.newQuery(SQL, "SELECT producto.codigo_barras FROM " + ps.darTablaProducto() + " WHERE producto.id_categoria = ?");
+		q2.setParameters(tipo);
+		List<Object> list2 = q2.executeList();
+		
+		for(Object idsCajero : list) {
+			Object[] idCajero = (Object[]) idsCajero;
+			long id = ((BigDecimal)idCajero[0]).longValue();
+			//Por cajero seleccionamos las facturas
+			Query q1 = pm.newQuery(SQL, "SELECT id_factura FROM " + ps.darTablaFactura() + " WHERE factura.id_cajero = ?");
+			q1.setParameters(id);
+			List<Object> list1 = q1.executeList();
+			
+			for(Object facturas : list1) {
+				Object[] factura = (Object[]) facturas;
+				long idFactura = ((BigDecimal)factura[0]).longValue();
+				
+				//Por cada producto encontrado
+				for(Object productos : list2) {
+					Object[] producto = (Object[]) productos;
+					String idProducto = String.valueOf(producto[0]);
+					
+					Query q3 = pm.newQuery(SQL, "SELECT factura.fecha, SUM(compra.cantidad) FROM (( producto INNER JOIN compra "
+							+ "ON producto.codigo_barras = compra.id_producto) INNER JOIN factura ON factura.id = compra.id_factura) "
+							+ "WHERE producto.codigo_barras = ? AND id_factura = ? GROUP BY factura.fecha");
+					q3.setParameters(idProducto, idFactura);
+					List<Object> list3 = q3.executeList();
+					
+					int maxVenta = 0;
+					for(Object ventas : list3) {
+						Object[] venta = (Object[]) ventas;
+						Timestamp fech = (Timestamp)venta[0];
+						int cant = ((BigDecimal)venta[1]).intValue();
+						
+						if(cant < maxVenta) {
+							//Agrego las fechas
+							fechaMenor = fech;
+							//cantidadMayorD.add(cant);							
+						}
+					}
+				}
+			}
+		}
+		return fechaMenor;
+	}
+	public List<Timestamp> getFechasMayorD() {
+		return fechasMayorD;
+	}
+
+	public void setFechasMayorD(List<Timestamp> fechasMayorD) {
+		this.fechasMayorD = fechasMayorD;
+	}
+
+
+	public List<Timestamp> getFechasMenorD() {
+		return fechasMenorD;
+	}
+
+	public void setFechasMenorD(List<Timestamp> fechasMenorD) {
+		this.fechasMenorD = fechasMenorD;
+	}
+
+	public List<Integer> getCantidadMayorD() {
+		return cantidadMayorD;
+	}
+
+	public void setCantidadMayorD(List<Integer> cantidadMayorD) {
+		this.cantidadMayorD = cantidadMayorD;
+	}
+
+	public List<Integer> getCantidadMenorD() {
+		return cantidadMenorD;
+	}
+
+	public void setCantidadMenorD(List<Integer> cantidadMenorD) {
+		this.cantidadMenorD = cantidadMenorD;
+	}
+
 }
