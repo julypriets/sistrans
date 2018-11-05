@@ -90,7 +90,7 @@ public class SQLCliente {
 	 * @param identificacion
 	 * @return el número de tuplas adicionadas
 	 */
-	public Long registrarPersonaNatural(PersistenceManager pm, Long id, String nombre, String correo, String identificacion) {
+	public Long registrarPersonaNatural(PersistenceManager pm, Long id, String nombre, String correo, long identificacion) {
         // insertar en la tabla clientes
 		Query q1 = pm.newQuery(SQL, "INSERT INTO " + ps.darTablaCliente() + "(id, nombre, correo) "
         		+ "values (?, ?, ?)");

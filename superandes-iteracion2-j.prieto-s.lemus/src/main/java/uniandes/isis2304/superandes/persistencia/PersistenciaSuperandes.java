@@ -1031,7 +1031,7 @@ public class PersistenciaSuperandes {
         {
             tx.begin();
             long idCliente = nextval ();
-            long tuplasInsertadas = sqlCliente.registrarPersonaNatural(pm, idCliente, nombre, correo, identificacion);
+            long tuplasInsertadas = sqlCliente.registrarPersonaNatural(pm, idCliente, nombre, correo, Long.parseLong(identificacion));
      
             tx.commit();
             

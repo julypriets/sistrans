@@ -23,6 +23,7 @@ import java.io.FileReader;
 import java.util.List;
 import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
+import org.junit.Ignore;
 import org.junit.Test;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -165,7 +166,6 @@ public class ConexionTest
      * Método que prueba el intento de acceso a una base de datos inaccesible, por causa:
      * 1. El esquema no ha sido creado o es erróneo - Intentar acceder a una tabla inexistente
      */
-    @Test
     public void tablaInexistenteTest ()
     {
     	// Probar primero la conexión a la base de datos

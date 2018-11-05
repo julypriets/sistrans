@@ -113,7 +113,7 @@ public class Superandes
 	 * INVENTARIO, PRODUCTO_ORDEN, CATALOGO, ORDEN_PROVEEDOR, COMPRA, PRODUCTO_PROMOCION, FACTURA_PROMOCION y CARRITO_PRODUCTO
 	 * respectivamente.
 	 */
-	public long [] limpiarParranderos ()
+	public long [] limpiarSuperandes ()
 	{
 		log.info ("Limpiando la BD de Superandes");
 		long [] borrrados = ps.limpiarSuperandes();	

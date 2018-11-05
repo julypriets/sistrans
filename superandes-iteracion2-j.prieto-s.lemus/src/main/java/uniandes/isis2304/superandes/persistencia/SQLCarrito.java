@@ -221,7 +221,7 @@ public class SQLCarrito {
 			q.setResultClass(Integer.class);
 			return (int) q.executeUnique();
 		}catch(Exception e){
-			return -1;
+			return 0;
 		}
 
 	}
