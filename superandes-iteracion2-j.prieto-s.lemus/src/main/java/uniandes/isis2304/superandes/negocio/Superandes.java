@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.jdo.PersistenceManager;
+
 import org.apache.log4j.Logger;
 import com.google.gson.JsonObject;
 import uniandes.isis2304.superandes.persistencia.PersistenciaSuperandes;
@@ -429,11 +431,24 @@ public class Superandes
 	 * 			Métodos para manejar las Ordenes
 	 *****************************************************************/
 	
-	public long[] registrarLlegadaOrden(long idOrden, Timestamp fechaLlegada, String estado, String idProveedor, double calificacion){
-		log.info("Registrando la llegada de la orden: " + idOrden);
-		long[] cambios = ps.registrarLlegadaOrden(idOrden, fechaLlegada, estado, idProveedor, calificacion);
-		return cambios;
-		
+	/**
+	 * Registra la llegada de una orden y actualiza los inventarios
+	 * @param idOrden - identificador de la orden
+	 * @param idSucursal - identificador de la sucursal
+	 * @param fechaLlegada - fecha de llegada de la orden
+	 * @param idProveedor - identificador del proveedor que atendió la orden
+	 * @param calificacion - calificación del servicio
+	 * @return - número de tuplas insertadas
+	 */
+	public long[] registrarLlegadaOrden(long idOrden, long idSucursal, Timestamp fechaLlegada, String idProveedor, double calificacion) {
+		log.info("Registrando llegada de la orden: " + idOrden);
+		long[] resp = ps.registrarLlegadaOrden(idOrden, idSucursal, fechaLlegada, idProveedor, calificacion);
+		long cantidad = 0;
+		for(long r : resp) {
+			cantidad += r;
+		}
+		log.info("Registrando llegada de la orden: " + idOrden + " " + cantidad + " tuplas insertadas");
+		return resp;
 	}
 
 	/* ****************************************************************
@@ -609,6 +624,13 @@ public class Superandes
 	 * 			Métodos para manejar las Ventas
 	 *****************************************************************/
 	
-
-	
+	/**
+	 * Registra la venta de un producto
+	 * @param idFactura - identificador de la factura 
+	 * @param idCajero - identificador del cajero que atiende la compra
+	 * @return - El número de tuplas modificadas
+	 */
+	public long[] registrarVenta(long idFactura, long idCajero) {
+		return ps.registrarVenta(idFactura, idCajero);
+	}
 }
