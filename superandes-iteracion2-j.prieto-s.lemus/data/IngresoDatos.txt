@@ -7,4 +7,5 @@
 7. CLIENTE
 8. PERSONA - fijarse en el rango de id's
 9. EMPRESA - fijarse en el rango de id's
-10. CAJERO 
+10. CAJERO
+11. CARRITO

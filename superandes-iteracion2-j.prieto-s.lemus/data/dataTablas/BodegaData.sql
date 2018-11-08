@@ -24,8 +24,8 @@ COMMIT;
 --AFTER
 --BODEGA DATA - ADICIÓN
 
-update bodega set id_categoria = 1 where id = 815
-  
+update bodega set id_categoria = 1 where id = 815;
+
 -- Sucursal 1
 insert into BODEGA (id, id_categoria, capacidad_peso, capacidad_volumen, id_sucursal) values (superandes_sequence.NEXTVAL, 3, 3097, 214, 1);
 insert into BODEGA (id, id_categoria, capacidad_peso, capacidad_volumen, id_sucursal) values (superandes_sequence.NEXTVAL, 4, 3574, 145, 1);
