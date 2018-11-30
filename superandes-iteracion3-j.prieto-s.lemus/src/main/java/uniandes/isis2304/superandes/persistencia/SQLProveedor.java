@@ -1,7 +1,12 @@
 package uniandes.isis2304.superandes.persistencia;
 
+import java.util.List;
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+
+import uniandes.isis2304.superandes.negocio.ProveedorPorSemana;
+
 
 /**
  * Clase que encapsula los métodos que hacen acceso a la base de datos para el concepto PROVEEDOR de Superandes
@@ -52,5 +57,56 @@ public class SQLProveedor {
 		q.setParameters(nit, nombre, calificacion);
 		return (long) q.executeUnique();
 	}
+	
+	/* ****************************************************************
+	 * 			Métodos consulta para Iteración 3
+	 *****************************************************************/
+	
+	/**
+	 * Retorna la información de los proveedores con solicitudes máximas por semana
+	 * @param pm
+	 * @return Colección con la información de los proveedores con órdenes máximas por semana
+	 */
+	public List<ProveedorPorSemana> proveedoresConSolicitudesMaximasPorSemana(PersistenceManager pm){
+		String select = "SELECT fechaSemana, nombre, nit,\n" + 
+				"    MAX(solicitudes) OVER (PARTITION BY fechaSemana) AS solicitudesMaximas\n" +  
+				"FROM\n" + 
+				"(SELECT TRUNC(fecha_esperada, 'WW') fechaSemana, p.nombre, p.nit, COUNT(p.nit) solicitudes\n" + 
+				"FROM ORDEN o, PROVEEDOR p, ORDEN_PROVEEDOR op\n" + 
+				"WHERE\n" + 
+				"    o.id = op.id_orden AND\n" + 
+				"    p.nit = op.id_proveedor\n" + 
+				"GROUP BY TRUNC(fecha_esperada, 'WW'), p.nombre, p.nit\n" + 
+				"ORDER BY TRUNC(fecha_esperada, 'WW')\n" + 
+				")";
+		Query q = pm.newQuery(SQL, select);
+		q.setResultClass(ProveedorPorSemana.class);
+		return (List<ProveedorPorSemana>) q.executeList();
+	}
+	
+	/**
+	 * Retorna la información de los proveedores con solicitudes con ventas mínimas por semana
+	 * @param pm
+	 * @return Colección con la información de los proveedores con órdenes mínimas por semana
+	 */
+	public List<ProveedorPorSemana> proveedoresConSolicitudesMinimasPorSemana(PersistenceManager pm){
+		String select = "SELECT fechaSemana, nombre, nit,\n" + 
+				"    MIN(solicitudes) OVER (PARTITION BY fechaSemana) AS solicitudesMinimas \n" + 
+				"FROM\n" + 
+				"(SELECT TRUNC(fecha_esperada, 'WW') fechaSemana, p.nombre, p.nit, COUNT(p.nit) solicitudes\n" + 
+				"FROM ORDEN o, PROVEEDOR p, ORDEN_PROVEEDOR op\n" + 
+				"WHERE\n" + 
+				"    o.id = op.id_orden AND\n" + 
+				"    p.nit = op.id_proveedor\n" + 
+				"GROUP BY TRUNC(fecha_esperada, 'WW'), p.nombre, p.nit\n" + 
+				"ORDER BY TRUNC(fecha_esperada, 'WW')\n" + 
+				")";
+		Query q = pm.newQuery(SQL, select);
+		q.setResultClass(ProveedorPorSemana.class);
+		return (List<ProveedorPorSemana>) q.executeList();
+	}
+	
+	
+	
 	
 }

@@ -1,5 +1,6 @@
 package uniandes.isis2304.superandes.persistencia;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
@@ -7,8 +8,10 @@ import javax.jdo.Query;
 
 import uniandes.isis2304.superandes.negocio.Cliente;
 import uniandes.isis2304.superandes.negocio.Empresa;
+import uniandes.isis2304.superandes.negocio.FacturaCliente;
 import uniandes.isis2304.superandes.negocio.Persona;
 import uniandes.isis2304.superandes.negocio.Producto;
+import uniandes.isis2304.superandes.negocio.ProductoPorSemana;
 
 /**
  * Clase que encapsula los métodos que hacen acceso a la base de datos para el concepto CLIENTE de Superandes
@@ -150,4 +153,67 @@ public class SQLCliente {
 		return (Empresa) q.executeUnique();
 	}
 
+	
+	/* ****************************************************************
+	 * 			Métodos consulta para Iteración 3
+	 *****************************************************************/
+	
+	/**
+	 * Retorna la información de todos los clientes que han comprado por lo menos una vez un determinado producto 
+	 * en un rango de fechas especificado
+	 * @param pm
+	 * @param fechaInicial
+	 * @param fechaFinal
+	 * @param criterioOrdenamiento
+	 * @param nombreProducto
+	 * @return Una colección de la información de los clientes y su compra
+	 */
+	public List<FacturaCliente> clientesQueCompraronElProductoPorRangoFecha(
+			PersistenceManager pm, Date fechaInicial, Date fechaFinal, String criterioOrdenamiento, String nombreProducto) {
+		
+		String select = "SELECT f.id, f.fecha, f.precio_total, f.id_cliente, c.nombre, c.correo, p.nombre nombreProducto, p.codigo_barras, COUNT (f.id_cliente) cantidad\n" + 
+				"FROM FACTURA f, CLIENTE c, COMPRA cp, Producto p\n" + 
+				"WHERE\n" + 
+				"    f.id_cliente = c.id AND\n" + 
+				"    f.id = cp.id_factura AND \n" + 
+				"    p.codigo_barras = cp.id_producto\n" + 
+				"    AND p.nombre = ' " + nombreProducto + "'\n" + 
+				"    AND f.fecha BETWEEN to_date('" + fechaInicial + "') AND to_date('" + fechaFinal + "')\n" +
+				"GROUP BY f.id, f.fecha, f.precio_total, f.id_cliente, c.nombre, c.correo, p.nombre, p.codigo_barras\n" +
+				"ORDER BY " + criterioOrdenamiento;
+		Query q = pm.newQuery(SQL, select);
+		q.setResultClass(FacturaCliente.class);
+		return (List<FacturaCliente>) q.executeList();
+	}
+	
+	/**
+	 * Retorna la información de todos los clientes que no han comprado por lo menos una vez un determinado producto 
+	 * en un rango de fechas especificado
+	 * @param pm
+	 * @param fechaInicial
+	 * @param fechaFinal
+	 * @param criterioOrdenamiento
+	 * @param nombreProducto
+	 * @return Una colección de la información de los clientes y su compra
+	 */
+	public List<FacturaCliente> clientesQueNoCompraronElProductoPorRangoFecha(
+			PersistenceManager pm, Date fechaInicial, Date fechaFinal, String criterioOrdenamiento, String nombreProducto){
+		String select = "SELECT f.id, f.fecha, f.precio_total, f.id_cliente, c.nombre, c.correo, p.nombre nombreProducto, p.codigo_barras, cp.cantidad\n" + 
+				"FROM FACTURA f, CLIENTE c, COMPRA cp, Producto p \n" + 
+				"WHERE\n" + 
+				"    f.id_cliente = c.id AND\n" + 
+				"    f.id = cp.id_factura AND \n" + 
+				"    p.codigo_barras = cp.id_producto AND\n" + 
+				"    c.id IN (\n" + 
+				"        SELECT id FROM CLIENTE\n" + 
+				"        MINUS\n" + 
+				"        (SELECT id_cliente FROM FACTURA WHERE p.nombre = ' " + nombreProducto + "' AND fecha BETWEEN to_date(' " + fechaInicial+ "') AND to_date(' " + fechaFinal + "'))\n" + 
+				"    )\n" + 
+				"GROUP BY f.id, f.fecha, f.precio_total, f.id_cliente, c.nombre, c.correo, p.nombre, p.codigo_barras, cp.cantidad\n" + 
+				"ORDER BY " + criterioOrdenamiento;
+		Query q = pm.newQuery(SQL, select);
+		q.setResultClass(FacturaCliente.class);
+		return (List<FacturaCliente>) q.executeList();
+	}
+	
 }

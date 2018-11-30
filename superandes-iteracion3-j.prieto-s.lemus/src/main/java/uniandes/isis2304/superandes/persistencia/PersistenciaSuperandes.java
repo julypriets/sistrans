@@ -1686,4 +1686,70 @@ public class PersistenciaSuperandes {
 	public List<Integer> getCantidadMenorD(){
 		return sqlFactura.getCantidadMenorD();
 	}
+	
+	
+	/* ****************************************************************
+	 * 			Métodos consulta para Iteración 3
+	 *****************************************************************/
+	
+	/**
+	 * Retorna la información de todos los clientes que han comprado por lo menos una vez un determinado producto 
+	 * en un rango de fechas especificado
+	 * @param fechaInicial
+	 * @param fechaFinal
+	 * @param criterioOrdenamiento
+	 * @param nombreProducto
+	 * @return Una colección de la información de los clientes y su compra
+	 */
+	public List<FacturaCliente> clientesQueCompraronElProductoPorRangoFecha(Date fechaInicial, Date fechaFinal, String criterioOrdenamiento, String nombreProducto){
+		return sqlCliente.clientesQueCompraronElProductoPorRangoFecha
+				(pmf.getPersistenceManager(), fechaInicial, fechaFinal, criterioOrdenamiento, nombreProducto);
+	}
+	
+	/**
+	 * Retorna la información de todos los clientes que no han comprado por lo menos una vez un determinado producto 
+	 * en un rango de fechas especificado
+	 * @param fechaInicial
+	 * @param fechaFinal
+	 * @param criterioOrdenamiento
+	 * @param nombreProducto
+	 * @return Una colección de la información de los clientes y su compra
+	 */
+	public List<FacturaCliente> clientesQueNoCompraronElProductoPorRangoFecha(Date fechaInicial, Date fechaFinal, String criterioOrdenamiento, String nombreProducto){
+		return sqlCliente.clientesQueNoCompraronElProductoPorRangoFecha
+				(pmf.getPersistenceManager(), fechaInicial, fechaFinal, criterioOrdenamiento, nombreProducto);
+	}
+	
+	/**
+	 * Retorna la información de los productos con ventas máximas por semana	  
+	 * @return Colección con la información de los productos con ventas máximas por semana
+	 */
+	public List<ProductoPorSemana> productosConVentasMaximasPorSemana(){
+		return sqlProducto.productosConVentasMaximasPorSemana(pmf.getPersistenceManager());
+	}
+	
+	/**
+	 * Retorna la información de los productos con ventas mínimas por semana
+	 * @return Colección con la información de los productos con ventas mínimas por semana
+	 */
+	public List<ProductoPorSemana> productosConVentasMinimasPorSemana(){
+		return sqlProducto.productosConVentasMinimasPorSemana(pmf.getPersistenceManager());
+	}
+	
+	/**
+	 * Retorna la información de los proveedores con solicitudes máximas por semana
+	 * @return Colección con la información de los proveedores con órdenes máximas por semana
+	 */
+	public List<ProveedorPorSemana> proveedoresConSolicitudesMaximasPorSemana(){
+		return sqlProveedor.proveedoresConSolicitudesMaximasPorSemana(pmf.getPersistenceManager());
+	}
+	
+	/**
+	 * Retorna la información de los proveedores con solicitudes con ventas mínimas por semana
+	 * @return Colección con la información de los proveedores con órdenes mínimas por semana
+	 */
+	public List<ProveedorPorSemana> proveedoresConSolicitudesMinimasPorSemana(){
+		return sqlProveedor.proveedoresConSolicitudesMinimasPorSemana(pmf.getPersistenceManager());
+	}
+	
 }

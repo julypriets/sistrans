@@ -654,4 +654,66 @@ public class Superandes
 	public List<Integer> getCantidadMenorD(){
 		return ps.getCantidadMenorD();
 	}
+	
+	/* ****************************************************************
+	 * 			Métodos para manejar consultas Iteración 3
+	 *****************************************************************/
+	
+	/**
+	 * (RFC10) Retorna la información de todos los clientes que han comprado por lo menos una vez un determinado producto 
+	 * en un rango de fechas especificado
+	 * @param fechaInicial
+	 * @param fechaFinal
+	 * @param criterioOrdenamiento
+	 * @param nombreProducto
+	 * @return Una colección de la información de los clientes y su compra
+	 */
+	public List<FacturaCliente> clientesQueCompraronElProductoPorRangoFecha(Date fechaInicial, Date fechaFinal, String criterioOrdenamiento, String nombreProducto){
+		return ps.clientesQueCompraronElProductoPorRangoFecha(fechaInicial, fechaFinal, criterioOrdenamiento, nombreProducto);
+	}
+	
+	/**
+	 * (RFC11) Retorna la información de todos los clientes que no han comprado por lo menos una vez un determinado producto 
+	 * en un rango de fechas especificado
+	 * @param fechaInicial
+	 * @param fechaFinal
+	 * @param criterioOrdenamiento
+	 * @param nombreProducto
+	 * @return Una colección de la información de los clientes y su compra
+	 */
+	public List<FacturaCliente> clientesQueNoCompraronElProductoPorRangoFecha(Date fechaInicial, Date fechaFinal, String criterioOrdenamiento, String nombreProducto){
+		return ps.clientesQueNoCompraronElProductoPorRangoFecha(fechaInicial, fechaFinal, criterioOrdenamiento, nombreProducto);
+	}
+	
+	/**
+	 * (RFC12) Retorna la información de los productos con ventas máximas por semana	  
+	 * @return Colección con la información de los productos con ventas máximas por semana
+	 */
+	public List<ProductoPorSemana> productosConVentasMaximasPorSemana(){
+		return ps.productosConVentasMaximasPorSemana();
+	}
+	
+	/**
+	 * (RFC12) Retorna la información de los productos con ventas mínimas por semana
+	 * @return Colección con la información de los productos con ventas mínimas por semana
+	 */
+	public List<ProductoPorSemana> productosConVentasMinimasPorSemana(){
+		return ps.productosConVentasMinimasPorSemana();
+	}
+	
+	/**
+	 * (RFC12) Retorna la información de los proveedores con solicitudes máximas por semana
+	 * @return Colección con la información de los proveedores con órdenes máximas por semana
+	 */
+	public List<ProveedorPorSemana> proveedoresConSolicitudesMaximasPorSemana(){
+		return ps.proveedoresConSolicitudesMaximasPorSemana();
+	}
+	
+	/**
+	 * Retorna la información de los proveedores con solicitudes con ventas mínimas por semana
+	 * @return Colección con la información de los proveedores con órdenes mínimas por semana
+	 */
+	public List<ProveedorPorSemana> proveedoresConSolicitudesMinimasPorSemana(){
+		return ps.proveedoresConSolicitudesMinimasPorSemana();
+	}
 }

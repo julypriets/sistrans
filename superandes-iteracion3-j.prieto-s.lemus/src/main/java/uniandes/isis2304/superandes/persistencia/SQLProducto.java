@@ -1,6 +1,8 @@
 package uniandes.isis2304.superandes.persistencia;
 import uniandes.isis2304.superandes.persistencia.PersistenciaSuperandes;
+import uniandes.isis2304.superandes.negocio.FacturaCliente;
 import uniandes.isis2304.superandes.negocio.Producto;
+import uniandes.isis2304.superandes.negocio.ProductoPorSemana;
 import uniandes.isis2304.superandes.negocio.Sucursal;
 
 import javax.jdo.PersistenceManager;
@@ -111,4 +113,51 @@ public class SQLProducto {
 		return (List<Producto>) q.executeList();
 	}
 	
+	/* ****************************************************************
+	 * 			Métodos consulta para Iteración 3
+	 *****************************************************************/	
+	
+	/**
+	 * Retorna la información de los productos con ventas máximas por semana
+	 * @param pm
+	 * @return Colección con la información de los productos con ventas máximas por semana
+	 */
+	public List<ProductoPorSemana> productosConVentasMaximasPorSemana(PersistenceManager pm){
+		String select = "SELECT fechaSemana, nombre, codigo_barras,\n" + 
+				"    MAX(ventas) OVER (PARTITION BY fechaSemana) AS ventasMaximas\n" +  
+				"FROM\n" + 
+				"(SELECT TRUNC(fecha, 'WW') fechaSemana, nombre, codigo_barras, COUNT (codigo_barras) ventas\n" + 
+				"FROM PRODUCTO p, COMPRA cp, FACTURA f\n" + 
+				"WHERE\n" + 
+				"    p.codigo_barras = cp.id_producto AND\n" + 
+				"    f.id = cp.id_factura\n" + 
+				"GROUP BY TRUNC(fecha, 'WW'), nombre, codigo_barras\n" + 
+				"ORDER BY TRUNC(fecha, 'WW')\n" + 
+				")";
+		Query q = pm.newQuery(SQL, select);
+		q.setResultClass(ProductoPorSemana.class);
+		return (List<ProductoPorSemana>) q.executeList();
+	}
+	
+	/**
+	 * Retorna la información de los productos con ventas mínimas por semana
+	 * @param pm
+	 * @return Colección con la información de los productos con ventas mínimas por semana
+	 */
+	public List<ProductoPorSemana> productosConVentasMinimasPorSemana(PersistenceManager pm){
+		String select = "SELECT fechaSemana, nombre, codigo_barras,\n" +  
+				"    MIN(ventas) OVER (PARTITION BY fechaSemana) AS ventasMinimas\n" + 
+				"FROM\n" + 
+				"(SELECT TRUNC(fecha, 'WW') fechaSemana, nombre, codigo_barras, COUNT (codigo_barras) ventas\n" + 
+				"FROM PRODUCTO p, COMPRA cp, FACTURA f\n" + 
+				"WHERE\n" + 
+				"    p.codigo_barras = cp.id_producto AND\n" + 
+				"    f.id = cp.id_factura\n" + 
+				"GROUP BY TRUNC(fecha, 'WW'), nombre, codigo_barras\n" + 
+				"ORDER BY TRUNC(fecha, 'WW')\n" + 
+				")";
+		Query q = pm.newQuery(SQL, select);
+		q.setResultClass(ProductoPorSemana.class);
+		return (List<ProductoPorSemana>) q.executeList();
+	}
 }
