@@ -1,0 +1,14 @@
+BUGS DE LOS REQUERIMIENTOS
+
+1. En el requerimiento 10, cuando se actualiza la cantidad de productos en bodega actualiza TODAS las bodegas con ese producto.
+  SOLUCION: asegurarme que un producto se guarde SOLO en una bodega para evitar problemas
+
+
+
+TODO!!!
+
+1. DOCUMENTO
+2. REQUERIMIENTOS 10 Y 11
+3. REQUERIMIENTOS DE CONSULTA
+4. PRUEBAS
+5. DOCUMENTO EXCEL DE PRUEBAS

@@ -1,0 +1,33 @@
+{
+	"title": "Nombres de las tablas de Parranderos Uniandes para la aplicación B",
+	"unidadPersistencia": "Superandes",
+	"tablas":
+	[
+		
+		"Superandes_sequence",
+		"B_SUCURSAL",
+		"B_PRODUCTO",
+		"B_CATEGORÍA",
+		"B_PERECEDERO",
+		"B_ORDEN",
+		"B_ESTANTE",
+		"B_BODEGA",
+		"B_PEDIDO_BODEGA",
+		"B_PROVEEDOR",
+		"B_CLIENTE",
+		"B_PERSONA_NATURAL",
+		"B_EMPRESA",
+		"B_CAJERO",
+		"B_FACTURA",
+		"B_PROMOCION",
+		"B_USUARIO",
+		"B_ABASTECIMIENTO_ESTANTE",
+		"B_SURTIDO_ESTANTE",
+		"B_PRODUCTOS_ABASTECIMIENTO",
+		"B_INVENTARIO",
+		"B_REORDEN_SUCURSAL",
+		"B_DETALLE_PEDIDO",
+		"B_COMPRA_FACTURA",
+		"B_PRODUCTO_PROMOCION"
+	]
+}

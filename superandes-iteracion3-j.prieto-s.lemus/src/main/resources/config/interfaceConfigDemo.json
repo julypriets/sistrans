@@ -1,0 +1,153 @@
+{
+	"title": "Demostración de Superandes",
+	"frameH": 600,
+	"frameW": 800,
+	"bannerPath": "./src/main/resources/config/logo.png",
+	"menuBar":
+	[
+		{ "menuTitle": "Usuario",
+			"options":
+			[
+				{
+					"label": "Iniciar Sesión",
+					"event": "iniciarSesionClientePersona"
+				},
+				{
+					"label": "Iniciar Sesión como Empresa",
+					"event": "iniciarSesionClienteEmpresa"
+				},
+				{
+					"label": "Cerrar Sesión",
+					"event": "cerrarSesion"
+				}
+			]
+		},
+		{ "menuTitle": "Producto",
+		  "options":
+			[
+				{
+					"label": "Registrar",
+					"event": "registrarProducto"
+				},
+				{
+					"label": "Obtener los productos",
+					"event": "darProductos"
+				},
+				{
+					"label": "Obtener producto por código de barras",
+					"event": "darProductoPorId"
+				},
+				{
+					"label": "Obtener productos por nombre",
+					"event": "darProductosPorNombre"
+				}
+			]
+		},
+		{ "menuTitle": "Promoción",
+		  "options":
+			[
+				{
+					"label": "Registrar",
+					"event": "registrarPromocion"
+				},
+				{
+					"label": "20 más populares",
+					"event": "dar20PromocionesMasPopulares"
+				}
+			]
+		},
+		{ "menuTitle": "Proveedor",
+			"options":
+			[
+				{
+					"label": "Registrar",
+					"event": "registrarProveedor"
+				}
+			]
+		},
+		{ "menuTitle": "Cliente",
+			"options":
+			[
+				{
+					"label": "Registrar Empresa",
+					"event": "registrarEmpresa"
+				},
+				{
+					"label": "Registrar Persona Natural",
+					"event": "registrarPersona"
+				},
+				{
+					"label": "Obtener todos los clientes",
+					"event": "darClientes"
+				}
+			]
+		},
+		{ "menuTitle": "Sucursal",
+			"options":
+			[
+				{
+					"label": "Registrar",
+					"event": "registrarSucursal"
+				},
+				{
+					"label": "Registrar Bodega en una Sucursal",
+					"event": "registrarBodega"
+				},
+				{
+					"label": "Registrar Estante en una Sucursal",
+					"event": "registrarEstante"
+				}
+			]
+		},
+		{ "menuTitle": "Carro de Compras",
+			"options":
+			[
+				{
+					"label": "Solicitar Carro de Compras",
+					"event": "solicitarCarro"
+				},
+				{
+					"label": "Abandonar Carro de Compras",
+					"event": "abandonarCarro"
+				},
+				{
+					"label": "Insertar Producto",
+					"event": "insertarProductoAlCarro"
+				},
+				{
+					"label": "Devolver Producto",
+					"event": "devolverProductoDelCarro"
+				},
+				{
+					"label": "Pagar Productos",
+					"event": "pagarCompra"
+				},
+				{
+					"label": "Obtener Productos Insertados",
+					"event": "darProductosEnCarro"
+				},
+				{
+					"label": "Obtener todos los carros registrados",
+					"event": "darCarros"
+				}
+			]
+		},
+		{ "menuTitle": "Operación",
+			"options":
+			[
+				{
+					"label": "Fechas de mayor demanda",
+					"event": "fechasMayorDemanda"
+				},
+				{
+					"label": "Fechas de mayores ingresos",
+					"event": "fechasMayoresIngresos"
+				},
+				{
+					"label": "Fechas de menor demanda",
+					"event": "fechasMenorDemanda"
+				}
+			]
+		}
+	]
+}
