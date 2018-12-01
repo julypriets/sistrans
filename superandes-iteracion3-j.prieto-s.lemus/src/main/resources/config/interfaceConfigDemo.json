@@ -148,6 +148,40 @@
 					"event": "fechasMenorDemanda"
 				}
 			]
+		},
+		{ "menuTitle": "Consultar Consumo",
+			"options":
+			[
+				{
+					"label": "Clientes que compraron al menos una vez el producto por rango de fecha",
+					"event": "clientesQueCompraronElProductoPorRangoDeFecha"
+				},
+				{
+					"label": "Clientes que compraron no al menos una vez el producto por rango de fecha",
+					"event": "clientesQueNoCompraronElProductoPorRangoFecha"
+				}
+			]
+		},
+		{ "menuTitle": "Consultar Funcionamiento",
+			"options":
+			[
+				{
+					"label": "Productos con ventas máximas por semana",
+					"event": "productosConVentasMaximasPorSemana"
+				},
+				{
+					"label": "Productos con ventas mínimas por semana",
+					"event": "productosConVentasMinimasPorSemana"
+				},
+				{
+					"label": "Proveedores con solicitudes máximas por semana",
+					"event": "proveedoresConSolicitudesMaximasPorSemana"
+				},
+				{
+					"label": "Proveedores con solicitudes mínimas por semana",
+					"event": "proveedoresConSolicitudesMinimasPorSemana"
+				}
+			]
 		}
 	]
 }

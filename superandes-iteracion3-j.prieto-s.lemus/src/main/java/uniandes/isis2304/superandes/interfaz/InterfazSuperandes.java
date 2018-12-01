@@ -57,7 +57,10 @@ import uniandes.isis2304.superandes.negocio.Carrito;
 import uniandes.isis2304.superandes.negocio.Cliente;
 import uniandes.isis2304.superandes.negocio.ComprasPorPromocion;
 import uniandes.isis2304.superandes.negocio.Factura;
+import uniandes.isis2304.superandes.negocio.FacturaCliente;
 import uniandes.isis2304.superandes.negocio.Producto;
+import uniandes.isis2304.superandes.negocio.ProductoPorSemana;
+import uniandes.isis2304.superandes.negocio.ProveedorPorSemana;
 import uniandes.isis2304.superandes.negocio.Superandes;
 import uniandes.isis2304.superandes.negocio.VOBebedor;
 import uniandes.isis2304.superandes.negocio.VOBodega;
@@ -1374,7 +1377,184 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     }
 	
 	
-	
+	/* ****************************************************************
+	 * 			Operaciones Consulta Iteración 3 
+	 *****************************************************************/
+    
+    /**
+	 * (RFC10) Retorna la información de todos los clientes que han comprado por lo menos una vez un determinado producto 
+	 * en un rango de fechas especificado
+     */
+    public void clientesQueCompraronElProductoPorRangoDeFecha() {
+    	try 
+    	{
+    		JTextField nombreProducto = new JTextField();
+    		JTextField fechaInicio = new JTextField();
+    		JTextField fechaFin = new JTextField();
+    		JTextField criterioOrdenamiento = new JTextField();
+    		Object[] message = {
+    		    "Ingrese el nombre del producto:", nombreProducto,
+    		    "Ingrese la fecha de inicio del rango (debe estar en formato año/mes/día: yyyy/MM/dd ):", fechaInicio,
+    		    "Ingrese la fecha de finalización del rango (debe estar en formato año/mes/día: yyyy/MM/dd ):", fechaFin,
+    		    "Ingrese criterio de ordenamiento (puede ser: 'id', 'fecha', 'cantidad' o 'correo') :", criterioOrdenamiento,
+    		    
+    		};
+    		int option = JOptionPane.showConfirmDialog(this, message, "Dar clientes por producto y rango de fecha", JOptionPane.OK_CANCEL_OPTION);
+    		if (option == JOptionPane.OK_OPTION)
+    		{
+        		String nombreProductoResp = nombreProducto.getText();
+        		String fechaInicialResp = fechaInicio.getText();
+        		String fechaFinalResp = fechaFin.getText();
+        		String criterioOrdenamientoResp = criterioOrdenamiento.getText();
+        		
+        		List<FacturaCliente> cs = superandes.clientesQueCompraronElProductoPorRangoFecha(fechaInicialResp, fechaFinalResp, criterioOrdenamientoResp, nombreProductoResp);
+        		String resultado = "En clientesQueCompraronElProductoPorRangoDeFecha\n\n";
+        		
+        		if(cs.isEmpty()) {
+        			resultado += "No se encontraron clientes asociados a la búsqueda";
+        		}else {
+        			for(FacturaCliente c: cs) {
+        				resultado += c.toString() + "\n";
+        			}
+        		}
+    			resultado += "\n Operación terminada";
+        		panelDatos.actualizarInterfaz(resultado);
+    		}else {
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+    }
+    
+    /**
+	 * (RFC11) Retorna la información de todos los clientes que no han comprado por lo menos una vez un determinado producto 
+	 * en un rango de fechas especificado
+     */
+    public void clientesQueNoCompraronElProductoPorRangoFecha() {
+    	try 
+    	{
+    		JTextField nombreProducto = new JTextField();
+    		JTextField fechaInicio = new JTextField();
+    		JTextField fechaFin = new JTextField();
+    		JTextField criterioOrdenamiento = new JTextField();
+    		Object[] message = {
+    		    "Ingrese el nombre del producto:", nombreProducto,
+    		    "Ingrese la fecha de inicio del rango (debe estar en formato año/mes/día: yyyy/MM/dd ):", fechaInicio,
+    		    "Ingrese la fecha de finalización del rango (debe estar en formato año/mes/día: yyyy/MM/dd ):", fechaFin,
+    		    "Ingrese criterio de ordenamiento (puede ser: 'id', 'fecha', 'cantidad' o 'correo') :", criterioOrdenamiento,
+    		    
+    		};
+    		int option = JOptionPane.showConfirmDialog(this, message, "Dar clientes que no compraron el producto, por rango de fecha", JOptionPane.OK_CANCEL_OPTION);
+    		if (option == JOptionPane.OK_OPTION)
+    		{
+        		String nombreProductoResp = nombreProducto.getText();
+        		String fechaInicialResp = fechaInicio.getText();
+        		String fechaFinalResp = fechaFin.getText();
+        		String criterioOrdenamientoResp = criterioOrdenamiento.getText();
+        		
+        		List<FacturaCliente> cs = superandes.clientesQueNoCompraronElProductoPorRangoFecha(fechaInicialResp, fechaFinalResp, criterioOrdenamientoResp, nombreProductoResp);
+        		String resultado = "En clientesQueNoCompraronElProductoPorRangoFecha\n\n";
+        		
+        		if(cs.isEmpty()) {
+        			resultado += "No se encontraron clientes asociados a la búsqueda";
+        		}else {
+        			for(FacturaCliente c: cs) {
+        				resultado += c.toString() + "\n";
+        			}
+        		}
+    			resultado += "\n Operación terminada";
+        		panelDatos.actualizarInterfaz(resultado);
+    		}else {
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+    }
+    
+    /**
+     * (RFC12) Retorna la información de los productos con ventas máximas por semana
+     */
+    public void productosConVentasMaximasPorSemana() {
+		List<ProductoPorSemana> ps = superandes.productosConVentasMaximasPorSemana();
+		String resultado = " en productosConVentasMaximasPorSemana\n\n";
+		
+		if(ps.size() == 0){
+			resultado += "no hay productos disponibles\n\n";
+		}else{
+			for (int i = 0; i < ps.size(); i++) {
+				resultado += ps.get(i).toString() + "\n";
+			}
+		}
+		resultado += "Terminó proceso";
+		panelDatos.actualizarInterfaz(resultado);
+		
+    }
+    
+    /**
+     * (RFC12) Retorna la información de los productos con ventas mínimas por semana
+     */
+    public void productosConVentasMinimasPorSemana() {
+		List<ProductoPorSemana> ps = superandes.productosConVentasMinimasPorSemana();
+		String resultado = " en productosConVentasMinimasPorSemana\n\n";
+		
+		if(ps.size() == 0){
+			resultado += "no hay productos disponibles\n\n";
+		}else{
+			for (int i = 0; i < ps.size(); i++) {
+				resultado += ps.get(i).toString() + "\n";
+			}
+		}
+		resultado += "Terminó proceso";
+		panelDatos.actualizarInterfaz(resultado);
+    }
+    
+    /**
+     * (RFC12) Retorna la información de los proveedores con solicitudes máximas por semana
+     */
+    public void proveedoresConSolicitudesMaximasPorSemana() {
+		List<ProveedorPorSemana> ps = superandes.proveedoresConSolicitudesMaximasPorSemana();
+		String resultado = " en proveedoresConSolicitudesMaximasPorSemana\n\n";
+		
+		if(ps.size() == 0){
+			resultado += "no hay proveedores disponibles\n\n";
+		}else{
+			for (int i = 0; i < ps.size(); i++) {
+				resultado += ps.get(i).toString() + "\n";
+			}
+		}
+		resultado += "Terminó proceso";
+		panelDatos.actualizarInterfaz(resultado);
+    }
+    
+    /**
+     * (RFC12) Retorna la información de los proveedores con solicitudes con ventas mínimas por semana
+     */
+    public void proveedoresConSolicitudesMinimasPorSemana() {
+		List<ProveedorPorSemana> ps = superandes.proveedoresConSolicitudesMinimasPorSemana();
+		String resultado = " en proveedoresConSolicitudesMinimasPorSemana\n\n";
+		
+		if(ps.size() == 0){
+			resultado += "no hay proveedores disponibles\n\n";
+		}else{
+			for (int i = 0; i < ps.size(); i++) {
+				resultado += ps.get(i).toString() + "\n";
+			}
+		}
+		resultado += "Terminó proceso";
+		panelDatos.actualizarInterfaz(resultado);
+    }
 
 	/* ****************************************************************
 	 * 			Métodos administrativos

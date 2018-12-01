@@ -668,8 +668,31 @@ public class Superandes
 	 * @param nombreProducto
 	 * @return Una colección de la información de los clientes y su compra
 	 */
-	public List<FacturaCliente> clientesQueCompraronElProductoPorRangoFecha(Date fechaInicial, Date fechaFinal, String criterioOrdenamiento, String nombreProducto){
-		return ps.clientesQueCompraronElProductoPorRangoFecha(fechaInicial, fechaFinal, criterioOrdenamiento, nombreProducto);
+	public List<FacturaCliente> clientesQueCompraronElProductoPorRangoFecha(
+			String fechaInicial, String fechaFinal, String criterioOrdenamiento, String nombreProducto) throws Exception{
+		
+		if(!(criterioOrdenamiento.equals(FacturaCliente.NOMBRE) && criterioOrdenamiento.equals(FacturaCliente.ID_FACTURA) &&
+				criterioOrdenamiento.equals(FacturaCliente.FECHA) && criterioOrdenamiento.equals(FacturaCliente.CORREO) &&
+				criterioOrdenamiento.equals(FacturaCliente.CANTIDAD))) {
+			throw new Exception("El criterio de ordenamiento indicado no existe");
+		}
+		
+		Timestamp fechaInicioFormateada = (Timestamp) new Date();
+		Timestamp fechaFinFormateada = (Timestamp) new Date();
+
+		try{
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+			Date parsedDateIni = dateFormat.parse(fechaInicial);
+			fechaInicioFormateada = new Timestamp(parsedDateIni.getTime());
+
+			Date parsedDateFin = dateFormat.parse(fechaFinal);
+			fechaFinFormateada = new Timestamp(parsedDateFin.getTime());
+
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return ps.clientesQueCompraronElProductoPorRangoFecha(fechaInicioFormateada, fechaFinFormateada, criterioOrdenamiento, nombreProducto);
 	}
 	
 	/**
@@ -681,8 +704,30 @@ public class Superandes
 	 * @param nombreProducto
 	 * @return Una colección de la información de los clientes y su compra
 	 */
-	public List<FacturaCliente> clientesQueNoCompraronElProductoPorRangoFecha(Date fechaInicial, Date fechaFinal, String criterioOrdenamiento, String nombreProducto){
-		return ps.clientesQueNoCompraronElProductoPorRangoFecha(fechaInicial, fechaFinal, criterioOrdenamiento, nombreProducto);
+	public List<FacturaCliente> clientesQueNoCompraronElProductoPorRangoFecha(
+			String fechaInicial, String fechaFinal, String criterioOrdenamiento, String nombreProducto) throws Exception{
+		if(!(criterioOrdenamiento.equals(FacturaCliente.NOMBRE) && criterioOrdenamiento.equals(FacturaCliente.ID_FACTURA) &&
+				criterioOrdenamiento.equals(FacturaCliente.FECHA) && criterioOrdenamiento.equals(FacturaCliente.CORREO) &&
+				criterioOrdenamiento.equals(FacturaCliente.CANTIDAD))) {
+			throw new Exception("El criterio de ordenamiento indicado no existe");
+		}
+		
+		Timestamp fechaInicioFormateada = (Timestamp) new Date();
+		Timestamp fechaFinFormateada = (Timestamp) new Date();
+
+		try{
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+			Date parsedDateIni = dateFormat.parse(fechaInicial);
+			fechaInicioFormateada = new Timestamp(parsedDateIni.getTime());
+
+			Date parsedDateFin = dateFormat.parse(fechaFinal);
+			fechaFinFormateada = new Timestamp(parsedDateFin.getTime());
+
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return ps.clientesQueNoCompraronElProductoPorRangoFecha(fechaInicioFormateada, fechaFinFormateada, criterioOrdenamiento, nombreProducto);
 	}
 	
 	/**
@@ -710,7 +755,7 @@ public class Superandes
 	}
 	
 	/**
-	 * Retorna la información de los proveedores con solicitudes con ventas mínimas por semana
+	 * (RFC12) Retorna la información de los proveedores con solicitudes con ventas mínimas por semana
 	 * @return Colección con la información de los proveedores con órdenes mínimas por semana
 	 */
 	public List<ProveedorPorSemana> proveedoresConSolicitudesMinimasPorSemana(){
