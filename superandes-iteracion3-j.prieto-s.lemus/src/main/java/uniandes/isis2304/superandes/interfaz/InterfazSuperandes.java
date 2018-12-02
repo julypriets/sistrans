@@ -27,6 +27,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -51,7 +52,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
+import com.sun.org.apache.xpath.internal.operations.Div;
 
+import javafx.scene.control.DatePicker;
 import uniandes.isis2304.superandes.interfaz.PanelDatos;
 import uniandes.isis2304.superandes.negocio.Carrito;
 import uniandes.isis2304.superandes.negocio.Cliente;
@@ -1268,7 +1271,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 			resultado += "no hay promociones disponibles\n\n";
 		}else{
 			for (int i = 0; i < cs.size(); i++) {
-				resultado += (i + 1) + ". id_promoción: " + cs.get(i).getIdPromocion() + "; número_compras: " + cs.get(i).getNumCompras() + "\n";
+				resultado += (i + 1) + ". La promoción " + cs.get(i).getIdPromocion() + " se vendió " + cs.get(i).getNumCompras() + " veces. \n";
 			}
 		}
 		resultado += "Terminó proceso";
@@ -1417,6 +1420,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 	
 	public void fechasMayorDemanda() {
 		try {
+			
 			
 		}catch(Exception e) {
 			String resultado = generarMensajeError(e);
