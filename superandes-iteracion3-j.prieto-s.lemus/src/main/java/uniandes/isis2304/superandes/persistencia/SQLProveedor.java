@@ -68,17 +68,22 @@ public class SQLProveedor {
 	 * @return Colección con la información de los proveedores con órdenes máximas por semana
 	 */
 	public List<ProveedorPorSemana> proveedoresConSolicitudesMaximasPorSemana(PersistenceManager pm){
-		String select = "SELECT fechaSemana, nombre, nit,\n" + 
-				"    MAX(solicitudes) OVER (PARTITION BY fechaSemana) AS solicitudesMaximas\n" +  
+		String select = "SELECT fechaSemana, nombre, nit, solicitudesMaximas\n" + 
 				"FROM\n" + 
-				"(SELECT TRUNC(fecha_esperada, 'WW') fechaSemana, p.nombre, p.nit, COUNT(p.nit) solicitudes\n" + 
-				"FROM ORDEN o, PROVEEDOR p, ORDEN_PROVEEDOR op\n" + 
-				"WHERE\n" + 
-				"    o.id = op.id_orden AND\n" + 
-				"    p.nit = op.id_proveedor\n" + 
-				"GROUP BY TRUNC(fecha_esperada, 'WW'), p.nombre, p.nit\n" + 
-				"ORDER BY TRUNC(fecha_esperada, 'WW')\n" + 
-				")";
+				"    (SELECT fechaSemana, nombre, nit, solicitudes,\n" + 
+				"        MAX(solicitudes) OVER (PARTITION BY fechaSemana) AS solicitudesMaximas\n" +  
+				"    FROM\n" + 
+				"        (SELECT TRUNC(fecha_esperada, 'WW') fechaSemana, p.nombre, p.nit, COUNT(p.nombre) solicitudes\n" + 
+				"        FROM ORDEN o, PROVEEDOR p, ORDEN_PROVEEDOR op\n" + 
+				"        WHERE\n" + 
+				"            o.id = op.id_orden AND\n" + 
+				"            p.nit = op.id_proveedor\n" + 
+				"        GROUP BY TRUNC(fecha_esperada, 'WW'), p.nombre, p.nit\n" + 
+				"        ORDER BY TRUNC(fecha_esperada, 'WW')\n" + 
+				"        )\n" + 
+				"    )\n" + 
+				"WHERE solicitudes = solicitudesMaximas\n" + 
+				"ORDER BY solicitudesMaximas DESC";
 		Query q = pm.newQuery(SQL, select);
 		q.setResultClass(ProveedorPorSemana.class);
 		return (List<ProveedorPorSemana>) q.executeList();
@@ -90,17 +95,22 @@ public class SQLProveedor {
 	 * @return Colección con la información de los proveedores con órdenes mínimas por semana
 	 */
 	public List<ProveedorPorSemana> proveedoresConSolicitudesMinimasPorSemana(PersistenceManager pm){
-		String select = "SELECT fechaSemana, nombre, nit,\n" + 
-				"    MIN(solicitudes) OVER (PARTITION BY fechaSemana) AS solicitudesMinimas \n" + 
+		String select = "SELECT fechaSemana, nombre, nit, solicitudesMaximas\n" + 
 				"FROM\n" + 
-				"(SELECT TRUNC(fecha_esperada, 'WW') fechaSemana, p.nombre, p.nit, COUNT(p.nit) solicitudes\n" + 
-				"FROM ORDEN o, PROVEEDOR p, ORDEN_PROVEEDOR op\n" + 
-				"WHERE\n" + 
-				"    o.id = op.id_orden AND\n" + 
-				"    p.nit = op.id_proveedor\n" + 
-				"GROUP BY TRUNC(fecha_esperada, 'WW'), p.nombre, p.nit\n" + 
-				"ORDER BY TRUNC(fecha_esperada, 'WW')\n" + 
-				")";
+				"    (SELECT fechaSemana, nombre, nit, solicitudes,\n" +  
+				"        MIN(solicitudes) OVER (PARTITION BY fechaSemana) AS solicitudesMinimas \n" + 
+				"    FROM\n" + 
+				"        (SELECT TRUNC(fecha_esperada, 'WW') fechaSemana, p.nombre, p.nit, COUNT(p.nombre) solicitudes\n" + 
+				"        FROM ORDEN o, PROVEEDOR p, ORDEN_PROVEEDOR op\n" + 
+				"        WHERE\n" + 
+				"            o.id = op.id_orden AND\n" + 
+				"            p.nit = op.id_proveedor\n" + 
+				"        GROUP BY TRUNC(fecha_esperada, 'WW'), p.nombre, p.nit\n" + 
+				"        ORDER BY TRUNC(fecha_esperada, 'WW')\n" + 
+				"        )\n" + 
+				"    )\n" + 
+				"WHERE solicitudes = solicitudesMaximas\n" + 
+				"ORDER BY solicitudesMaximas DESC";
 		Query q = pm.newQuery(SQL, select);
 		q.setResultClass(ProveedorPorSemana.class);
 		return (List<ProveedorPorSemana>) q.executeList();
