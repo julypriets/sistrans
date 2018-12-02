@@ -32,31 +32,40 @@ ORDER BY nombre
 -- Ejemplo base RFC12
 
 -- Máximas y mínimas ventas de los productos por semana
-SELECT fechaSemana, nombre, codigo_barras,
-    MAX(ventas) OVER (PARTITION BY fechaSemana) AS ventasMaximas
---    ,MIN(ventas) OVER (PARTITION BY fechaSemana) AS ventasMinimas  // en otra consulta similar para sacar los valores mínimos
+SELECT fechaSemana, nombre, codigo_barras, ventasMaximas
 FROM
-(SELECT TRUNC(fecha, 'WW') fechaSemana, nombre, codigo_barras, COUNT (codigo_barras) ventas
-FROM PRODUCTO p, COMPRA cp, FACTURA f
-WHERE
-    p.codigo_barras = cp.id_producto AND
-    f.id = cp.id_factura
-GROUP BY TRUNC(fecha, 'WW'), nombre, codigo_barras
-ORDER BY TRUNC(fecha, 'WW')
-)
+    (SELECT fechaSemana, nombre, codigo_barras, ventas,
+        MAX(ventas) OVER (PARTITION BY fechaSemana) AS ventasMaximas
+    --    ,MIN(ventas) OVER (PARTITION BY fechaSemana) AS ventasMinimas  // en otra consulta similar para sacar los valores mínimos
+    FROM
+        (SELECT TRUNC(fecha, 'WW') fechaSemana, nombre, codigo_barras, (COUNT (nombre)* SUM(cantidad)) ventas
+        FROM PRODUCTO p, COMPRA cp, FACTURA f
+        WHERE
+            p.codigo_barras = cp.id_producto AND
+            f.id = cp.id_factura
+        GROUP BY TRUNC(fecha, 'WW'), nombre, codigo_barras
+        ORDER BY TRUNC(fecha, 'WW')
+        )
+    )
+WHERE ventas = ventasMaximas;
 
 -- Máximas y mínimas órdenes a proveedores por semana
-SELECT fechaSemana, nombre, nit,
-    MAX(solicitudes) OVER (PARTITION BY fechaSemana) AS solicitudesMaximas
---    ,MIN(solicitudes) OVER (PARTITION BY fechaSemana) AS solicitudesMinimas // en otra consulta similar para sacar los valores mínimos
+SELECT fechaSemana, nombre, nit, solicitudesMaximas
 FROM
-(SELECT TRUNC(fecha_esperada, 'WW') fechaSemana, p.nombre, p.nit, COUNT(p.nit) solicitudes
-FROM ORDEN o, PROVEEDOR p, ORDEN_PROVEEDOR op
-WHERE
-    o.id = op.id_orden AND
-    p.nit = op.id_proveedor
-GROUP BY TRUNC(fecha_esperada, 'WW'), p.nombre, p.nit
-ORDER BY TRUNC(fecha_esperada, 'WW')
-)
+    (SELECT fechaSemana, nombre, nit, solicitudes,
+        MAX(solicitudes) OVER (PARTITION BY fechaSemana) AS solicitudesMaximas
+    --    ,MIN(solicitudes) OVER (PARTITION BY fechaSemana) AS solicitudesMinimas // en otra consulta similar para sacar los valores mínimos
+    FROM
+        (SELECT TRUNC(fecha_esperada, 'WW') fechaSemana, p.nombre, p.nit, COUNT(p.nombre) solicitudes
+        FROM ORDEN o, PROVEEDOR p, ORDEN_PROVEEDOR op
+        WHERE
+            o.id = op.id_orden AND
+            p.nit = op.id_proveedor
+        GROUP BY TRUNC(fecha_esperada, 'WW'), p.nombre, p.nit
+        ORDER BY TRUNC(fecha_esperada, 'WW')
+        )
+    )
+WHERE solicitudes = solicitudesMaximas
+ORDER BY solicitudesMaximas DESC
 
 -- Ejemplo base RFC13

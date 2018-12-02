@@ -123,17 +123,21 @@ public class SQLProducto {
 	 * @return Colección con la información de los productos con ventas máximas por semana
 	 */
 	public List<ProductoPorSemana> productosConVentasMaximasPorSemana(PersistenceManager pm){
-		String select = "SELECT fechaSemana, nombre, codigo_barras,\n" + 
-				"    MAX(ventas) OVER (PARTITION BY fechaSemana) AS ventasMaximas\n" +  
+		String select = "SELECT fechaSemana, nombre, codigo_barras, ventasMaximas\n" + 
 				"FROM\n" + 
-				"(SELECT TRUNC(fecha, 'WW') fechaSemana, nombre, codigo_barras, COUNT (codigo_barras) ventas\n" + 
-				"FROM PRODUCTO p, COMPRA cp, FACTURA f\n" + 
-				"WHERE\n" + 
-				"    p.codigo_barras = cp.id_producto AND\n" + 
-				"    f.id = cp.id_factura\n" + 
-				"GROUP BY TRUNC(fecha, 'WW'), nombre, codigo_barras\n" + 
-				"ORDER BY TRUNC(fecha, 'WW')\n" + 
-				")";
+				"    (SELECT fechaSemana, nombre, codigo_barras, ventas,\n" + 
+				"        MAX(ventas) OVER (PARTITION BY fechaSemana) AS ventasMaximas\n" +  
+				"    FROM\n" + 
+				"        (SELECT TRUNC(fecha, 'WW') fechaSemana, nombre, codigo_barras, (COUNT (nombre)* SUM(cantidad)) ventas\n" + 
+				"        FROM PRODUCTO p, COMPRA cp, FACTURA f\n" + 
+				"        WHERE\n" + 
+				"            p.codigo_barras = cp.id_producto AND\n" + 
+				"            f.id = cp.id_factura\n" + 
+				"        GROUP BY TRUNC(fecha, 'WW'), nombre, codigo_barras\n" + 
+				"        ORDER BY TRUNC(fecha, 'WW')\n" + 
+				"        )\n" + 
+				"    )\n" + 
+				"WHERE ventas = ventasMaximas;";
 		Query q = pm.newQuery(SQL, select);
 		q.setResultClass(ProductoPorSemana.class);
 		return (List<ProductoPorSemana>) q.executeList();
@@ -145,17 +149,21 @@ public class SQLProducto {
 	 * @return Colección con la información de los productos con ventas mínimas por semana
 	 */
 	public List<ProductoPorSemana> productosConVentasMinimasPorSemana(PersistenceManager pm){
-		String select = "SELECT fechaSemana, nombre, codigo_barras,\n" +  
-				"    MIN(ventas) OVER (PARTITION BY fechaSemana) AS ventasMinimas\n" + 
+		String select = "SELECT fechaSemana, nombre, codigo_barras, ventasMaximas\n" + 
 				"FROM\n" + 
-				"(SELECT TRUNC(fecha, 'WW') fechaSemana, nombre, codigo_barras, COUNT (codigo_barras) ventas\n" + 
-				"FROM PRODUCTO p, COMPRA cp, FACTURA f\n" + 
-				"WHERE\n" + 
-				"    p.codigo_barras = cp.id_producto AND\n" + 
-				"    f.id = cp.id_factura\n" + 
-				"GROUP BY TRUNC(fecha, 'WW'), nombre, codigo_barras\n" + 
-				"ORDER BY TRUNC(fecha, 'WW')\n" + 
-				")";
+				"    (SELECT fechaSemana, nombre, codigo_barras, ventas,\n" +  
+				"        MIN(ventas) OVER (PARTITION BY fechaSemana) AS ventasMinimas  \n" + 
+				"    FROM\n" + 
+				"        (SELECT TRUNC(fecha, 'WW') fechaSemana, nombre, codigo_barras, (COUNT (nombre)* SUM(cantidad)) ventas\n" + 
+				"        FROM PRODUCTO p, COMPRA cp, FACTURA f\n" + 
+				"        WHERE\n" + 
+				"            p.codigo_barras = cp.id_producto AND\n" + 
+				"            f.id = cp.id_factura\n" + 
+				"        GROUP BY TRUNC(fecha, 'WW'), nombre, codigo_barras\n" + 
+				"        ORDER BY TRUNC(fecha, 'WW')\n" + 
+				"        )\n" + 
+				"    )\n" + 
+				"WHERE ventas = ventasMaximas;";
 		Query q = pm.newQuery(SQL, select);
 		q.setResultClass(ProductoPorSemana.class);
 		return (List<ProductoPorSemana>) q.executeList();

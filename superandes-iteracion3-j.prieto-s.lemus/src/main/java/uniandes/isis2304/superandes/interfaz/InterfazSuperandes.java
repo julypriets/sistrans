@@ -54,7 +54,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import com.sun.org.apache.xpath.internal.operations.Div;
 
-import javafx.scene.control.DatePicker;
+
 import uniandes.isis2304.superandes.interfaz.PanelDatos;
 import uniandes.isis2304.superandes.negocio.Carrito;
 import uniandes.isis2304.superandes.negocio.Cliente;
