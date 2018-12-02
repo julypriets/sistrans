@@ -1,6 +1,10 @@
 package uniandes.isis2304.superandes.interfaz;
 
 import java.io.FileReader;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -13,6 +17,7 @@ import com.google.gson.stream.JsonReader;
 
 import uniandes.isis2304.superandes.negocio.Cliente;
 import uniandes.isis2304.superandes.negocio.Estante;
+import uniandes.isis2304.superandes.negocio.FacturaCliente;
 import uniandes.isis2304.superandes.negocio.Superandes;
 
 public class Prueba {
@@ -56,12 +61,42 @@ public class Prueba {
 //			System.out.println(c.toString());
 //		}
 		
-		System.out.println(superandes.darCarroPorCliente((long)835));
-		System.out.println(superandes.getPersistenciaSuperandes().darCantidadDeProducto(1584, "RO094VSGI981U"));
-		//superandes.getPersistenciaSuperandes().desocuparCarro(834);
-		List<Estante> estantes = superandes.getPersistenciaSuperandes().darEstantesPorCategoria(6);
-		for(Estante e : estantes){
-			System.out.println(e.toString());
+//		System.out.println(superandes.darCarroPorCliente((long)835));
+//		System.out.println(superandes.getPersistenciaSuperandes().darCantidadDeProducto(1584, "RO094VSGI981U"));
+//		//superandes.getPersistenciaSuperandes().desocuparCarro(834);
+//		List<Estante> estantes = superandes.getPersistenciaSuperandes().darEstantesPorCategoria(6);
+//		for(Estante e : estantes){
+//			System.out.println(e.toString());
+//		}
+		
+//		Timestamp fechaInicioFormateada = null;
+//		Timestamp fechaFinFormateada = null;
+//		
+//		try{
+//			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//			Date parsedDateIni = dateFormat.parse("2000-01-01");
+//			fechaInicioFormateada = new Timestamp(parsedDateIni.getTime());
+//
+//			Date parsedDateFin = dateFormat.parse("2000-11-01");
+//			fechaFinFormateada = new Timestamp(parsedDateFin.getTime());
+//			System.out.println(fechaInicioFormateada + ", " + fechaFinFormateada);
+//		}catch (Exception e) {
+//			e.printStackTrace();
+//		}
+		List<FacturaCliente> fc = new LinkedList<>();
+		List<FacturaCliente> fc1 = new LinkedList<>();
+		try {
+			fc = superandes.clientesQueCompraronElProductoPorRangoFecha("2001-01-01", "2001-11-01", "nombre", "Bread - Olive", 0);
+			fc1 = superandes.clientesQueNoCompraronElProductoPorRangoFecha("2001-01-01", "2001-11-01", "nombre", "Bread - Olive", 0);
+		}catch (Exception e) {
+			e.getStackTrace();
+		}
+		for(FacturaCliente f : fc) {
+			System.out.println(f);
+		}
+		
+		for(FacturaCliente f : fc1) {
+			System.out.println(f);
 		}
 	}
 }

@@ -1,27 +1,31 @@
 -- Ejemplo base RFC10
 SELECT f.id, f.fecha, f.precio_total, f.id_cliente, c.nombre, c.correo, p.nombre nombreProducto, p.codigo_barras, COUNT (f.id_cliente) cantidad
-FROM FACTURA f, CLIENTE c, COMPRA cp, Producto p
+FROM FACTURA f, CLIENTE c, COMPRA cp, Producto p, CAJERO cj
 WHERE
     f.id_cliente = c.id AND
     f.id = cp.id_factura AND
-    p.codigo_barras = cp.id_producto
-    AND p.nombre = 'Beans - French'
-    AND f.fecha BETWEEN to_date('15-JAN-10') AND to_date('17-JAN-10')
+    p.codigo_barras = cp.id_producto AND
+    p.nombre = 'Beans - French' AND
+    cj.id = f.id_cajero AND
+    f.fecha BETWEEN to_date('01-JAN-01') AND to_date('01-NOV-01')
+    --AND cj.id_sucursal = 1
 GROUP BY f.id, f.fecha, f.precio_total, f.id_cliente, c.nombre, c.correo, p.nombre, p.codigo_barras
 ORDER BY nombre
 
 -- Ejemplo base RFC11
 SELECT f.id, f.fecha, f.precio_total, f.id_cliente, c.nombre, c.correo, p.nombre nombreProducto, p.codigo_barras, cp.cantidad
-FROM FACTURA f, CLIENTE c, COMPRA cp, Producto p
+FROM FACTURA f, CLIENTE c, COMPRA cp, Producto p, CAJERO cj
 WHERE
     f.id_cliente = c.id AND
     f.id = cp.id_factura AND
     p.codigo_barras = cp.id_producto AND
+    cj.id = f.id_cajero AND
     c.id IN (
         SELECT id FROM CLIENTE
         MINUS
         (SELECT id_cliente FROM FACTURA WHERE p.nombre = 'Beans - French' AND fecha BETWEEN to_date('15-JAN-10') AND to_date('17-JAN-10'))
-    )
+    ) AND
+    cj.id_sucursal = 1
 GROUP BY f.id, f.fecha, f.precio_total, f.id_cliente, c.nombre, c.correo, p.nombre, p.codigo_barras, cp.cantidad
 ORDER BY nombre
 

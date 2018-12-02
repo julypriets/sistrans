@@ -178,7 +178,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
         add (new JLabel (new ImageIcon (path)), BorderLayout.NORTH );          
         add( panelDatos, BorderLayout.CENTER );
         //VerificacionPromocion.intervaloLimpiezaPromocion(this, 10000);
-        RecoleccionProductosAbandonados.intervaloRecoleccionProductosAbandonados(this, 40000);
+        //RecoleccionProductosAbandonados.intervaloRecoleccionProductosAbandonados(this, 40000);
     }
     
 	/* ****************************************************************

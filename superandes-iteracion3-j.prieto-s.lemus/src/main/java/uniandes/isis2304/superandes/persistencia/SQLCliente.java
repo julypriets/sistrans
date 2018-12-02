@@ -171,15 +171,15 @@ public class SQLCliente {
 	public List<FacturaCliente> clientesQueCompraronElProductoPorRangoFecha(
 			PersistenceManager pm, Date fechaInicial, Date fechaFinal, String criterioOrdenamiento, String nombreProducto, long idSucursal) {
 		
-		String select = "SELECT f.id, f.fecha, f.precio_total, f.id_cliente, c.nombre, c.correo, p.nombre nombreProducto, p.codigo_barras, COUNT (f.id_cliente) cantidad\n" + 
+		String select = "SELECT f.id, f.fecha, f.precio_total, f.id_cliente, c.nombre, c.correo, p.nombre nombreProducto, p.codigo_barras codigo_barras, COUNT (f.id_cliente) cantidad\n" + 
 				"FROM FACTURA f, CLIENTE c, COMPRA cp, Producto p, CAJERO cj\n" + 
 				"WHERE\n" + 
 				"    f.id_cliente = c.id AND\n" + 
 				"    f.id = cp.id_factura AND \n" + 
 				"    p.codigo_barras = cp.id_producto AND\n" +
 				"    cj.id = f.id_cajero \n" +
-				"    AND p.nombre = ' " + nombreProducto + "'\n" + 
-				"    AND f.fecha BETWEEN to_date('" + fechaInicial + "') AND to_date('" + fechaFinal + "')\n";
+				"    AND p.nombre = '" + nombreProducto + "'\n" + 
+				"    AND f.fecha BETWEEN (timestamp  '" + fechaInicial+ "') AND (timestamp '" + fechaFinal + "')\n";
 		
 		if(idSucursal > 0) {
 			select += "AND cj.id_sucursal = " + idSucursal + "\n";
@@ -191,6 +191,7 @@ public class SQLCliente {
 		
 		Query q = pm.newQuery(SQL, select);
 		q.setResultClass(FacturaCliente.class);
+		//q.setParameters(fechaInicial, fechaFinal);
 		return (List<FacturaCliente>) q.executeList();
 	}
 	
@@ -216,7 +217,7 @@ public class SQLCliente {
 				"    c.id IN (\n" + 
 				"        SELECT id FROM CLIENTE\n" + 
 				"        MINUS\n" + 
-				"        (SELECT id_cliente FROM FACTURA WHERE p.nombre = ' " + nombreProducto + "' AND fecha BETWEEN to_date(' " + fechaInicial+ "') AND to_date(' " + fechaFinal + "'))\n" + 
+				"        (SELECT id_cliente FROM FACTURA WHERE p.nombre = '" + nombreProducto + " AND f.fecha BETWEEN (timestamp  '" + fechaInicial+ "') AND (timestamp '" + fechaFinal + "')\n" + 
 				"    )\n";
 		
 		if(idSucursal > 0) {
@@ -229,6 +230,7 @@ public class SQLCliente {
 		
 		Query q = pm.newQuery(SQL, select);
 		q.setResultClass(FacturaCliente.class);
+		//q.setParameters(fechaInicial, fechaFinal);
 		return (List<FacturaCliente>) q.executeList();
 	}
 	

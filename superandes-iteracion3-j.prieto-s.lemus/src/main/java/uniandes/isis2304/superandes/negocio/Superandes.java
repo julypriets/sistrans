@@ -162,10 +162,10 @@ public class Superandes
 			throw new Exception("El id de la categoría ingresado no es válido");
 		}
 
-		Timestamp fechaVencimientoFormateada = (Timestamp) new Date();
+		Timestamp fechaVencimientoFormateada = null;
 
 		try{
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Date parsedDate = dateFormat.parse(fechaVencimiento);
 			fechaVencimientoFormateada = new Timestamp(parsedDate.getTime());
 		}catch (Exception e) {
@@ -228,11 +228,11 @@ public class Superandes
 			throw new Exception("Los valores ingresados para las cantidades son inválidas");
 		}
 
-		Timestamp fechaInicioFormateada = (Timestamp) new Date();
-		Timestamp fechaFinFormateada = (Timestamp) new Date();
+		Timestamp fechaInicioFormateada = null;
+		Timestamp fechaFinFormateada = null;
 
 		try{
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Date parsedDateIni = dateFormat.parse(fechaInicio);
 			fechaInicioFormateada = new Timestamp(parsedDateIni.getTime());
 
@@ -671,17 +671,17 @@ public class Superandes
 	public List<FacturaCliente> clientesQueCompraronElProductoPorRangoFecha(
 			String fechaInicial, String fechaFinal, String criterioOrdenamiento, String nombreProducto, long idSucursal) throws Exception{
 		
-		if(!(criterioOrdenamiento.equals(FacturaCliente.NOMBRE) && criterioOrdenamiento.equals(FacturaCliente.ID_FACTURA) &&
-				criterioOrdenamiento.equals(FacturaCliente.FECHA) && criterioOrdenamiento.equals(FacturaCliente.CORREO) &&
+		if(!(criterioOrdenamiento.equals(FacturaCliente.NOMBRE) || criterioOrdenamiento.equals(FacturaCliente.ID_FACTURA) ||
+				criterioOrdenamiento.equals(FacturaCliente.FECHA) || criterioOrdenamiento.equals(FacturaCliente.CORREO) ||
 				criterioOrdenamiento.equals(FacturaCliente.CANTIDAD))) {
 			throw new Exception("El criterio de ordenamiento indicado no existe");
 		}
 		
-		Timestamp fechaInicioFormateada = (Timestamp) new Date();
-		Timestamp fechaFinFormateada = (Timestamp) new Date();
+		Timestamp fechaInicioFormateada = null;
+		Timestamp fechaFinFormateada = null;
 
 		try{
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Date parsedDateIni = dateFormat.parse(fechaInicial);
 			fechaInicioFormateada = new Timestamp(parsedDateIni.getTime());
 
@@ -706,17 +706,17 @@ public class Superandes
 	 */
 	public List<FacturaCliente> clientesQueNoCompraronElProductoPorRangoFecha(
 			String fechaInicial, String fechaFinal, String criterioOrdenamiento, String nombreProducto, long idSucursal) throws Exception{
-		if(!(criterioOrdenamiento.equals(FacturaCliente.NOMBRE) && criterioOrdenamiento.equals(FacturaCliente.ID_FACTURA) &&
-				criterioOrdenamiento.equals(FacturaCliente.FECHA) && criterioOrdenamiento.equals(FacturaCliente.CORREO) &&
+		if(!(criterioOrdenamiento.equals(FacturaCliente.NOMBRE) || criterioOrdenamiento.equals(FacturaCliente.ID_FACTURA) ||
+				criterioOrdenamiento.equals(FacturaCliente.FECHA) || criterioOrdenamiento.equals(FacturaCliente.CORREO) ||
 				criterioOrdenamiento.equals(FacturaCliente.CANTIDAD))) {
 			throw new Exception("El criterio de ordenamiento indicado no existe");
 		}
 		
-		Timestamp fechaInicioFormateada = (Timestamp) new Date();
-		Timestamp fechaFinFormateada = (Timestamp) new Date();
+		Timestamp fechaInicioFormateada = null;
+		Timestamp fechaFinFormateada = null;
 
 		try{
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Date parsedDateIni = dateFormat.parse(fechaInicial);
 			fechaInicioFormateada = new Timestamp(parsedDateIni.getTime());
 
