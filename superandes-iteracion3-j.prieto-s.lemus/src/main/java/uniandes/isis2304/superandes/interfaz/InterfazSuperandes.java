@@ -62,6 +62,7 @@ import uniandes.isis2304.superandes.negocio.Producto;
 import uniandes.isis2304.superandes.negocio.ProductoPorSemana;
 import uniandes.isis2304.superandes.negocio.ProveedorPorSemana;
 import uniandes.isis2304.superandes.negocio.Superandes;
+import uniandes.isis2304.superandes.negocio.Usuario;
 import uniandes.isis2304.superandes.negocio.VOBebedor;
 import uniandes.isis2304.superandes.negocio.VOBodega;
 import uniandes.isis2304.superandes.negocio.VOCliente;
@@ -72,6 +73,7 @@ import uniandes.isis2304.superandes.negocio.VOProducto;
 import uniandes.isis2304.superandes.negocio.VOPromocion;
 import uniandes.isis2304.superandes.negocio.VOProveedor;
 import uniandes.isis2304.superandes.negocio.VOSucursal;
+import uniandes.isis2304.superandes.negocio.VOUsuario;
 import uniandes.isis2304.superandes.tareasTemporales.RecoleccionProductosAbandonados;
 import uniandes.isis2304.superandes.tareasTemporales.VerificacionPromocion;
 
@@ -138,6 +140,11 @@ public class InterfazSuperandes extends JFrame implements ActionListener
      * El cliente que inició sesión en la aplicación
      */
     private VOCliente loggedClient;
+    
+    /**
+     * El usuario que inició sesión en la aplicación
+     */
+    private VOUsuario loggedUser;
 
 	/* ****************************************************************
 	 * 			Métodos
@@ -149,6 +156,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     public InterfazSuperandes( )
     {
     	loggedClient = null;
+    	loggedUser = null;
     	
         // Carga la configuración de la interfaz desde un archivo JSON
         guiConfig = openConfig ("Interfaz", CONFIG_INTERFAZ);
@@ -709,7 +717,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
      * Verifica si la identificación del cliente está registrada e inicia sesión
      */
     public void iniciarSesionClientePersona(){
-    	if(loggedClient == null){
+    	if(loggedClient == null && loggedUser == null){
         	try 
         	{
         		JTextField identificacion = new JTextField();
@@ -755,7 +763,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
      * Verifica si el nit de la empresa está registrada e inicia sesión
      */
     public void iniciarSesionClienteEmpresa(){
-    	if(loggedClient == null){
+    	if(loggedClient == null && loggedUser == null){
         	try 
         	{
         		JTextField nit = new JTextField();
@@ -800,9 +808,10 @@ public class InterfazSuperandes extends JFrame implements ActionListener
      * Cerrar sesión 
      */
     public void cerrarSesion(){
-    	int option = JOptionPane.showConfirmDialog(this, "Desea cerrar sesión");
+    	int option = JOptionPane.showConfirmDialog(this, "Desea cerrar sesión?");
     	if (option == JOptionPane.OK_OPTION) {
-			loggedClient = null;
+    		loggedClient = null;
+    		loggedUser = null;
     		String resultado = "En cerrarSesion\n\n";
     		resultado += "Se cerró sesión exitosamente ";
 			resultado += "\n Operación terminada";
@@ -810,6 +819,104 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 		}else{
 			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
 		}
+    }
+    
+	/* ****************************************************************
+	 * 			Operaciones Usuario
+	 *****************************************************************/
+    
+    public void iniciarSesionUsuarioAdministrador() {
+    	if(loggedClient == null && loggedUser == null) {
+        	if(loggedClient == null && loggedUser == null){
+            	try 
+            	{
+            		JTextField username = new JTextField();
+            		JTextField password = new JTextField();
+            		Object[] message = {
+            		    "username:", username,
+            		    "password:", password,
+            		};
+            		int option = JOptionPane.showConfirmDialog(this, message, "Ingresar con usuario y contraseña", JOptionPane.OK_CANCEL_OPTION);
+            		if (option == JOptionPane.OK_OPTION)
+            		{
+                		String usernameResp = username.getText();
+                		String passwordResp = password.getText();
+                		
+                		VOUsuario u = superandes.darUsuarioAdministradorPorUsername(usernameResp, passwordResp);
+                		if(u != null){
+                			loggedUser = u;
+                			JOptionPane.showMessageDialog(this, "Bienvenido(a) " + u.getNombre(), "Sesión iniciada exitosamente", JOptionPane.INFORMATION_MESSAGE);
+                			
+                    		String resultado = "En iniciarSesionUsuarioAdministrador\n\n";
+                    		resultado += "Se inició sesión exitosamente: " + u.getNombre() + " Correo: " + u.getTipo();
+                			resultado += "\n Operación terminada";
+                    		panelDatos.actualizarInterfaz(resultado);
+                		}else{
+                			JOptionPane.showMessageDialog(this, "El usuario o contraseña no son correctos", "Error", JOptionPane.ERROR_MESSAGE);
+                		}
+
+            		}else {
+            			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+            		}
+
+        		} 
+            	catch (Exception e) 
+            	{
+//        			e.printStackTrace();
+        			String resultado = generarMensajeError(e);
+        			panelDatos.actualizarInterfaz(resultado);
+        		}
+        	}else{
+        		JOptionPane.showMessageDialog(this, "Ya existe una sesión iniciada, por favor cerrar sesión", "Error", JOptionPane.ERROR_MESSAGE);
+        	}
+    	}
+    }
+    
+    public void iniciarSesionUsuarioGerente() {
+    	if(loggedClient == null && loggedUser == null) {
+        	if(loggedClient == null && loggedUser == null){
+            	try 
+            	{
+            		JTextField username = new JTextField();
+            		JTextField password = new JTextField();
+            		Object[] message = {
+            		    "username:", username,
+            		    "password:", password,
+            		};
+            		int option = JOptionPane.showConfirmDialog(this, message, "Ingresar con usuario y contraseña", JOptionPane.OK_CANCEL_OPTION);
+            		if (option == JOptionPane.OK_OPTION)
+            		{
+                		String usernameResp = username.getText();
+                		String passwordResp = password.getText();
+                		
+                		VOUsuario u = superandes.darUsuarioGerentePorUsername(usernameResp, passwordResp);
+                		if(u != null){
+                			loggedUser = u;
+                			JOptionPane.showMessageDialog(this, "Bienvenido(a) " + u.getNombre(), "Sesión iniciada exitosamente", JOptionPane.INFORMATION_MESSAGE);
+                			
+                    		String resultado = "En iniciarSesionUsuarioAdministrador\n\n";
+                    		resultado += "Se inició sesión exitosamente: " + u.getNombre() + " Correo: " + u.getTipo();
+                			resultado += "\n Operación terminada";
+                    		panelDatos.actualizarInterfaz(resultado);
+                		}else{
+                			JOptionPane.showMessageDialog(this, "El usuario o contraseña no son correctos", "Error", JOptionPane.ERROR_MESSAGE);
+                		}
+
+            		}else {
+            			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+            		}
+
+        		} 
+            	catch (Exception e) 
+            	{
+//        			e.printStackTrace();
+        			String resultado = generarMensajeError(e);
+        			panelDatos.actualizarInterfaz(resultado);
+        		}
+        	}else{
+        		JOptionPane.showMessageDialog(this, "Ya existe una sesión iniciada, por favor cerrar sesión", "Error", JOptionPane.ERROR_MESSAGE);
+        	}
+    	}
     }
     
 	/* ****************************************************************
@@ -1386,50 +1493,54 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 	 * en un rango de fechas especificado
      */
     public void clientesQueCompraronElProductoPorRangoDeFecha() {
-    	try 
-    	{
-    		JTextField nombreProducto = new JTextField();
-    		JTextField fechaInicio = new JTextField();
-    		JTextField fechaFin = new JTextField();
-    		JTextField criterioOrdenamiento = new JTextField();
-    		Object[] message = {
-    		    "Ingrese el nombre del producto:", nombreProducto,
-    		    "Ingrese la fecha de inicio del rango (debe estar en formato año/mes/día: yyyy/MM/dd ):", fechaInicio,
-    		    "Ingrese la fecha de finalización del rango (debe estar en formato año/mes/día: yyyy/MM/dd ):", fechaFin,
-    		    "Ingrese criterio de ordenamiento (puede ser: 'id', 'fecha', 'cantidad' o 'correo') :", criterioOrdenamiento,
-    		    
-    		};
-    		int option = JOptionPane.showConfirmDialog(this, message, "Dar clientes por producto y rango de fecha", JOptionPane.OK_CANCEL_OPTION);
-    		if (option == JOptionPane.OK_OPTION)
-    		{
-        		String nombreProductoResp = nombreProducto.getText();
-        		String fechaInicialResp = fechaInicio.getText();
-        		String fechaFinalResp = fechaFin.getText();
-        		String criterioOrdenamientoResp = criterioOrdenamiento.getText();
-        		
-        		List<FacturaCliente> cs = superandes.clientesQueCompraronElProductoPorRangoFecha(fechaInicialResp, fechaFinalResp, criterioOrdenamientoResp, nombreProductoResp);
-        		String resultado = "En clientesQueCompraronElProductoPorRangoDeFecha\n\n";
-        		
-        		if(cs.isEmpty()) {
-        			resultado += "No se encontraron clientes asociados a la búsqueda";
+    	if(loggedUser != null) {
+        	try 
+        	{
+        		JTextField nombreProducto = new JTextField();
+        		JTextField fechaInicio = new JTextField();
+        		JTextField fechaFin = new JTextField();
+        		JTextField criterioOrdenamiento = new JTextField();
+        		Object[] message = {
+        		    "Ingrese el nombre del producto:", nombreProducto,
+        		    "Ingrese la fecha de inicio del rango (debe estar en formato año/mes/día: yyyy/MM/dd ):", fechaInicio,
+        		    "Ingrese la fecha de finalización del rango (debe estar en formato año/mes/día: yyyy/MM/dd ):", fechaFin,
+        		    "Ingrese criterio de ordenamiento (puede ser: 'id', 'fecha', 'cantidad' o 'correo') :", criterioOrdenamiento,
+        		    
+        		};
+        		int option = JOptionPane.showConfirmDialog(this, message, "Dar clientes por producto y rango de fecha", JOptionPane.OK_CANCEL_OPTION);
+        		if (option == JOptionPane.OK_OPTION)
+        		{
+            		String nombreProductoResp = nombreProducto.getText();
+            		String fechaInicialResp = fechaInicio.getText();
+            		String fechaFinalResp = fechaFin.getText();
+            		String criterioOrdenamientoResp = criterioOrdenamiento.getText();
+            		
+            		List<FacturaCliente> cs = superandes.clientesQueCompraronElProductoPorRangoFecha(fechaInicialResp, fechaFinalResp, criterioOrdenamientoResp, nombreProductoResp, loggedUser.getIdSucursal());
+            		String resultado = "En clientesQueCompraronElProductoPorRangoDeFecha\n\n";
+            		
+            		if(cs.isEmpty()) {
+            			resultado += "No se encontraron clientes asociados a la búsqueda";
+            		}else {
+            			for(FacturaCliente c: cs) {
+            				resultado += c.toString() + "\n";
+            			}
+            		}
+        			resultado += "\n Operación terminada";
+            		panelDatos.actualizarInterfaz(resultado);
         		}else {
-        			for(FacturaCliente c: cs) {
-        				resultado += c.toString() + "\n";
-        			}
+        			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
         		}
-    			resultado += "\n Operación terminada";
-        		panelDatos.actualizarInterfaz(resultado);
-    		}else {
-    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-    		}
 
-		} 
-    	catch (Exception e) 
-    	{
-//			e.printStackTrace();
-			String resultado = generarMensajeError(e);
-			panelDatos.actualizarInterfaz(resultado);
-		}
+    		} 
+        	catch (Exception e) 
+        	{
+//    			e.printStackTrace();
+    			String resultado = generarMensajeError(e);
+    			panelDatos.actualizarInterfaz(resultado);
+    		}
+    	}else {
+    		JOptionPane.showMessageDialog(this, "Esta operación solo se puede realizar si ha iniciado sesión previamente como administrador o gerente", "Error", JOptionPane.ERROR_MESSAGE);
+    	}
     }
     
     /**
@@ -1437,123 +1548,144 @@ public class InterfazSuperandes extends JFrame implements ActionListener
 	 * en un rango de fechas especificado
      */
     public void clientesQueNoCompraronElProductoPorRangoFecha() {
-    	try 
-    	{
-    		JTextField nombreProducto = new JTextField();
-    		JTextField fechaInicio = new JTextField();
-    		JTextField fechaFin = new JTextField();
-    		JTextField criterioOrdenamiento = new JTextField();
-    		Object[] message = {
-    		    "Ingrese el nombre del producto:", nombreProducto,
-    		    "Ingrese la fecha de inicio del rango (debe estar en formato año/mes/día: yyyy/MM/dd ):", fechaInicio,
-    		    "Ingrese la fecha de finalización del rango (debe estar en formato año/mes/día: yyyy/MM/dd ):", fechaFin,
-    		    "Ingrese criterio de ordenamiento (puede ser: 'id', 'fecha', 'cantidad' o 'correo') :", criterioOrdenamiento,
-    		    
-    		};
-    		int option = JOptionPane.showConfirmDialog(this, message, "Dar clientes que no compraron el producto, por rango de fecha", JOptionPane.OK_CANCEL_OPTION);
-    		if (option == JOptionPane.OK_OPTION)
-    		{
-        		String nombreProductoResp = nombreProducto.getText();
-        		String fechaInicialResp = fechaInicio.getText();
-        		String fechaFinalResp = fechaFin.getText();
-        		String criterioOrdenamientoResp = criterioOrdenamiento.getText();
-        		
-        		List<FacturaCliente> cs = superandes.clientesQueNoCompraronElProductoPorRangoFecha(fechaInicialResp, fechaFinalResp, criterioOrdenamientoResp, nombreProductoResp);
-        		String resultado = "En clientesQueNoCompraronElProductoPorRangoFecha\n\n";
-        		
-        		if(cs.isEmpty()) {
-        			resultado += "No se encontraron clientes asociados a la búsqueda";
+    	if(loggedUser != null) {
+        	try 
+        	{
+        		JTextField nombreProducto = new JTextField();
+        		JTextField fechaInicio = new JTextField();
+        		JTextField fechaFin = new JTextField();
+        		JTextField criterioOrdenamiento = new JTextField();
+        		Object[] message = {
+        		    "Ingrese el nombre del producto:", nombreProducto,
+        		    "Ingrese la fecha de inicio del rango (debe estar en formato año/mes/día: yyyy/MM/dd ):", fechaInicio,
+        		    "Ingrese la fecha de finalización del rango (debe estar en formato año/mes/día: yyyy/MM/dd ):", fechaFin,
+        		    "Ingrese criterio de ordenamiento (puede ser: 'id', 'fecha', 'cantidad' o 'correo') :", criterioOrdenamiento,
+        		    
+        		};
+        		int option = JOptionPane.showConfirmDialog(this, message, "Dar clientes que no compraron el producto, por rango de fecha", JOptionPane.OK_CANCEL_OPTION);
+        		if (option == JOptionPane.OK_OPTION)
+        		{
+            		String nombreProductoResp = nombreProducto.getText();
+            		String fechaInicialResp = fechaInicio.getText();
+            		String fechaFinalResp = fechaFin.getText();
+            		String criterioOrdenamientoResp = criterioOrdenamiento.getText();
+            		
+            		List<FacturaCliente> cs = superandes.clientesQueNoCompraronElProductoPorRangoFecha(fechaInicialResp, fechaFinalResp, criterioOrdenamientoResp, nombreProductoResp, loggedUser.getIdSucursal());
+            		String resultado = "En clientesQueNoCompraronElProductoPorRangoFecha\n\n";
+            		
+            		if(cs.isEmpty()) {
+            			resultado += "No se encontraron clientes asociados a la búsqueda";
+            		}else {
+            			for(FacturaCliente c: cs) {
+            				resultado += c.toString() + "\n";
+            			}
+            		}
+        			resultado += "\n Operación terminada";
+            		panelDatos.actualizarInterfaz(resultado);
         		}else {
-        			for(FacturaCliente c: cs) {
-        				resultado += c.toString() + "\n";
-        			}
+        			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
         		}
-    			resultado += "\n Operación terminada";
-        		panelDatos.actualizarInterfaz(resultado);
-    		}else {
-    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-    		}
 
-		} 
-    	catch (Exception e) 
-    	{
-//			e.printStackTrace();
-			String resultado = generarMensajeError(e);
-			panelDatos.actualizarInterfaz(resultado);
-		}
+    		} 
+        	catch (Exception e) 
+        	{
+//    			e.printStackTrace();
+    			String resultado = generarMensajeError(e);
+    			panelDatos.actualizarInterfaz(resultado);
+    		}
+    	} else {
+    		JOptionPane.showMessageDialog(this, "Esta operación solo se puede realizar si ha iniciado sesión previamente como administrador o gerente", "Error", JOptionPane.ERROR_MESSAGE);
+    	}
+    	
+
     }
     
     /**
      * (RFC12) Retorna la información de los productos con ventas máximas por semana
      */
     public void productosConVentasMaximasPorSemana() {
-		List<ProductoPorSemana> ps = superandes.productosConVentasMaximasPorSemana();
-		String resultado = " en productosConVentasMaximasPorSemana\n\n";
-		
-		if(ps.size() == 0){
-			resultado += "no hay productos disponibles\n\n";
-		}else{
-			for (int i = 0; i < ps.size(); i++) {
-				resultado += ps.get(i).toString() + "\n";
-			}
-		}
-		resultado += "Terminó proceso";
-		panelDatos.actualizarInterfaz(resultado);
-		
+    	if(loggedUser != null && loggedUser.getTipo().equals(Usuario.ADMINISTRADOR)) {
+    		List<ProductoPorSemana> ps = superandes.productosConVentasMaximasPorSemana();
+    		String resultado = " en productosConVentasMaximasPorSemana\n\n";
+    		
+    		if(ps.size() == 0){
+    			resultado += "no hay productos disponibles\n\n";
+    		}else{
+    			for (int i = 0; i < ps.size(); i++) {
+    				resultado += ps.get(i).toString() + "\n";
+    			}
+    		}
+    		resultado += "Terminó proceso";
+    		panelDatos.actualizarInterfaz(resultado);
+    	}else {
+    		JOptionPane.showMessageDialog(this, "Esta operación solo se puede realizar si ha iniciado sesión previamente como administrador", "Error", JOptionPane.ERROR_MESSAGE);
+    	}
     }
     
     /**
      * (RFC12) Retorna la información de los productos con ventas mínimas por semana
      */
     public void productosConVentasMinimasPorSemana() {
-		List<ProductoPorSemana> ps = superandes.productosConVentasMinimasPorSemana();
-		String resultado = " en productosConVentasMinimasPorSemana\n\n";
-		
-		if(ps.size() == 0){
-			resultado += "no hay productos disponibles\n\n";
-		}else{
-			for (int i = 0; i < ps.size(); i++) {
-				resultado += ps.get(i).toString() + "\n";
-			}
-		}
-		resultado += "Terminó proceso";
-		panelDatos.actualizarInterfaz(resultado);
+    	if(loggedUser != null && loggedUser.getTipo().equals(Usuario.ADMINISTRADOR)) {
+    		List<ProductoPorSemana> ps = superandes.productosConVentasMinimasPorSemana();
+    		String resultado = " en productosConVentasMinimasPorSemana\n\n";
+    		
+    		if(ps.size() == 0){
+    			resultado += "no hay productos disponibles\n\n";
+    		}else{
+    			for (int i = 0; i < ps.size(); i++) {
+    				resultado += ps.get(i).toString() + "\n";
+    			}
+    		}
+    		resultado += "Terminó proceso";
+    		panelDatos.actualizarInterfaz(resultado);
+    	}else {
+    		JOptionPane.showMessageDialog(this, "Esta operación solo se puede realizar si ha iniciado sesión previamente como administrador", "Error", JOptionPane.ERROR_MESSAGE);
+    	}
     }
     
     /**
      * (RFC12) Retorna la información de los proveedores con solicitudes máximas por semana
      */
     public void proveedoresConSolicitudesMaximasPorSemana() {
-		List<ProveedorPorSemana> ps = superandes.proveedoresConSolicitudesMaximasPorSemana();
-		String resultado = " en proveedoresConSolicitudesMaximasPorSemana\n\n";
-		
-		if(ps.size() == 0){
-			resultado += "no hay proveedores disponibles\n\n";
-		}else{
-			for (int i = 0; i < ps.size(); i++) {
-				resultado += ps.get(i).toString() + "\n";
-			}
-		}
-		resultado += "Terminó proceso";
-		panelDatos.actualizarInterfaz(resultado);
+    	if(loggedUser != null && loggedUser.getTipo().equals(Usuario.ADMINISTRADOR)) {
+    		List<ProveedorPorSemana> ps = superandes.proveedoresConSolicitudesMaximasPorSemana();
+    		String resultado = " en proveedoresConSolicitudesMaximasPorSemana\n\n";
+    		
+    		if(ps.size() == 0){
+    			resultado += "no hay proveedores disponibles\n\n";
+    		}else{
+    			for (int i = 0; i < ps.size(); i++) {
+    				resultado += ps.get(i).toString() + "\n";
+    			}
+    		}
+    		resultado += "Terminó proceso";
+    		panelDatos.actualizarInterfaz(resultado);
+    	}else {
+    		JOptionPane.showMessageDialog(this, "Esta operación solo se puede realizar si ha iniciado sesión previamente como administrador", "Error", JOptionPane.ERROR_MESSAGE);
+    	}
     }
     
     /**
      * (RFC12) Retorna la información de los proveedores con solicitudes con ventas mínimas por semana
      */
     public void proveedoresConSolicitudesMinimasPorSemana() {
-		List<ProveedorPorSemana> ps = superandes.proveedoresConSolicitudesMinimasPorSemana();
-		String resultado = " en proveedoresConSolicitudesMinimasPorSemana\n\n";
-		
-		if(ps.size() == 0){
-			resultado += "no hay proveedores disponibles\n\n";
-		}else{
-			for (int i = 0; i < ps.size(); i++) {
-				resultado += ps.get(i).toString() + "\n";
-			}
-		}
-		resultado += "Terminó proceso";
-		panelDatos.actualizarInterfaz(resultado);
+    	if(loggedUser != null && loggedUser.getTipo().equals(Usuario.ADMINISTRADOR)) {
+    		List<ProveedorPorSemana> ps = superandes.proveedoresConSolicitudesMinimasPorSemana();
+    		String resultado = " en proveedoresConSolicitudesMinimasPorSemana\n\n";
+    		
+    		if(ps.size() == 0){
+    			resultado += "no hay proveedores disponibles\n\n";
+    		}else{
+    			for (int i = 0; i < ps.size(); i++) {
+    				resultado += ps.get(i).toString() + "\n";
+    			}
+    		}
+    		resultado += "Terminó proceso";
+    		panelDatos.actualizarInterfaz(resultado);
+    	}else {
+    		JOptionPane.showMessageDialog(this, "Esta operación solo se puede realizar si ha iniciado sesión previamente como administrador", "Error", JOptionPane.ERROR_MESSAGE);
+    	}
     }
 
 	/* ****************************************************************

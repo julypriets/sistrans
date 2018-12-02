@@ -1701,9 +1701,10 @@ public class PersistenciaSuperandes {
 	 * @param nombreProducto
 	 * @return Una colección de la información de los clientes y su compra
 	 */
-	public List<FacturaCliente> clientesQueCompraronElProductoPorRangoFecha(Date fechaInicial, Date fechaFinal, String criterioOrdenamiento, String nombreProducto){
+	public List<FacturaCliente> clientesQueCompraronElProductoPorRangoFecha(
+			Date fechaInicial, Date fechaFinal, String criterioOrdenamiento, String nombreProducto, long idSucursal){
 		return sqlCliente.clientesQueCompraronElProductoPorRangoFecha
-				(pmf.getPersistenceManager(), fechaInicial, fechaFinal, criterioOrdenamiento, nombreProducto);
+				(pmf.getPersistenceManager(), fechaInicial, fechaFinal, criterioOrdenamiento, nombreProducto, idSucursal);
 	}
 	
 	/**
@@ -1715,9 +1716,9 @@ public class PersistenciaSuperandes {
 	 * @param nombreProducto
 	 * @return Una colección de la información de los clientes y su compra
 	 */
-	public List<FacturaCliente> clientesQueNoCompraronElProductoPorRangoFecha(Date fechaInicial, Date fechaFinal, String criterioOrdenamiento, String nombreProducto){
+	public List<FacturaCliente> clientesQueNoCompraronElProductoPorRangoFecha(Date fechaInicial, Date fechaFinal, String criterioOrdenamiento, String nombreProducto, long idSucursal){
 		return sqlCliente.clientesQueNoCompraronElProductoPorRangoFecha
-				(pmf.getPersistenceManager(), fechaInicial, fechaFinal, criterioOrdenamiento, nombreProducto);
+				(pmf.getPersistenceManager(), fechaInicial, fechaFinal, criterioOrdenamiento, nombreProducto, idSucursal);
 	}
 	
 	/**
@@ -1735,7 +1736,7 @@ public class PersistenciaSuperandes {
 	public List<ProductoPorSemana> productosConVentasMinimasPorSemana(){
 		return sqlProducto.productosConVentasMinimasPorSemana(pmf.getPersistenceManager());
 	}
-	
+
 	/**
 	 * Retorna la información de los proveedores con solicitudes máximas por semana
 	 * @return Colección con la información de los proveedores con órdenes máximas por semana
@@ -1752,4 +1753,26 @@ public class PersistenciaSuperandes {
 		return sqlProveedor.proveedoresConSolicitudesMinimasPorSemana(pmf.getPersistenceManager());
 	}
 	
+	
+	/* ****************************************************************
+	 * 			Métodos para manejar los USUARIOS
+	 *****************************************************************/
+	
+	/**
+	 * Retorna el usuario de tipo administrador con el username respectivo
+	 * @param username
+	 * @return
+	 */
+	public Usuario darUsuarioAdministradorPorUsername(String username, String password) {
+		return sqlUsuario.darUsuarioAdministradorPorUsername(pmf.getPersistenceManager(), username, password);
+	}
+	
+	/**
+	 * Retorna el usuario de tipo gerente con el username respectivo
+	 * @param username
+	 * @return
+	 */
+	public Usuario darUsuarioGerentePorUsername(String username, String password) {
+		return sqlUsuario.darUsuarioGerentePorUsername(pmf.getPersistenceManager(), username, password);
+	}
 }

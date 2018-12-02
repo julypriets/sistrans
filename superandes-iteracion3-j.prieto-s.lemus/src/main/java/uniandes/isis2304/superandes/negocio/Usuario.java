@@ -28,19 +28,21 @@ public class Usuario implements VOUsuario{
 	private String tipo;
 	
 	/**
-	 * Id de la sucursal del usuario
+	 * Id de la sucursal del usuario, si el usuario es administrador,
+	 * el valor para este atributo es cero
 	 */
 	private long idSucursal;
 	
 	/**
-	 * Tipo de usuario USUP
+	 * Tipo de usuario USUP; el administrador
 	 */
-	private static final String USUARIO_SUPERMERCADO = "USUP";
+	public static final String ADMINISTRADOR = "ADMINISTRADOR";
 	
 	/**
-	 * Tipo de usuario USUC
+	 * Tipo de usuario USUC; el gerente de una sucursal
 	 */
-	private static final String USUARIO_SUCURSAL = "USUC";
+	public static final String GERENTE = "GERENTE";
+
 	
 	/**
 	 * Constructor del Usuario con valores

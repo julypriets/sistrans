@@ -9,12 +9,20 @@
 			"options":
 			[
 				{
-					"label": "Iniciar Sesión",
+					"label": "Iniciar Sesión como cliente",
 					"event": "iniciarSesionClientePersona"
 				},
 				{
 					"label": "Iniciar Sesión como Empresa",
 					"event": "iniciarSesionClienteEmpresa"
+				},
+				{
+					"label": "Iniciar Sesión como administrador",
+					"event": "iniciarSesionUsuarioAdministrador"
+				},
+				{
+					"label": "Iniciar Sesión como gerente de sucursal",
+					"event": "iniciarSesionUsuarioGerente"
 				},
 				{
 					"label": "Cerrar Sesión",

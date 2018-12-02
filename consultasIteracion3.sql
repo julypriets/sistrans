@@ -29,22 +29,22 @@ ORDER BY nombre
 
 -- Máximas y mínimas ventas de los productos por semana
 SELECT fechaSemana, nombre, codigo_barras,
-    MAX(ventas) OVER (PARTITION BY fechaSemana) AS ventasMaximo,
---    MIN(ventas) OVER (PARTITION BY fechaSemana) AS ventasMinimo  // en otra consulta similar para sacar los valores mínimos
+    MAX(ventas) OVER (PARTITION BY fechaSemana) AS ventasMaximas
+--    ,MIN(ventas) OVER (PARTITION BY fechaSemana) AS ventasMinimas  // en otra consulta similar para sacar los valores mínimos
 FROM
 (SELECT TRUNC(fecha, 'WW') fechaSemana, nombre, codigo_barras, COUNT (codigo_barras) ventas
-FROM PRODUCTO p, FACTURA_PRODUCTO fp, FACTURA f
+FROM PRODUCTO p, COMPRA cp, FACTURA f
 WHERE
-    p.codigo_barras = fp.id_producto AND
-    f.id = fp.id_factura
+    p.codigo_barras = cp.id_producto AND
+    f.id = cp.id_factura
 GROUP BY TRUNC(fecha, 'WW'), nombre, codigo_barras
 ORDER BY TRUNC(fecha, 'WW')
 )
 
 -- Máximas y mínimas órdenes a proveedores por semana
 SELECT fechaSemana, nombre, nit,
-    MAX(solicitudes) OVER (PARTITION BY fechaSemana) AS solicitudesMaximo,
---    MIN(solicitudes) OVER (PARTITION BY fechaSemana) AS solicitudesMinimo // en otra consulta similar para sacar los valores mínimos
+    MAX(solicitudes) OVER (PARTITION BY fechaSemana) AS solicitudesMaximas
+--    ,MIN(solicitudes) OVER (PARTITION BY fechaSemana) AS solicitudesMinimas // en otra consulta similar para sacar los valores mínimos
 FROM
 (SELECT TRUNC(fecha_esperada, 'WW') fechaSemana, p.nombre, p.nit, COUNT(p.nit) solicitudes
 FROM ORDEN o, PROVEEDOR p, ORDEN_PROVEEDOR op

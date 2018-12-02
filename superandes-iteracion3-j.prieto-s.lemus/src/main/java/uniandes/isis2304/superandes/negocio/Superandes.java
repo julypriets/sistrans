@@ -669,7 +669,7 @@ public class Superandes
 	 * @return Una colección de la información de los clientes y su compra
 	 */
 	public List<FacturaCliente> clientesQueCompraronElProductoPorRangoFecha(
-			String fechaInicial, String fechaFinal, String criterioOrdenamiento, String nombreProducto) throws Exception{
+			String fechaInicial, String fechaFinal, String criterioOrdenamiento, String nombreProducto, long idSucursal) throws Exception{
 		
 		if(!(criterioOrdenamiento.equals(FacturaCliente.NOMBRE) && criterioOrdenamiento.equals(FacturaCliente.ID_FACTURA) &&
 				criterioOrdenamiento.equals(FacturaCliente.FECHA) && criterioOrdenamiento.equals(FacturaCliente.CORREO) &&
@@ -692,7 +692,7 @@ public class Superandes
 			e.printStackTrace();
 		}
 		
-		return ps.clientesQueCompraronElProductoPorRangoFecha(fechaInicioFormateada, fechaFinFormateada, criterioOrdenamiento, nombreProducto);
+		return ps.clientesQueCompraronElProductoPorRangoFecha(fechaInicioFormateada, fechaFinFormateada, criterioOrdenamiento, nombreProducto, idSucursal);
 	}
 	
 	/**
@@ -705,7 +705,7 @@ public class Superandes
 	 * @return Una colección de la información de los clientes y su compra
 	 */
 	public List<FacturaCliente> clientesQueNoCompraronElProductoPorRangoFecha(
-			String fechaInicial, String fechaFinal, String criterioOrdenamiento, String nombreProducto) throws Exception{
+			String fechaInicial, String fechaFinal, String criterioOrdenamiento, String nombreProducto, long idSucursal) throws Exception{
 		if(!(criterioOrdenamiento.equals(FacturaCliente.NOMBRE) && criterioOrdenamiento.equals(FacturaCliente.ID_FACTURA) &&
 				criterioOrdenamiento.equals(FacturaCliente.FECHA) && criterioOrdenamiento.equals(FacturaCliente.CORREO) &&
 				criterioOrdenamiento.equals(FacturaCliente.CANTIDAD))) {
@@ -727,7 +727,7 @@ public class Superandes
 			e.printStackTrace();
 		}
 		
-		return ps.clientesQueNoCompraronElProductoPorRangoFecha(fechaInicioFormateada, fechaFinFormateada, criterioOrdenamiento, nombreProducto);
+		return ps.clientesQueNoCompraronElProductoPorRangoFecha(fechaInicioFormateada, fechaFinFormateada, criterioOrdenamiento, nombreProducto, idSucursal);
 	}
 	
 	/**
@@ -760,5 +760,27 @@ public class Superandes
 	 */
 	public List<ProveedorPorSemana> proveedoresConSolicitudesMinimasPorSemana(){
 		return ps.proveedoresConSolicitudesMinimasPorSemana();
+	}
+	
+	/* ****************************************************************
+	 * 			Métodos para manejar los USUARIOS
+	 *****************************************************************/
+	
+	/**
+	 * Retorna el usuario de tipo administrador con el username respectivo
+	 * @param username
+	 * @return
+	 */
+	public Usuario darUsuarioAdministradorPorUsername(String username, String password) throws Exception{
+		return ps.darUsuarioAdministradorPorUsername(username, password);
+	}
+	
+	/**
+	 * Retorna el usuario de tipo gerente con el username respectivo
+	 * @param username
+	 * @return
+	 */
+	public Usuario darUsuarioGerentePorUsername(String username, String password) throws Exception{
+		return ps.darUsuarioGerentePorUsername(username, password);
 	}
 }
