@@ -4,8 +4,11 @@
 4. ESTANTE
 5. BODEGA
 6. PROVEEDOR
-7. CLIENTE
-8. PERSONA - fijarse en el rango de id's
-9. EMPRESA - fijarse en el rango de id's
-10. CAJERO
-11. CARRITO
+7. CAJERO
+8. PROMOCION
+9. CLIENTE
+10. PERSONA - fijarse en el rango de id's
+11. EMPRESA - fijarse en el rango de id's
+12. CARRITO
+13. CATALOGO 
+

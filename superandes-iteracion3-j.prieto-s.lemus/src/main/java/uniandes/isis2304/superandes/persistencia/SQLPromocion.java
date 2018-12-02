@@ -74,14 +74,10 @@ public class SQLPromocion {
 	 * @return
 	 */
 	public List<ComprasPorPromocion> dar20PromocionesMasPopulares(PersistenceManager pm) {
-		String select = "SELECT prom.id idPromocion, COUNT(*) numCompras " + 
-				"FROM PRODUCTO_PROMOCION prodprom, COMPRA compra, PROMOCION prom " + 
-				"WHERE " + 
-				"    prom.id = prodprom.id_promocion AND" + 
-				"    compra.id_producto = prodprom.id_producto " + 
-				"GROUP BY prom.id " + 
-				"ORDER BY numCompras DESC " + 
-				"FETCH FIRST 20 ROWS ONLY";
+		String select = "select promocion.id idPromocion, count(factura.id) as numCompras "
+				+ "from promocion,factura_promocion, factura where promocion.id = id_promocion "
+				+ "AND factura.id = id_factura group by promocion.id order by numCompras "
+				+ "desc fetch first 20 rows only";
 		Query q = pm.newQuery(SQL, select);
 		q.setResultClass(ComprasPorPromocion.class);
 		return (List<ComprasPorPromocion>) q.execute();

@@ -1,0 +1,1 @@
+sqlldr CONTROL=OrdenProveedor.ctl   skip=1   
