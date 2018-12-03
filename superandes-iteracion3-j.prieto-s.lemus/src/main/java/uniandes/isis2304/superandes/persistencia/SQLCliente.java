@@ -171,7 +171,7 @@ public class SQLCliente {
 	public List<FacturaCliente> clientesQueCompraronElProductoPorRangoFecha(
 			PersistenceManager pm, Date fechaInicial, Date fechaFinal, String criterioOrdenamiento, String nombreProducto, long idSucursal) {
 		
-		String select1 = "SELECT f.id id, fecha, f.precio_total precioTotal, f.id_cliente idCliente, c.nombre nombre, c.correo correo, p.nombre nombreProducto, COUNT (f.id_cliente) cantidad\n" + 
+		String select1 = "SELECT f.id \"id\", fecha \"fecha\", f.precio_total \"precioTotal\", f.id_cliente \"idCliente\", c.nombre \"nombre\", c.correo \"correo\", p.nombre \"nombreProducto\", COUNT (f.id_cliente) \"cantidad\" \n" + 
 				"FROM FACTURA f, CLIENTE c, COMPRA cp, Producto p, CAJERO cj\n" + 
 				"WHERE\n" + 
 				"    f.id_cliente = c.id AND\n" + 
@@ -181,7 +181,7 @@ public class SQLCliente {
 				"    cj.id = f.id_cajero AND\n" + 
 				"    f.fecha BETWEEN to_date('01-JAN-01') AND to_date('01-NOV-01')\n" + 
 				"GROUP BY f.id, f.fecha, f.precio_total, f.id_cliente, c.nombre, c.correo, p.nombre, p.codigo_barras\n" + 
-				"ORDER BY nombre";
+				"ORDER BY c.nombre";
 		
 		String select = "SELECT f.id, f.fecha, f.precio_total, f.id_cliente, c.nombre, c.correo, p.nombre nombreProducto, COUNT (f.id_cliente) cantidad\n" + 
 				"FROM FACTURA f, CLIENTE c, COMPRA cp, Producto p, CAJERO cj\n" + 
@@ -219,7 +219,7 @@ public class SQLCliente {
 	 */
 	public List<FacturaCliente> clientesQueNoCompraronElProductoPorRangoFecha(
 			PersistenceManager pm, Date fechaInicial, Date fechaFinal, String criterioOrdenamiento, String nombreProducto, long idSucursal){
-		String select = "SELECT f.id id, fecha, f.precio_total precioTotal, f.id_cliente idCliente, c.nombre nombre, c.correo correo, p.nombre nombreProducto, cp.cantidad\n" + 
+		String select = "SELECT f.id \"id\", fecha \"fecha\", f.precio_total \"precioTotal\", f.id_cliente \"idCliente\", c.nombre \"nombre\", c.correo \"correo\", p.nombre \"nombreProducto\", cp.cantidad \"cantidad\"\n" + 
 				"FROM FACTURA f, CLIENTE c, COMPRA cp, Producto p, CAJERO cj \n" + 
 				"WHERE\n" + 
 				"    f.id_cliente = c.id AND\n" + 
