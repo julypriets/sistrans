@@ -137,7 +137,7 @@ public class SQLProducto {
 				"        ORDER BY TRUNC(fecha, 'WW')\n" + 
 				"        )\n" + 
 				"    )\n" + 
-				"WHERE ventas = ventasMaximas;";
+				"WHERE ventas = ventasMaximas";
 		Query q = pm.newQuery(SQL, select);
 		q.setResultClass(ProductoPorSemana.class);
 		return (List<ProductoPorSemana>) q.executeList();
@@ -149,7 +149,7 @@ public class SQLProducto {
 	 * @return Colección con la información de los productos con ventas mínimas por semana
 	 */
 	public List<ProductoPorSemana> productosConVentasMinimasPorSemana(PersistenceManager pm){
-		String select = "SELECT fechaSemana, nombre, codigo_barras, ventasMaximas\n" + 
+		String select = "SELECT fechaSemana, nombre, codigo_barras, ventasMinimas\n" + 
 				"FROM\n" + 
 				"    (SELECT fechaSemana, nombre, codigo_barras, ventas,\n" +  
 				"        MIN(ventas) OVER (PARTITION BY fechaSemana) AS ventasMinimas  \n" + 
@@ -163,7 +163,7 @@ public class SQLProducto {
 				"        ORDER BY TRUNC(fecha, 'WW')\n" + 
 				"        )\n" + 
 				"    )\n" + 
-				"WHERE ventas = ventasMaximas;";
+				"WHERE ventas = ventasMinimas";
 		Query q = pm.newQuery(SQL, select);
 		q.setResultClass(ProductoPorSemana.class);
 		return (List<ProductoPorSemana>) q.executeList();

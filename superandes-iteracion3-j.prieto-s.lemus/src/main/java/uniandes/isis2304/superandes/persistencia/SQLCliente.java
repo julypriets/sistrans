@@ -171,7 +171,19 @@ public class SQLCliente {
 	public List<FacturaCliente> clientesQueCompraronElProductoPorRangoFecha(
 			PersistenceManager pm, Date fechaInicial, Date fechaFinal, String criterioOrdenamiento, String nombreProducto, long idSucursal) {
 		
-		String select = "SELECT f.id, f.fecha, f.precio_total, f.id_cliente, c.nombre, c.correo, p.nombre nombreProducto, p.codigo_barras codigo_barras, COUNT (f.id_cliente) cantidad\n" + 
+		String select1 = "SELECT f.id id, fecha, f.precio_total precioTotal, f.id_cliente idCliente, c.nombre nombre, c.correo correo, p.nombre nombreProducto, COUNT (f.id_cliente) cantidad\n" + 
+				"FROM FACTURA f, CLIENTE c, COMPRA cp, Producto p, CAJERO cj\n" + 
+				"WHERE\n" + 
+				"    f.id_cliente = c.id AND\n" + 
+				"    f.id = cp.id_factura AND\n" + 
+				"    p.codigo_barras = cp.id_producto AND\n" + 
+				"    p.nombre = 'Beans - French' AND\n" + 
+				"    cj.id = f.id_cajero AND\n" + 
+				"    f.fecha BETWEEN to_date('01-JAN-01') AND to_date('01-NOV-01')\n" + 
+				"GROUP BY f.id, f.fecha, f.precio_total, f.id_cliente, c.nombre, c.correo, p.nombre, p.codigo_barras\n" + 
+				"ORDER BY nombre";
+		
+		String select = "SELECT f.id, f.fecha, f.precio_total, f.id_cliente, c.nombre, c.correo, p.nombre nombreProducto, COUNT (f.id_cliente) cantidad\n" + 
 				"FROM FACTURA f, CLIENTE c, COMPRA cp, Producto p, CAJERO cj\n" + 
 				"WHERE\n" + 
 				"    f.id_cliente = c.id AND\n" + 
@@ -189,7 +201,7 @@ public class SQLCliente {
 				"GROUP BY f.id, f.fecha, f.precio_total, f.id_cliente, c.nombre, c.correo, p.nombre, p.codigo_barras\n" +
 				"ORDER BY " + criterioOrdenamiento;
 		
-		Query q = pm.newQuery(SQL, select);
+		Query q = pm.newQuery(SQL, select1);
 		q.setResultClass(FacturaCliente.class);
 		//q.setParameters(fechaInicial, fechaFinal);
 		return (List<FacturaCliente>) q.executeList();
@@ -207,7 +219,7 @@ public class SQLCliente {
 	 */
 	public List<FacturaCliente> clientesQueNoCompraronElProductoPorRangoFecha(
 			PersistenceManager pm, Date fechaInicial, Date fechaFinal, String criterioOrdenamiento, String nombreProducto, long idSucursal){
-		String select = "SELECT f.id, f.fecha, f.precio_total, f.id_cliente, c.nombre, c.correo, p.nombre nombreProducto, p.codigo_barras, cp.cantidad\n" + 
+		String select = "SELECT f.id id, fecha, f.precio_total precioTotal, f.id_cliente idCliente, c.nombre nombre, c.correo correo, p.nombre nombreProducto, cp.cantidad\n" + 
 				"FROM FACTURA f, CLIENTE c, COMPRA cp, Producto p, CAJERO cj \n" + 
 				"WHERE\n" + 
 				"    f.id_cliente = c.id AND\n" + 
@@ -217,7 +229,7 @@ public class SQLCliente {
 				"    c.id IN (\n" + 
 				"        SELECT id FROM CLIENTE\n" + 
 				"        MINUS\n" + 
-				"        (SELECT id_cliente FROM FACTURA WHERE p.nombre = '" + nombreProducto + " AND f.fecha BETWEEN (timestamp  '" + fechaInicial+ "') AND (timestamp '" + fechaFinal + "')\n" + 
+				"        (SELECT id_cliente FROM FACTURA WHERE p.nombre = '" + nombreProducto + "' AND f.fecha BETWEEN (timestamp  '" + fechaInicial+ "') AND (timestamp '" + fechaFinal + "'))\n" + 
 				"    )\n";
 		
 		if(idSucursal > 0) {

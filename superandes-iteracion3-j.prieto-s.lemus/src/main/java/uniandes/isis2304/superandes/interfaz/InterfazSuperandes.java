@@ -1616,6 +1616,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     			resultado += "no hay productos disponibles\n\n";
     		}else{
     			for (int i = 0; i < ps.size(); i++) {
+    				ps.get(i).setTipo(ProductoPorSemana.MAXIMAL);
     				resultado += ps.get(i).toString() + "\n";
     			}
     		}
@@ -1638,6 +1639,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     			resultado += "no hay productos disponibles\n\n";
     		}else{
     			for (int i = 0; i < ps.size(); i++) {
+    				ps.get(i).setTipo(ProductoPorSemana.MINIMAL);
     				resultado += ps.get(i).toString() + "\n";
     			}
     		}
@@ -1660,6 +1662,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     			resultado += "no hay proveedores disponibles\n\n";
     		}else{
     			for (int i = 0; i < ps.size(); i++) {
+    				ps.get(i).setTipo(ProveedorPorSemana.MAXIMAL);
     				resultado += ps.get(i).toString() + "\n";
     			}
     		}
@@ -1682,6 +1685,7 @@ public class InterfazSuperandes extends JFrame implements ActionListener
     			resultado += "no hay proveedores disponibles\n\n";
     		}else{
     			for (int i = 0; i < ps.size(); i++) {
+    				ps.get(i).setTipo(ProveedorPorSemana.MINIMAL);
     				resultado += ps.get(i).toString() + "\n";
     			}
     		}

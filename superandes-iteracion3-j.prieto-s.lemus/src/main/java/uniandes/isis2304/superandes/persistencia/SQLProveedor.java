@@ -82,8 +82,7 @@ public class SQLProveedor {
 				"        ORDER BY TRUNC(fecha_esperada, 'WW')\n" + 
 				"        )\n" + 
 				"    )\n" + 
-				"WHERE solicitudes = solicitudesMaximas\n" + 
-				"ORDER BY solicitudesMaximas DESC";
+				"WHERE solicitudes = solicitudesMaximas\n";
 		Query q = pm.newQuery(SQL, select);
 		q.setResultClass(ProveedorPorSemana.class);
 		return (List<ProveedorPorSemana>) q.executeList();
@@ -95,7 +94,7 @@ public class SQLProveedor {
 	 * @return Colección con la información de los proveedores con órdenes mínimas por semana
 	 */
 	public List<ProveedorPorSemana> proveedoresConSolicitudesMinimasPorSemana(PersistenceManager pm){
-		String select = "SELECT fechaSemana, nombre, nit, solicitudesMaximas\n" + 
+		String select = "SELECT fechaSemana, nombre, nit, solicitudesMinimas\n" + 
 				"FROM\n" + 
 				"    (SELECT fechaSemana, nombre, nit, solicitudes,\n" +  
 				"        MIN(solicitudes) OVER (PARTITION BY fechaSemana) AS solicitudesMinimas \n" + 
@@ -109,8 +108,7 @@ public class SQLProveedor {
 				"        ORDER BY TRUNC(fecha_esperada, 'WW')\n" + 
 				"        )\n" + 
 				"    )\n" + 
-				"WHERE solicitudes = solicitudesMaximas\n" + 
-				"ORDER BY solicitudesMaximas DESC";
+				"WHERE solicitudes = solicitudesMinimas\n";
 		Query q = pm.newQuery(SQL, select);
 		q.setResultClass(ProveedorPorSemana.class);
 		return (List<ProveedorPorSemana>) q.executeList();

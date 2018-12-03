@@ -87,7 +87,7 @@ public class Prueba {
 		List<FacturaCliente> fc1 = new LinkedList<>();
 		try {
 			fc = superandes.clientesQueCompraronElProductoPorRangoFecha("2001-01-01", "2001-11-01", "nombre", "Bread - Olive", 0);
-			fc1 = superandes.clientesQueNoCompraronElProductoPorRangoFecha("2001-01-01", "2001-11-01", "nombre", "Bread - Olive", 0);
+			//fc1 = superandes.clientesQueNoCompraronElProductoPorRangoFecha("2001-01-01", "2001-11-01", "nombre", "Bread - Olive", 0);
 		}catch (Exception e) {
 			e.getStackTrace();
 		}

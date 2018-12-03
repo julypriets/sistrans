@@ -25,12 +25,12 @@ public class FacturaCliente {
 	/**
 	 * Precio total cancelado por el cliente
 	 */
-	public double precio_total;
+	public double precioTotal;
 	
 	/**
 	 * El identificador del cliente que realizó la compra
 	 */
-	public long id_cliente;
+	public long idCliente;
 	
 	/**
 	 * El nombre del cliente
@@ -86,8 +86,8 @@ public class FacturaCliente {
 		super();
 		this.id = id;
 		this.fecha = fecha;
-		this.precio_total = precio_total;
-		this.id_cliente = id_cliente;
+		this.precioTotal = precio_total;
+		this.idCliente = id_cliente;
 		this.nombre = nombre;
 		this.correo = correo;
 		this.nombreProducto = nombreProducto;
@@ -132,32 +132,32 @@ public class FacturaCliente {
 	 * 
 	 * @return el precio total cancelado
 	 */
-	public double getPrecio_total() {
-		return precio_total;
+	public double getPrecioTotal() {
+		return precioTotal;
 	}
 
 	/**
 	 * Modifica el precio total
 	 * @param precio_total
 	 */
-	public void setPrecio_total(double precio_total) {
-		this.precio_total = precio_total;
+	public void setPrecioTotal(double precio_total) {
+		this.precioTotal = precio_total;
 	}
 
 	/**
 	 * 
 	 * @return el id del cliente
 	 */
-	public long getId_cliente() {
-		return id_cliente;
+	public long getIdCliente() {
+		return idCliente;
 	}
 
 	/**
 	 * Modifica el id del cliente
 	 * @param id_cliente
 	 */
-	public void setId_cliente(long id_cliente) {
-		this.id_cliente = id_cliente;
+	public void setIdCliente(long id_cliente) {
+		this.idCliente = id_cliente;
 	}
 
 	/**
@@ -215,8 +215,8 @@ public class FacturaCliente {
 
 	@Override
 	public String toString() {
-		return "FacturaCliente [id=" + id + ", fecha=" + fecha + ", precio_total=" + precio_total + ", id_cliente="
-				+ id_cliente + ", nombre=" + nombre + ", correo=" + correo + ", nombreProducto=" + nombreProducto
+		return "FacturaCliente [id=" + id + ", fecha=" + fecha + ", precio_total=" + precioTotal + ", id_cliente="
+				+ idCliente + ", nombre=" + nombre + ", correo=" + correo + ", nombreProducto=" + nombreProducto
 				+ ", cantidad=" + cantidad + "]";
 	}
 	
