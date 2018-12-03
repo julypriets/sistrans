@@ -5,6 +5,8 @@ import javax.jdo.PersistenceManager;
 
 import javax.jdo.Query;
 
+import uniandes.isis2304.superandes.negocio.Factura;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -406,6 +408,37 @@ public class SQLFactura {
 
 	public void setCantidadMenorD(List<Integer> cantidadMenorD) {
 		this.cantidadMenorD = cantidadMenorD;
+	}
+	
+	public boolean tieneProductosCostosos( PersistenceManager pm, long idFactura){
+		Query q = pm.newQuery(SQL, "SELECT id FROM factura, compra, producto where factura.id "
+				+ "= compra.id_factura and producto.codigo_barras = compra.id_producto and id_factura "
+				+ "= ? and producto.precio_unitario > 40000;");
+		q.setParameters(idFactura);
+		if(q.executeList().isEmpty()) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	public boolean tieneCompras(PersistenceManager pm, long idCliente ) {
+		Query q = pm.newQuery(SQL, "SELECT * FROM FACTURA WHERE ID_CLIENTE = ?");
+		q.setResultClass(Factura.class);
+		q.setParameters(idCliente);
+		List<Factura> facturas = (List<Factura>)q.executeList();
+		if(facturas.isEmpty()) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	public List<Factura> darFacturasCliente(PersistenceManager pm, long idCliente){
+		Query q = pm.newQuery(SQL, "SELECT * FROM FACTURA WHERE ID_CLIENTE = ?");
+		q.setResultClass(Factura.class);
+		q.setParameters(idCliente);
+		return (List<Factura>)q.executeList();
 	}
 
 }

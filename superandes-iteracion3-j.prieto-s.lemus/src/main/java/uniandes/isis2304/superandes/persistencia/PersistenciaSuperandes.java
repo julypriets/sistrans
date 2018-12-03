@@ -122,7 +122,7 @@ public class PersistenciaSuperandes {
 	 * Atributo para el acceso a la tabla CLIENTE de la base de datos
 	 */
 	private SQLCliente sqlCliente;
-	
+
 	/**
 	 * Atributo para el acceso a la tabla PERSONA de la base de datos
 	 */
@@ -157,7 +157,7 @@ public class PersistenciaSuperandes {
 	 * Atributo para el acceso a la tabla CARRITO de la base de datos
 	 */
 	private SQLCarrito sqlCarrito;
-	
+
 	/**
 	 * Atributo para el acceso a la tabla ABASTECIMIENTO_BODEGA de la base de datos
 	 */
@@ -207,7 +207,7 @@ public class PersistenciaSuperandes {
 	 * Atributo para el acceso a la tabla FACTURA_PROMOCION de la base de datos
 	 */
 	private SQLFacturaPromocion sqlFacturaPromocion;
-	
+
 	/**
 	 * Atributo para el acceso a la tabla CARRITO_PRODUCTO de la base de datos
 	 */
@@ -403,21 +403,21 @@ public class PersistenciaSuperandes {
 	public String darTablaBodega() {
 		return tablas.get(6);
 	}
-	
+
 	/**
 	 * @return La cadena de caracteres con el nombre de la tabla Abastecimiento de Superandes
 	 */
 	public String darTablaAbastecimiento() {
 		return tablas.get(7);
 	}
-	
+
 	/**
 	 * @return La cadena de caracteres con el nombre de la tabla Proveedor de Superandes
 	 */
 	public String darTablaProveedor() {
 		return tablas.get(8);
 	}
-	
+
 	/**
 	 * @return La cadena de caracteres con el nombre de la tabla Cliente de Superandes
 	 */
@@ -431,126 +431,126 @@ public class PersistenciaSuperandes {
 	public String darTablaPersona() {
 		return tablas.get(10);
 	}
-	
+
 	/**
 	 * @return La cadena de caracteres con el nombre de la tabla Empresa de Superandes
 	 */
 	public String darTablaEmpresa() {
 		return tablas.get(11);
 	}
-	
+
 	/**
 	 * @return La cadena de caracteres con el nombre de la tabla Cajero de Superandes
 	 */
 	public String darTablaCajero() {
 		return tablas.get(12);
 	}
-	
+
 	/**
 	 * @return La cadena de caracteres con el nombre de la tabla Factura de Superandes
 	 */
 	public String darTablaFactura() {
 		return tablas.get(13);
 	}
-	
+
 	/**
 	 * @return La cadena de caracteres con el nombre de la tabla Promocion de Superandes
 	 */
 	public String darTablaPromocion() {
 		return tablas.get(14);
 	}
-	
+
 	/**
 	 * @return La cadena de caracteres con el nombre de la tabla Usuario de Superandes
 	 */
 	public String darTablaUsuario() {
 		return tablas.get(15);
 	}
-	
+
 	/**
 	 * @return La cadena de caracteres con el nombre de la tabla Carrito de Superandes
 	 */
 	public String darTablaCarrito() {
 		return tablas.get(16);
 	}
-	
+
 	/**
 	 * @return La cadena de caracteres con el nombre de la tabla AbastecimientoBodega de Superandes
 	 */
 	public String darTablaAbastecimientoBodega() {
 		return tablas.get(17);
 	}
-	
+
 	/**
 	 * @return La cadena de caracteres con el nombre de la tabla Surtido de Superandes
 	 */
 	public String darTablaSurtido() {
 		return tablas.get(18);
 	}
-	
+
 	/**
 	 * @return La cadena de caracteres con el nombre de la tabla ProductoAbastecimiento de Superandes
 	 */
 	public String darTablaProductoAbastecimiento() {
 		return tablas.get(19);
 	}
-	
+
 	/**
 	 * @return La cadena de caracteres con el nombre de la tabla Inventario de Superandes
 	 */
 	public String darTablaInventario() {
 		return tablas.get(20);
 	}
-	
+
 	/**
 	 * @return La cadena de caracteres con el nombre de la tabla ProductoOrden de Superandes
 	 */
 	public String darTablaProductoOrden() {
 		return tablas.get(21);
 	}
-	
+
 	/**
 	 * @return La cadena de caracteres con el nombre de la tabla Catalogo de Superandes
 	 */
 	public String darTablaCatalogo() {
 		return tablas.get(22);
 	}
-	
+
 	/**
 	 * @return La cadena de caracteres con el nombre de la tabla OrdenProveedor de Superandes
 	 */
 	public String darTablaOrdenProveedor() {
 		return tablas.get(23);
 	}
-	
+
 	/**
 	 * @return La cadena de caracteres con el nombre de la tabla Compra de Superandes
 	 */
 	public String darTablaCompra() {
 		return tablas.get(24);
 	}
-	
+
 	/**
 	 * @return La cadena de caracteres con el nombre de la tabla ProductoPromocion de Superandes
 	 */
 	public String darTablaProductoPromocion() {
 		return tablas.get(25);
 	}
-	
+
 	/**
 	 * @return La cadena de caracteres con el nombre de la tabla FacturaPromocion de Superandes
 	 */
 	public String darTablaFacturaPromocion() {
 		return tablas.get(26);
 	}
-	
+
 	/**
 	 * @return La cadena de caracteres con el nombre de la tabla CarritoProducto de Superandes
 	 */
 	public String darTablaCarritoProducto() {
 		return tablas.get(27);
 	}
-	
+
 	/**
 	 * Extrae el mensaje de la exception JDODataStoreException embebido en la Exception e, que da el detalle específico del problema encontrado
 	 * @param e - La excepción que ocurrio
@@ -566,7 +566,7 @@ public class PersistenciaSuperandes {
 		}
 		return resp;
 	}
-	
+
 	/**
 	 * Elimina todas las tuplas de todas las tablas de la base de datos de Parranderos
 	 * Crea y ejecuta las sentencias SQL para cada tabla de la base de datos - EL ORDEN ES IMPORTANTE 
@@ -576,33 +576,33 @@ public class PersistenciaSuperandes {
 	public long [] limpiarSuperandes()
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx=pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            long [] resp = sqlUtil.limpiarSuperandes (pm);
-            tx.commit ();
-            log.info ("Borrada la base de datos");
-            return resp;
-        }
-        catch (Exception e)
-        {
-//        	e.printStackTrace();
-        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-        	return new long[] {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
-        			-1, -1, -1, -1, -1, -1, -1};
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
-		
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long [] resp = sqlUtil.limpiarSuperandes (pm);
+			tx.commit ();
+			log.info ("Borrada la base de datos");
+			return resp;
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return new long[] {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
+					-1, -1, -1, -1, -1, -1, -1};
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+
 	}
-	
+
 	/**
 	 * Transacción para el generador de secuencia de Superandes
 	 * Adiciona entradas al log de la aplicación
@@ -610,15 +610,15 @@ public class PersistenciaSuperandes {
 	 */
 	public long nextval ()
 	{
-        long resp = sqlUtil.nextval (pmf.getPersistenceManager());
-        log.trace ("Generando secuencia: " + resp);
-        return resp;
-    }
-	
+		long resp = sqlUtil.nextval (pmf.getPersistenceManager());
+		log.trace ("Generando secuencia: " + resp);
+		return resp;
+	}
+
 	/* ****************************************************************
 	 * 			Métodos para manejar los PRODUCTOS
 	 *****************************************************************/
-	
+
 	/**
 	 * Se encarga de adicionar un producto según los valores dados
 	 * y de retornar la representación en Objeto respectiva
@@ -641,34 +641,34 @@ public class PersistenciaSuperandes {
 			Integer existencias, Long idCategoria, Long idSucursal, Timestamp fechaVencimiento)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx=pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            long idProducto = nextval ();
-            long tuplasInsertadas = sqlProducto.registarProducto(pm, nombre, marca, precioUnitario, presentacion, precioUnidadMedida, unidadMedida, empacado, codigoBarras, idCategoria, nivelReorden, existencias, fechaVencimiento);
-            tx.commit();
-            
-            log.trace ("Inserción de producto: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
-            
-            return new Producto(nombre, marca, precioUnitario, presentacion, precioUnidadMedida, unidadMedida, empacado, codigoBarras, nivelReorden, existencias, idCategoria, idSucursal, fechaVencimiento);
-        }
-        catch (Exception e)
-        {
-//        	e.printStackTrace();
-        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-        	return null;
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long idProducto = nextval ();
+			long tuplasInsertadas = sqlProducto.registarProducto(pm, nombre, marca, precioUnitario, presentacion, precioUnidadMedida, unidadMedida, empacado, codigoBarras, idCategoria, nivelReorden, existencias, fechaVencimiento);
+			tx.commit();
+
+			log.trace ("Inserción de producto: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return new Producto(nombre, marca, precioUnitario, presentacion, precioUnidadMedida, unidadMedida, empacado, codigoBarras, nivelReorden, existencias, idCategoria, idSucursal, fechaVencimiento);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
-	
+
 	/**
 	 * Retorna todos los productos existentes
 	 * @return
@@ -676,7 +676,7 @@ public class PersistenciaSuperandes {
 	public List<Producto> darProductos(){
 		return sqlProducto.darProductos(pmf.getPersistenceManager());
 	}
-	
+
 	/**
 	 * 
 	 * @param idProducto
@@ -685,7 +685,7 @@ public class PersistenciaSuperandes {
 	public Producto darProductoPorId(String idProducto){
 		return sqlProducto.darProductoPorId(pmf.getPersistenceManager(), idProducto);
 	}
-	
+
 	/**
 	 * 
 	 * @param nombre
@@ -694,7 +694,7 @@ public class PersistenciaSuperandes {
 	public List<Producto> darProductosPorNombre(String nombre){
 		return sqlProducto.darProductosPorNombre(pmf.getPersistenceManager(), nombre);
 	}
-	
+
 
 	/* ****************************************************************
 	 * 			Métodos para manejar las PROMOCIONES
@@ -715,34 +715,34 @@ public class PersistenciaSuperandes {
 	public Promocion registrarPromocion (int tipo, double precio, Timestamp fechaInicio, 
 			Timestamp fechaFin, long idSucursal, String idProducto, int cantidad1, int cantidad2, double descuento){
 		PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx=pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            long idPromocion = nextval();
-            long tuplasInsertadas = sqlPromocion.registrarPromocion(pm, idPromocion, tipo, precio, fechaInicio, fechaFin, idSucursal, idProducto, cantidad1, cantidad2, descuento);
-            tx.commit();
-            
-            log.trace ("Inserción de promoción: " + tipo + ": " + tuplasInsertadas + " tuplas insertadas");
-            
-            return new Promocion(idPromocion, tipo, precio, fechaInicio, fechaFin, cantidad1, cantidad2, descuento, idSucursal, idProducto);
-        }
-        catch (Exception e)
-        {
-//        	e.printStackTrace();
-        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-        	return null;
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long idPromocion = nextval();
+			long tuplasInsertadas = sqlPromocion.registrarPromocion(pm, idPromocion, tipo, precio, fechaInicio, fechaFin, idSucursal, idProducto, cantidad1, cantidad2, descuento);
+			tx.commit();
+
+			log.trace ("Inserción de promoción: " + tipo + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return new Promocion(idPromocion, tipo, precio, fechaInicio, fechaFin, cantidad1, cantidad2, descuento, idSucursal, idProducto);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
-	
+
 	/**
 	 * Finaliza una promoción para todos los productos asociados
 	 * @param idPromocion
@@ -756,10 +756,10 @@ public class PersistenciaSuperandes {
 			long resp = sqlPromocion.finalizarPromocion(pm, fechaActual);
 			tx.commit();
 			return resp;
-			
+
 		} catch (Exception e) {
-        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-        	return -1;
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return -1;
 		} finally {
 			if (tx.isActive())
 			{
@@ -767,7 +767,7 @@ public class PersistenciaSuperandes {
 			}
 			pm.close();
 		}
- 
+
 	}
 
 	/**
@@ -778,11 +778,11 @@ public class PersistenciaSuperandes {
 	public List<ComprasPorPromocion> dar20PromocionesMasPopulares() {
 		return sqlPromocion.dar20PromocionesMasPopulares(pmf.getPersistenceManager());
 	}
-	
+
 	/* ****************************************************************
 	 * 			Métodos para manejar las CATEGORÍAS
 	 *****************************************************************/
-	
+
 	/**
 	 * 
 	 * @param idCategoria
@@ -791,7 +791,7 @@ public class PersistenciaSuperandes {
 	public Categoria darCategoriaPorId(long idCategoria){
 		return sqlCategoria.darCategoriaPorId(pmf.getPersistenceManager(), idCategoria);
 	}
-	
+
 	/**
 	 * 
 	 * @param nombreCategoria
@@ -800,11 +800,11 @@ public class PersistenciaSuperandes {
 	public Categoria darCategoriaPorNombre(String nombreCategoria){
 		return sqlCategoria.darCategoriaPorNombre(pmf.getPersistenceManager(), nombreCategoria);
 	}
-	
+
 	/* ****************************************************************
 	 * 			Métodos para manejar las SUCURSALES
 	 *****************************************************************/
-	
+
 	/**
 	 * 
 	 * @param nombre
@@ -814,34 +814,34 @@ public class PersistenciaSuperandes {
 	 */
 	public Sucursal registrarSucursal(String nombre, String ciudad, String direccion){
 		PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx=pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            long idSucursal = nextval();
-            long tuplasInsertadas = sqlSucursal.registrarSucursal(pm, idSucursal, nombre, ciudad, direccion);
-            tx.commit();
-            
-            log.trace ("Inserción de sucursal: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
-            
-            return new Sucursal(idSucursal, nombre, ciudad, direccion);
-        }
-        catch (Exception e)
-        {
-//        	e.printStackTrace();
-        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-        	return null;
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long idSucursal = nextval();
+			long tuplasInsertadas = sqlSucursal.registrarSucursal(pm, idSucursal, nombre, ciudad, direccion);
+			tx.commit();
+
+			log.trace ("Inserción de sucursal: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return new Sucursal(idSucursal, nombre, ciudad, direccion);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
-	
+
 	/**
 	 * 
 	 * @param idSucursal
@@ -850,11 +850,11 @@ public class PersistenciaSuperandes {
 	public Sucursal darSucursalPorId(long idSucursal){
 		return sqlSucursal.darSucursalPorId(pmf.getPersistenceManager(), idSucursal);
 	}
-	
+
 	/* ****************************************************************
 	 * 			Métodos para manejar las BODEGAS
 	 *****************************************************************/
-	
+
 	/**
 	 * 
 	 * @param idCategoria
@@ -865,74 +865,74 @@ public class PersistenciaSuperandes {
 	 */
 	public Bodega registrarBodega(long idCategoria, double capacidadPeso, double capacidadVolumen, long idSucursal){
 		PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx=pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            long idBodega = nextval();
-            long tuplasInsertadas = sqlBodega.registrarBodega(pm, idBodega, idCategoria, capacidadPeso, capacidadVolumen, idSucursal);
-            tx.commit();
-            
-            log.trace ("Inserción de bodega: " + idBodega + ": " + tuplasInsertadas + " tuplas insertadas");
-            
-            return new Bodega(idBodega, capacidadPeso, capacidadVolumen, idCategoria, idSucursal);
-        }
-        catch (Exception e)
-        {
-//        	e.printStackTrace();
-        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-        	return null;
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long idBodega = nextval();
+			long tuplasInsertadas = sqlBodega.registrarBodega(pm, idBodega, idCategoria, capacidadPeso, capacidadVolumen, idSucursal);
+			tx.commit();
+
+			log.trace ("Inserción de bodega: " + idBodega + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return new Bodega(idBodega, capacidadPeso, capacidadVolumen, idCategoria, idSucursal);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
-	
+
 	/* ****************************************************************
 	 * 			Métodos para manejar los ESTANTES
 	 *****************************************************************/
-	
+
 	public Estante registrarEstante(long idCategoria, double capacidadPeso, double capacidadVolumen, long idSucursal){
 		PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx=pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            long idEstante = nextval();
-            long tuplasInsertadas = sqlEstante.registrarEstante(pm, idEstante, idCategoria, capacidadPeso, capacidadVolumen, idSucursal);
-            tx.commit();
-            
-            log.trace ("Inserción de estante: " + idEstante + ": " + tuplasInsertadas + " tuplas insertadas");
-            
-            return new Estante(idEstante, capacidadPeso, capacidadVolumen, idCategoria, idSucursal);
-        }
-        catch (Exception e)
-        {
-//        	e.printStackTrace();
-        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-        	return null;
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long idEstante = nextval();
+			long tuplasInsertadas = sqlEstante.registrarEstante(pm, idEstante, idCategoria, capacidadPeso, capacidadVolumen, idSucursal);
+			tx.commit();
+
+			log.trace ("Inserción de estante: " + idEstante + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return new Estante(idEstante, capacidadPeso, capacidadVolumen, idCategoria, idSucursal);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
-	
-	
-	
+
+
+
 	/* ****************************************************************
 	 * 			Métodos para manejar los PROVEEDORES
 	 *****************************************************************/
-	
+
 	/**
 	 * 
 	 * @param nit
@@ -942,37 +942,37 @@ public class PersistenciaSuperandes {
 	 */
 	public Proveedor registrarProveedor(String nit, String nombre, double calificacion){
 		PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx=pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            long tuplasInsertadas = sqlProveedor.registarProveedor(pm, nit, nombre, calificacion);
-            tx.commit();
-            
-            log.trace ("Inserción de proveedor: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
-            
-            return new Proveedor(nit, nombre, calificacion);
-        }
-        catch (Exception e)
-        {
-//        	e.printStackTrace();
-        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-        	return null;
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long tuplasInsertadas = sqlProveedor.registarProveedor(pm, nit, nombre, calificacion);
+			tx.commit();
+
+			log.trace ("Inserción de proveedor: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return new Proveedor(nit, nombre, calificacion);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
-	
+
 	/* ****************************************************************
 	 * 			Métodos para manejar los CLIENTES
 	 *****************************************************************/
-	
+
 	/**
 	 * Se encarga de adicionar una empresa según los valores dados
 	 * y de retornar la representación en Objeto respectiva
@@ -986,34 +986,34 @@ public class PersistenciaSuperandes {
 	public Cliente registrarEmpresa(String nombre, String correo, String nit, String direccion)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx=pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            long idCliente = nextval ();
-            long tuplasInsertadas = sqlCliente.registarEmpresa(pm, idCliente, nombre, correo, nit, direccion);
-            tx.commit();
-            
-            log.trace ("Inserción de producto: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
-            
-            return new Empresa(idCliente, nombre, correo, nit, direccion);
-        }
-        catch (Exception e)
-        {
-//        	e.printStackTrace();
-        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-        	return null;
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long idCliente = nextval ();
+			long tuplasInsertadas = sqlCliente.registarEmpresa(pm, idCliente, nombre, correo, nit, direccion);
+			tx.commit();
+
+			log.trace ("Inserción de producto: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return new Empresa(idCliente, nombre, correo, nit, direccion);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
-	
+
 	/**
 	 * Se encarga de adicionar una persona natural según los valores dados
 	 * y de retornar la representación en Objeto respectiva
@@ -1026,35 +1026,35 @@ public class PersistenciaSuperandes {
 	public Cliente registrarPersona(String nombre, String correo, String identificacion)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx=pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            long idCliente = nextval ();
-            long tuplasInsertadas = sqlCliente.registrarPersonaNatural(pm, idCliente, nombre, correo, Long.parseLong(identificacion));
-     
-            tx.commit();
-            
-            log.trace ("Inserción de producto: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
-            
-            return new Persona(idCliente, nombre, correo, identificacion);
-        }
-        catch (Exception e)
-        {
-//        	e.printStackTrace();
-        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-        	return null;
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long idCliente = nextval ();
+			long tuplasInsertadas = sqlCliente.registrarPersonaNatural(pm, idCliente, nombre, correo, Long.parseLong(identificacion));
+
+			tx.commit();
+
+			log.trace ("Inserción de producto: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return new Persona(idCliente, nombre, correo, identificacion);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
-	
+
 	/**
 	 * 
 	 * @return todos los clientes registrados
@@ -1062,7 +1062,7 @@ public class PersistenciaSuperandes {
 	public List<Cliente> darClientes(){
 		return sqlCliente.darClientes(pmf.getPersistenceManager());
 	}
-	
+
 	/**
 	 * 
 	 * @param identificacion
@@ -1071,7 +1071,7 @@ public class PersistenciaSuperandes {
 	public Cliente darClientePersonaPorId(long identificacion){
 		return sqlCliente.darClientePersonaPorId(pmf.getPersistenceManager(), identificacion);
 	}
-	
+
 	/**
 	 * 
 	 * @param nit
@@ -1080,7 +1080,59 @@ public class PersistenciaSuperandes {
 	public Cliente darClienteEmpresaPorId(long nit){
 		return sqlCliente.darClienteEmpresaPorId(pmf.getPersistenceManager(), nit);
 	}
-	
+
+
+	public List<Cliente> darBuenosClientes(){
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		List<Cliente> buenosClientes = new ArrayList<>();
+		try
+		{
+			tx.begin();
+			List<Cliente> clientes = sqlCliente.darClientes(pm);
+			for (int i = 0; i < clientes.size(); i++) {
+				Cliente cliente = clientes.get(i);
+				if(!sqlFactura.tieneCompras(pm, cliente.getId())) {
+					continue;
+				} else {
+					List<Factura> facturas = sqlFactura.darFacturasCliente(pm, cliente.getId());
+					boolean no = false;
+					for (int j = 0; j < facturas.size(); j++) {
+						Factura factura = facturas.get(j);
+						if( !sqlFactura.tieneProductosCostosos(pm, factura.getId())) {
+							no = true;
+							break;
+						}
+					}
+					if(no) {
+						continue;
+					} else {
+						cliente.setTipo("Compra productos costosos");
+						buenosClientes.add(cliente);
+					}
+
+				}
+			} 
+
+			tx.commit();
+			return buenosClientes; //REMOVE ME
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+
+	}
 	/* ****************************************************************
 	 * 			Métodos para manejar las ORDENES
 	 *****************************************************************/
@@ -1097,36 +1149,36 @@ public class PersistenciaSuperandes {
 	 */
 	public long[] registrarLlegadaOrden(long idOrden, long idSucursal, Timestamp fechaLlegada, String idProveedor, double calificacion){
 		PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx=pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            
-            long [] resp = sqlOrden.registrarLlegadaOrden(pm, idOrden, idSucursal, fechaLlegada, idProveedor, calificacion);
-            tx.commit();
-            return resp;
-        }
-        catch (Exception e)
-        {
-//        	e.printStackTrace();
-        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-        	return null;
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
-		 
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+
+			long [] resp = sqlOrden.registrarLlegadaOrden(pm, idOrden, idSucursal, fechaLlegada, idProveedor, calificacion);
+			tx.commit();
+			return resp;
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+
 	}
-	
+
 	/* ****************************************************************
 	 * 			Métodos para manejar los CARROS DE COMPRA
 	 *****************************************************************/
-	
+
 	/**
 	 * Método que se encarga de asignar un carro desocupado a un cliente
 	 * Retorna null si no hay carros desocupados
@@ -1135,40 +1187,40 @@ public class PersistenciaSuperandes {
 	 */
 	public Carrito solicitarCarro(long idCliente){
 		PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx=pm.currentTransaction();
-        tx.setSerializeRead(true);
-        Carrito carroAsignado = null;
-        try
-        {
-            tx.begin();
-            List<Carrito> carrosDesocupados = sqlCarrito.darCarrosDesocupados(pm);
-            if(carrosDesocupados.size() != 0){
-            	Carrito carroDesocupado = carrosDesocupados.get(0);
-                long tuplasInsertadas = sqlCarrito.solicitarCarro(pm, carroDesocupado.getId(), idCliente);
-                carroAsignado = sqlCarrito.darCarroPorId(pm, carroDesocupado.getId());
-            }
+		Transaction tx=pm.currentTransaction();
+		tx.setSerializeRead(true);
+		Carrito carroAsignado = null;
+		try
+		{
+			tx.begin();
+			List<Carrito> carrosDesocupados = sqlCarrito.darCarrosDesocupados(pm);
+			if(carrosDesocupados.size() != 0){
+				Carrito carroDesocupado = carrosDesocupados.get(0);
+				long tuplasInsertadas = sqlCarrito.solicitarCarro(pm, carroDesocupado.getId(), idCliente);
+				carroAsignado = sqlCarrito.darCarroPorId(pm, carroDesocupado.getId());
+			}
 
-     
-            tx.commit();
-            
-            return carroAsignado;
-        }
-        catch (Exception e)
-        {
-//        	e.printStackTrace();
-        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-        	return null;
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
+
+			tx.commit();
+
+			return carroAsignado;
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
-	
+
 	/**
 	 * Método que se encarga de actualizar el estado del carro de compras 
 	 * si su dueño lo abandona. Si el cliente no tenía carro, devuelve nil
@@ -1177,41 +1229,41 @@ public class PersistenciaSuperandes {
 	 */
 	public Carrito abandonarCarro(long idCliente){
 		PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx=pm.currentTransaction();
-        tx.setSerializeRead(true);
-        Carrito carroAbandonado = null;
-        try
-        {
-            tx.begin();
-            
-            Carrito c = sqlCarrito.darCarroPorIdCliente(pm, idCliente);
-            
-            if(c != null){
-                long tuplasInsertadas = sqlCarrito.abandonarCarro(pm, c.getId());
-                carroAbandonado = sqlCarrito.darCarroPorId(pm, c.getId());
-            }
+		Transaction tx=pm.currentTransaction();
+		tx.setSerializeRead(true);
+		Carrito carroAbandonado = null;
+		try
+		{
+			tx.begin();
 
-     
-            tx.commit();
-            
-            return carroAbandonado;
-        }
-        catch (Exception e)
-        {
-//        	e.printStackTrace();
-        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-        	return null;
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
+			Carrito c = sqlCarrito.darCarroPorIdCliente(pm, idCliente);
+
+			if(c != null){
+				long tuplasInsertadas = sqlCarrito.abandonarCarro(pm, c.getId());
+				carroAbandonado = sqlCarrito.darCarroPorId(pm, c.getId());
+			}
+
+
+			tx.commit();
+
+			return carroAbandonado;
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
-	
+
 	/**
 	 * Método para manualmente desocupar un carro (solo se puede utilizar
 	 * si el carro no tiene producto)
@@ -1220,41 +1272,41 @@ public class PersistenciaSuperandes {
 	 */
 	public Carrito desocuparCarro(long idCliente){
 		PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx=pm.currentTransaction();
-        tx.setSerializeRead(true);
-        Carrito carroDesocupado = null;
-        try
-        {
-            tx.begin();
-            
-            Carrito c = sqlCarrito.darCarroPorIdCliente(pm, idCliente);
-            
-            if(c != null){
-                long tuplasInsertadas = sqlCarrito.desocuparCarro(pm, c.getId());
-                carroDesocupado = sqlCarrito.darCarroPorId(pm, c.getId());
-            }
+		Transaction tx=pm.currentTransaction();
+		tx.setSerializeRead(true);
+		Carrito carroDesocupado = null;
+		try
+		{
+			tx.begin();
 
-     
-            tx.commit();
-            
-            return carroDesocupado;
-        }
-        catch (Exception e)
-        {
-//        	e.printStackTrace();
-        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-        	return null;
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
+			Carrito c = sqlCarrito.darCarroPorIdCliente(pm, idCliente);
+
+			if(c != null){
+				long tuplasInsertadas = sqlCarrito.desocuparCarro(pm, c.getId());
+				carroDesocupado = sqlCarrito.darCarroPorId(pm, c.getId());
+			}
+
+
+			tx.commit();
+
+			return carroDesocupado;
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
-	
+
 	/**
 	 * Método que se encarga de actualizar los estados del carro y el estante
 	 * cuando un cliente adiciona un producto a su carro del estante respectivo
@@ -1266,39 +1318,39 @@ public class PersistenciaSuperandes {
 	 */
 	public long insertarProductoAlCarro (long idCarrito, String idProducto, long cantidad, long idEstante){
 		PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx=pm.currentTransaction();
-        tx.setSerializeRead(true);
+		Transaction tx=pm.currentTransaction();
+		tx.setSerializeRead(true);
 
-        try
-        {
-            tx.begin();
-            long tuplasInsertadas = 0;
-            long tuplasRemovidas = sqlSurtido.removerProductoDeEstante(pm, idEstante, idProducto, cantidad);
-            if(sqlCarrito.darCantidadDeProducto(pm, idCarrito, idProducto) < 0){
-            	tuplasInsertadas = sqlCarrito.insertarProductoAlCarro(pm, idCarrito, idProducto, cantidad);
-            }else{
-            	tuplasInsertadas = sqlCarrito.adicionarCantidadDeProductoAlCarro(pm, idCarrito, idProducto, cantidad);
-            }
-            tx.commit();
-            
-            return tuplasInsertadas;
-        }
-        catch (Exception e)
-        {
-//        	e.printStackTrace();
-        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-        	return 0;
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
+		try
+		{
+			tx.begin();
+			long tuplasInsertadas = 0;
+			long tuplasRemovidas = sqlSurtido.removerProductoDeEstante(pm, idEstante, idProducto, cantidad);
+			if(sqlCarrito.darCantidadDeProducto(pm, idCarrito, idProducto) < 0){
+				tuplasInsertadas = sqlCarrito.insertarProductoAlCarro(pm, idCarrito, idProducto, cantidad);
+			}else{
+				tuplasInsertadas = sqlCarrito.adicionarCantidadDeProductoAlCarro(pm, idCarrito, idProducto, cantidad);
+			}
+			tx.commit();
+
+			return tuplasInsertadas;
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return 0;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
-	
+
 	/**
 	 * Método que se encarga de actualizar los estados del carro y el estante
 	 * cuando un cliente devuelve un producto de su carro al estante respectivo
@@ -1310,40 +1362,40 @@ public class PersistenciaSuperandes {
 	 */
 	public long devolverProductoDelCarro (long idCarrito, String idProducto, long cantidad, long idEstante){
 		PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx=pm.currentTransaction();
-        tx.setSerializeRead(true);
+		Transaction tx=pm.currentTransaction();
+		tx.setSerializeRead(true);
 
-        try
-        {
-            tx.begin();
-           
-            long tuplasInsertadas = sqlCarrito.removerProductoDelCarro(pm, idCarrito, idProducto, cantidad);
-            int c = sqlCarrito.darCantidadDeProducto(pm, idCarrito, idProducto);
-            if (c == 0){
-            	sqlCarrito.eliminarProductoDelCarro(pm, idCarrito, idProducto);
-            }
-            sqlSurtido.insertarProductoEnEstante(pm, idEstante, idProducto, cantidad);
-            
-            tx.commit();
-            
-            return tuplasInsertadas;
-        }
-        catch (Exception e)
-        {
-//        	e.printStackTrace();
-        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-        	return 0;
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
+		try
+		{
+			tx.begin();
+
+			long tuplasInsertadas = sqlCarrito.removerProductoDelCarro(pm, idCarrito, idProducto, cantidad);
+			int c = sqlCarrito.darCantidadDeProducto(pm, idCarrito, idProducto);
+			if (c == 0){
+				sqlCarrito.eliminarProductoDelCarro(pm, idCarrito, idProducto);
+			}
+			sqlSurtido.insertarProductoEnEstante(pm, idEstante, idProducto, cantidad);
+
+			tx.commit();
+
+			return tuplasInsertadas;
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return 0;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
-	
+
 	/**
 	 * Método que se encarga de devolver los productos de los carros abandonados
 	 * a los respectivos estantes
@@ -1351,46 +1403,46 @@ public class PersistenciaSuperandes {
 	 */
 	public void recolectarProductosAbandonados(){
 		PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx=pm.currentTransaction();
-        tx.setSerializeRead(true);
+		Transaction tx=pm.currentTransaction();
+		tx.setSerializeRead(true);
 
-        try
-        {
-            tx.begin();
-            
-            List<Carrito> abandonados = sqlCarrito.darCarrosAbandonados(pm);
-            for(Carrito c : abandonados){
-            	long idCarrito = c.getId();
-            	long idCliente = c.getIdCliente();
-            	List<Producto> productos = sqlCarrito.darProductosEnCarro(pm, idCarrito);
-            	for(Producto p : productos){
-            		String idProducto = p.getCodigoBarras();
-            		int cantidad = sqlCarrito.darCantidadDeProducto(pm, idCarrito, idProducto);
-            		devolverProductoDelCarro(c.getId(), p.getCodigoBarras(), cantidad, elegirEstante(pm, p, cantidad));
-            	}
-            	sqlCarrito.todosLosProductosDevueltos(pmf.getPersistenceManager(), idCliente);
-            }
-            sqlCarrito.desocuparCarros(pm);
-            
-            tx.commit();
-            
+		try
+		{
+			tx.begin();
 
-        }
-        catch (Exception e)
-        {
-//        	e.printStackTrace();
-        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
+			List<Carrito> abandonados = sqlCarrito.darCarrosAbandonados(pm);
+			for(Carrito c : abandonados){
+				long idCarrito = c.getId();
+				long idCliente = c.getIdCliente();
+				List<Producto> productos = sqlCarrito.darProductosEnCarro(pm, idCarrito);
+				for(Producto p : productos){
+					String idProducto = p.getCodigoBarras();
+					int cantidad = sqlCarrito.darCantidadDeProducto(pm, idCarrito, idProducto);
+					devolverProductoDelCarro(c.getId(), p.getCodigoBarras(), cantidad, elegirEstante(pm, p, cantidad));
+				}
+				sqlCarrito.todosLosProductosDevueltos(pmf.getPersistenceManager(), idCliente);
+			}
+			sqlCarrito.desocuparCarros(pm);
+
+			tx.commit();
+
+
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
-	
+
 	/**
 	 * Método que se encarga de elegir un estante donde se pueda insertar
 	 * el producto dado por parámetro
@@ -1411,10 +1463,10 @@ public class PersistenciaSuperandes {
 				}
 			}
 		}
-		
+
 		return idEstante;
 	}
-	
+
 
 	/**
 	 * Método que se encarga de generar la factura cuando un cliente paga todos
@@ -1426,45 +1478,45 @@ public class PersistenciaSuperandes {
 	 */
 	public Factura pagarCompra(long idCarrito, long idCajero, long idCliente){
 		PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx=pm.currentTransaction();
-        tx.setSerializeRead(true);
-        Factura factura = null;
-        try
-        {
-            tx.begin();
-            long id = nextval();
-            List<Producto> productos = sqlCarrito.darProductosEnCarro(pm, idCarrito);
-            double precioTotal = calcularCostoTotalCarro(productos, idCarrito);
-            Date curr = new Date();
-            Timestamp fecha = new Timestamp(curr.getTime());
-            sqlFactura.registarFactura(pm, id, fecha, precioTotal, idCajero, idCliente);
-            sqlCarrito.eliminarProductosDelCarro(pm, idCarrito);
-            sqlCarrito.todosLosProductosDevueltos(pm, idCliente);
-            sqlCarrito.desocuparCarro(pm, idCarrito);
-            
-            tx.commit();
-            
-            factura = new Factura(id, precioTotal, fecha, idCajero, idCliente);
-            factura.setProductos(productos);
-            return factura;
+		Transaction tx=pm.currentTransaction();
+		tx.setSerializeRead(true);
+		Factura factura = null;
+		try
+		{
+			tx.begin();
+			long id = nextval();
+			List<Producto> productos = sqlCarrito.darProductosEnCarro(pm, idCarrito);
+			double precioTotal = calcularCostoTotalCarro(productos, idCarrito);
+			Date curr = new Date();
+			Timestamp fecha = new Timestamp(curr.getTime());
+			sqlFactura.registarFactura(pm, id, fecha, precioTotal, idCajero, idCliente);
+			sqlCarrito.eliminarProductosDelCarro(pm, idCarrito);
+			sqlCarrito.todosLosProductosDevueltos(pm, idCliente);
+			sqlCarrito.desocuparCarro(pm, idCarrito);
 
-        }
-        catch (Exception e)
-        {
-//        	e.printStackTrace();
-        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-        	return null;
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
+			tx.commit();
+
+			factura = new Factura(id, precioTotal, fecha, idCajero, idCliente);
+			factura.setProductos(productos);
+			return factura;
+
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
-	
+
 	/**
 	 * Método para calcular el costo total de los productos contenidos en un carro
 	 * @return
@@ -1478,7 +1530,7 @@ public class PersistenciaSuperandes {
 		}
 		return total;
 	}
-	
+
 	/**
 	 * 
 	 * @param idCarrito
@@ -1488,7 +1540,7 @@ public class PersistenciaSuperandes {
 	public int darCantidadDeProducto (long idCarrito, String idProducto){
 		return sqlCarrito.darCantidadDeProducto(pmf.getPersistenceManager(), idCarrito, idProducto);
 	}
-	
+
 	/**
 	 * 
 	 * @param idProducto
@@ -1498,7 +1550,7 @@ public class PersistenciaSuperandes {
 	public int darCantidadProductoPorEstante (String idProducto, long idEstante){
 		return sqlSurtido.darCantidadProductoPorEstante(pmf.getPersistenceManager(), idProducto, idEstante);
 	}
-	
+
 	/**
 	 * 
 	 * @param idCarrito
@@ -1507,7 +1559,7 @@ public class PersistenciaSuperandes {
 	public List<Producto> darProductosEnCarro(long idCarrito){
 		return sqlCarrito.darProductosEnCarro(pmf.getPersistenceManager(), idCarrito);
 	}
-	
+
 	/**
 	 * 
 	 * @return Todos los carros de compra registradoss
@@ -1515,7 +1567,7 @@ public class PersistenciaSuperandes {
 	public List<Carrito> darCarros(){
 		return sqlCarrito.darCarros(pmf.getPersistenceManager());
 	}
-	
+
 	/**
 	 * 
 	 * @return Una colección de los carros desocupados
@@ -1523,7 +1575,7 @@ public class PersistenciaSuperandes {
 	public List<Carrito> darCarrosDesocupados(){
 		return sqlCarrito.darCarrosDesocupados(pmf.getPersistenceManager());
 	}
-	
+
 	/**
 	 * 
 	 * @return Una colección de los carros abandonados
@@ -1531,7 +1583,7 @@ public class PersistenciaSuperandes {
 	public List<Carrito> darCarrosAbandonados(){
 		return sqlCarrito.darCarrosAbandonados(pmf.getPersistenceManager());
 	}
-	
+
 	/**
 	 * 
 	 * @param nombre
@@ -1541,7 +1593,7 @@ public class PersistenciaSuperandes {
 	public Producto darProductoPorNombreYEstante(String nombre, long idEstante){
 		return sqlSurtido.darProductoPorNombreYEstante(pmf.getPersistenceManager(), nombre, idEstante);
 	}
-	
+
 	/**
 	 * 
 	 * @param idCliente
@@ -1550,78 +1602,78 @@ public class PersistenciaSuperandes {
 	public long darCarroPorCliente(long idCliente){
 		return sqlCarrito.darCarroPorCliente(pmf.getPersistenceManager(), idCliente);
 	}
-	
+
 	public long productoTomado (long idCliente, String idProducto, long idEstante){
 		return sqlCarrito.productoTomado(pmf.getPersistenceManager(), idCliente, idProducto, idEstante);
 	}
-	
+
 	public long productoDevuelto (String idProducto, long idEstante, long idCliente){
-		
+
 		PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx=pm.currentTransaction();
-        tx.setSerializeRead(true);
-        try
-        {
-            tx.begin();
-            long tuplasEliminadas = sqlCarrito.productoDevuelto(pm, idProducto, idEstante, idCliente);
-            tx.commit();
-            return tuplasEliminadas;
-        }
-        catch (Exception e)
-        {
-//        	e.printStackTrace();
-        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-        	return -1;
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
+		Transaction tx=pm.currentTransaction();
+		tx.setSerializeRead(true);
+		try
+		{
+			tx.begin();
+			long tuplasEliminadas = sqlCarrito.productoDevuelto(pm, idProducto, idEstante, idCliente);
+			tx.commit();
+			return tuplasEliminadas;
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return -1;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
-	
+
 	public long todosLosProductosDevueltos (long idCliente){
 		PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx=pm.currentTransaction();
-        tx.setSerializeRead(true);
-        try
-        {
-            tx.begin();
-            long tuplasEliminadas = sqlCarrito.todosLosProductosDevueltos(pm, idCliente);
-            tx.commit();
-            return tuplasEliminadas;
-        }
-        catch (Exception e)
-        {
-//        	e.printStackTrace();
-        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-        	return -1;
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
+		Transaction tx=pm.currentTransaction();
+		tx.setSerializeRead(true);
+		try
+		{
+			tx.begin();
+			long tuplasEliminadas = sqlCarrito.todosLosProductosDevueltos(pm, idCliente);
+			tx.commit();
+			return tuplasEliminadas;
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return -1;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
-	
+
 	public long productoFueTomadoDe(String idProducto, long idCliente){
 		return sqlCarrito.productoFueTomadoDe(pmf.getPersistenceManager(), idProducto, idCliente);
 	}
-	
+
 	public List<Estante> darEstantesPorCategoria(long idCategoria){
 		return sqlEstante.darEstantesPorCategoria(pmf.getPersistenceManager(), idCategoria);
 	}
-	
+
 	/* ****************************************************************
 	 * 			Métodos para manejar las VENTAS
 	 *****************************************************************/
-	
+
 	/**
 	 * Registra la venta de un producto
 	 * @param idFactura - identificador de una factura
@@ -1649,12 +1701,12 @@ public class PersistenciaSuperandes {
 			pm.close();
 		}
 	}
-	
-	
+
+
 	/* ****************************************************************
 	 * 			Métodos para CONSULTAS
 	 *****************************************************************/
-	
+
 	public void fechasMayorDemanda( int tipo, long idSucursal, String option) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -1670,28 +1722,28 @@ public class PersistenciaSuperandes {
 			} pm.close();
 		}
 	}
-	
+
 	public List<Timestamp> getFechasMayorD(){
 		return sqlFactura.getFechasMayorD();
 	}
-	
+
 	public List<Timestamp> getFechasMenorD(){
 		return sqlFactura.getFechasMenorD();
 	}
-	
+
 	public List<Integer> getCantidadMayorD(){
 		return sqlFactura.getCantidadMayorD();
 	}
-	
+
 	public List<Integer> getCantidadMenorD(){
 		return sqlFactura.getCantidadMenorD();
 	}
-	
-	
+
+
 	/* ****************************************************************
 	 * 			Métodos consulta para Iteración 3
 	 *****************************************************************/
-	
+
 	/**
 	 * Retorna la información de todos los clientes que han comprado por lo menos una vez un determinado producto 
 	 * en un rango de fechas especificado
@@ -1706,7 +1758,7 @@ public class PersistenciaSuperandes {
 		return sqlCliente.clientesQueCompraronElProductoPorRangoFecha
 				(pmf.getPersistenceManager(), fechaInicial, fechaFinal, criterioOrdenamiento, nombreProducto, idSucursal);
 	}
-	
+
 	/**
 	 * Retorna la información de todos los clientes que no han comprado por lo menos una vez un determinado producto 
 	 * en un rango de fechas especificado
@@ -1720,7 +1772,7 @@ public class PersistenciaSuperandes {
 		return sqlCliente.clientesQueNoCompraronElProductoPorRangoFecha
 				(pmf.getPersistenceManager(), fechaInicial, fechaFinal, criterioOrdenamiento, nombreProducto, idSucursal);
 	}
-	
+
 	/**
 	 * Retorna la información de los productos con ventas máximas por semana	  
 	 * @return Colección con la información de los productos con ventas máximas por semana
@@ -1728,7 +1780,7 @@ public class PersistenciaSuperandes {
 	public List<ProductoPorSemana> productosConVentasMaximasPorSemana(){
 		return sqlProducto.productosConVentasMaximasPorSemana(pmf.getPersistenceManager());
 	}
-	
+
 	/**
 	 * Retorna la información de los productos con ventas mínimas por semana
 	 * @return Colección con la información de los productos con ventas mínimas por semana
@@ -1744,7 +1796,7 @@ public class PersistenciaSuperandes {
 	public List<ProveedorPorSemana> proveedoresConSolicitudesMaximasPorSemana(){
 		return sqlProveedor.proveedoresConSolicitudesMaximasPorSemana(pmf.getPersistenceManager());
 	}
-	
+
 	/**
 	 * Retorna la información de los proveedores con solicitudes con ventas mínimas por semana
 	 * @return Colección con la información de los proveedores con órdenes mínimas por semana
@@ -1752,12 +1804,12 @@ public class PersistenciaSuperandes {
 	public List<ProveedorPorSemana> proveedoresConSolicitudesMinimasPorSemana(){
 		return sqlProveedor.proveedoresConSolicitudesMinimasPorSemana(pmf.getPersistenceManager());
 	}
-	
-	
+
+
 	/* ****************************************************************
 	 * 			Métodos para manejar los USUARIOS
 	 *****************************************************************/
-	
+
 	/**
 	 * Retorna el usuario de tipo administrador con el username respectivo
 	 * @param username
@@ -1766,7 +1818,7 @@ public class PersistenciaSuperandes {
 	public Usuario darUsuarioAdministradorPorUsername(String username, String password) {
 		return sqlUsuario.darUsuarioAdministradorPorUsername(pmf.getPersistenceManager(), username, password);
 	}
-	
+
 	/**
 	 * Retorna el usuario de tipo gerente con el username respectivo
 	 * @param username
